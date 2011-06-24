@@ -1,7 +1,3 @@
-CC=gcc
-CFLAGS=-fPIC -Wall -O2
-LD=ld
-
 OBJ =	alsa-seq-endpoint.o \
 	alsa-seq-listener.o \
 	alsa-seq-print.o \
@@ -33,7 +29,7 @@ OBJ =	alsa-seq-endpoint.o \
 	xregcomp.o
 
 %.o : %.c %.h
-	$(CC) $(CFLAGS) -c $*.c
+	gcc -Wall -O2 -c $*.c
 
 all: $(OBJ)
 	ar -rcs lib-c-common.a $(OBJ)
