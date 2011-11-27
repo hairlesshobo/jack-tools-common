@@ -5,6 +5,7 @@ OBJ =	alsa-seq-endpoint.o \
 	byte-order.o \
 	client.o \
 	file.o \
+	gen-trapezoid.o \
 	img.o \
 	img-ppm.o \
 	jack-client.o \
@@ -15,7 +16,9 @@ OBJ =	alsa-seq-endpoint.o \
 	network.o \
 	observe-signal.o \
 	osc.o \
+	quantize.o \
 	rand.o \
+	segment-transfer.o \
 	signal-clip.o \
 	signal-copy.o \
 	signal-interleave.o \
