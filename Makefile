@@ -15,16 +15,19 @@ OBJ =	alsa-seq-endpoint.o \
 	network.o \
 	observe-signal.o \
 	osc.o \
+	rand.o \
 	signal-clip.o \
 	signal-copy.o \
 	signal-interleave.o \
 	signal-interpolate.o \
 	signal-print.o \
 	sound-file.o \
+	taus88.o \
 	time-current.o \
 	time-ntp.o \
 	time-timespec.o \
 	time-timeval.o \
+	vector.o \
 	ximg.o \
 	xregcomp.o
 
