@@ -27,7 +27,6 @@ OBJ =	alsa-seq-endpoint.o \
 	time-ntp.o \
 	time-timespec.o \
 	time-timeval.o \
-	vector.o \
 	ximg.o \
 	xregcomp.o
 
