@@ -4,6 +4,7 @@ OBJ =	alsa-seq-endpoint.o \
 	alsa-seq-send.o \
 	byte-order.o \
 	client.o \
+	cq.o \
 	file.o \
 	gen-trapezoid.o \
 	img.o \
