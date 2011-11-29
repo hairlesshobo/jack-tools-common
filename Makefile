@@ -4,6 +4,7 @@ OBJ =	alsa-seq-endpoint.o \
 	alsa-seq-send.o \
 	byte-order.o \
 	client.o \
+	clip.o \
 	cq.o \
 	file.o \
 	gen-trapezoid.o \
@@ -19,6 +20,7 @@ OBJ =	alsa-seq-endpoint.o \
 	osc.o \
 	quantize.o \
 	rand.o \
+	rgba.o \
 	segment-transfer.o \
 	signal-clip.o \
 	signal-copy.o \
@@ -31,8 +33,12 @@ OBJ =	alsa-seq-endpoint.o \
 	time-ntp.o \
 	time-timespec.o \
 	time-timeval.o \
+	vector.o \
 	ximg.o \
 	xregcomp.o
+
+#	gl/cube.o \
+#	gl/sphere.o \
 
 %.o : %.c %.h
 	gcc -Wall -O2 -c $*.c
