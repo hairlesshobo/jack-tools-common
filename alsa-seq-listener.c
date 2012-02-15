@@ -21,9 +21,8 @@ void *alsa_seq_listener_thread(void *PTR)
   alsa_seq_listener_t *l = (alsa_seq_listener_t *) PTR;
   while(true) {
     snd_seq_event_t *e;
-    int err;
-    err = snd_seq_event_input(l->seq, &e);
-    dprintf("%s: event received: err=%d, e=%p\n", __func__, err, e);
+    snd_seq_event_input(l->seq, &e);
+    dprintf("%s: event received: e=%p\n", __func__, e);
     if(snd_seq_ev_is_channel_type(e) || e->type == SND_SEQ_EVENT_SYSEX) {
       int data_extent = 512;
       u8 data[data_extent];

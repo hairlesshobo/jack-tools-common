@@ -183,8 +183,7 @@ void alsa_seq_endpoint_connect_from(snd_seq_t *seq, int port,
   int i;
   for(i = 0; i < e_n; i++) {
     if(e[i].source && e[i].client != self) {
-      int err;
-      err = snd_seq_connect_from(seq, port, e[i].client, e[i].port);
+      snd_seq_connect_from(seq, port, e[i].client, e[i].port);
     }
   }
 }
@@ -201,8 +200,7 @@ alsa_seq_endpoint_connect_to(snd_seq_t *seq, int port,
   int i;
   for(i = 0; i < e_n; i++) {
     if(e[i].source && e[i].client != self) {
-      int err;
-      err = snd_seq_connect_to(seq, port, e[i].client, e[i].port);
+      snd_seq_connect_to(seq, port, e[i].client, e[i].port);
     }
   }
 }

@@ -1,3 +1,4 @@
+PREFIX = $(HOME)/opt
 OBJ =	alsa-seq-endpoint.o \
 	alsa-seq-listener.o \
 	alsa-seq-print.o \
@@ -48,3 +49,12 @@ all: $(OBJ)
 
 clean:
 	rm -f *.o *.a
+
+install:
+	cp lib-c-common.a $(PREFIX)/lib
+	mkdir -p $(PREFIX)/include/c-common
+	cp *.h $(PREFIX)/include/c-common
+
+uninstall:
+	rm -f $(PREFIX)/lib/lib-c-common.a
+	rm -Rf $(PREFIX)/include/c-common
