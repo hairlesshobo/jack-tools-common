@@ -1,5 +1,5 @@
 #include <GL/gl.h>
-#include "cube.h"
+#include "gl-cube.h"
 
 void cubel(void)
 {

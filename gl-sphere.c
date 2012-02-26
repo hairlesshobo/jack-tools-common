@@ -1,6 +1,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "sphere.h"
+#include "gl-sphere.h"
 
 void spherel(void)
 {

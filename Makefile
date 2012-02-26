@@ -9,6 +9,9 @@ OBJ =	alsa-seq-endpoint.o \
 	cq.o \
 	file.o \
 	gen-trapezoid.o \
+	gl-cube.o \
+	gl-sphere.o \
+	glu-screen-capture.o \
 	img.o \
 	img-ppm.o \
 	jack-client.o \
@@ -37,9 +40,6 @@ OBJ =	alsa-seq-endpoint.o \
 	vector.o \
 	ximg.o \
 	xregcomp.o
-
-#	gl/cube.o \
-#	gl/sphere.o \
 
 %.o : %.c %.h
 	gcc -Wall -O2 -c $*.c
