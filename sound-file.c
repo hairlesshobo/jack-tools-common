@@ -43,7 +43,7 @@ sf_count_t xsf_write_float(SNDFILE *sndfile, float *ptr, sf_count_t items)
 /* Read the single channel sound file at `name' to a newly allocated
    array and store the size at `n'. */
 
-float *read_signal_file(const char *name, int *n)
+float *read_signal_file(const char *name, int nc, int *n)
 {
   SF_INFO sfi;
   SNDFILE *sfp = sf_open(name, SFM_READ, &sfi);
@@ -52,11 +52,11 @@ float *read_signal_file(const char *name, int *n)
     sf_perror(sfp);
     FAILURE;
   }
-  if(sfi.channels != 1) {
+  if(sfi.channels != nc) {
     fprintf(stderr, "illegal channel count: %d\n", sfi.channels);
     FAILURE;
   }
-  *n = sfi.frames;
+  *n = sfi.frames * sfi.channels;
   float *data = xmalloc(*n * sizeof(float));
   int err = sf_read_float(sfp, data, *n);
   if(err == -1) {

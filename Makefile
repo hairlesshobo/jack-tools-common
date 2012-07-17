@@ -3,7 +3,9 @@ OBJ =	alsa-seq-endpoint.o \
 	alsa-seq-listener.o \
 	alsa-seq-print.o \
 	alsa-seq-send.o \
+	bessel.o \
 	byte-order.o \
+	cfile.o \
 	client.o \
 	clip.o \
 	cq.o \
@@ -38,6 +40,7 @@ OBJ =	alsa-seq-endpoint.o \
 	time-timespec.o \
 	time-timeval.o \
 	vector.o \
+	window.o \
 	ximg.o \
 	xregcomp.o
 
