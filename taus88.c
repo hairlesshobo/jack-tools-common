@@ -1,6 +1,8 @@
 #include <stdint.h>
 #include "taus88.h"
 
+taus88_t taus88_std = {1243598713U, 3093459404U, 1821928721U};
+
 taus88_t make_taus88(u32 seed)
 {
   taus88_t t;
