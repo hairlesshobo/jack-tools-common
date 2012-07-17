@@ -39,6 +39,7 @@ OBJ =	alsa-seq-endpoint.o \
 	time-ntp.o \
 	time-timespec.o \
 	time-timeval.o \
+	trace.o \
 	vector.o \
 	window.o \
 	ximg.o \
