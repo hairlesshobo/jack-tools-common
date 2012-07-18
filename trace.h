@@ -4,6 +4,7 @@
 #include "int.h"
 #include "float.h"
 
-f32 trace_lookup(const f32 * data, i32 data_n, f32 time, i32 access);
+void trace_interpolate(const f32 * d, i32 m, f32 t, f32 z, f32 * r);
+int trace_lookup(const f32 * d, i32 n, i32 m, f32 time, f32 * r);
 
 #endif

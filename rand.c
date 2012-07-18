@@ -6,6 +6,8 @@
 #include "rgba.h"
 #include "vector.h"
 
+static taus88_t taus88_std = {1243598713U, 3093459404U, 1821928721U};
+
 f32 randf32(f32 l, f32 r)
 {
   f32 n = taus88f32(&taus88_std);
