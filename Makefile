@@ -24,6 +24,7 @@ OBJ =	alsa-seq-endpoint.o \
 	network.o \
 	observe-signal.o \
 	osc.o \
+	plane.o \
 	quantize.o \
 	rand.o \
 	rgba.o \

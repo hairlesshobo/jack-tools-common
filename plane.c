@@ -1,10 +1,9 @@
-/* plane.c - (c) rohan drape, 2005 */
-
 /* A plane in 'Hessian normal form' can be given by a normal (a unit
   vector perpendicular to the plane) and a scalar distance from the
   origin. */
 
 #include <stdbool.h>
+#include <stdio.h>
 #include <math.h>
 #include "vector.h"
 #include "plane.h"
