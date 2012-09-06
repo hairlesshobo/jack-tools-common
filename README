@@ -1,7 +1,7 @@
 c-common
 --------
 
-[c][c] library of functions common to c projects
+library of functions common to [c][c] projects
 
 tested-with: [gcc][gcc] 4.6.2
 

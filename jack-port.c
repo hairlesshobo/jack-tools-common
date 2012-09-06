@@ -87,12 +87,12 @@ void jack_port_clear_all_connections(jack_client_t *j, const char *l)
   }
 }
 
-void jack_port_connect_pattern(jack_client_t *client, int n, char *src, char *dst)
+void jack_port_connect_pattern(jack_client_t *client, int n, int k, char *src, char *dst)
 {
   int i;
   for(i = 0; i < n; i++) {
     char src_name[64],dst_name[64];
-    snprintf(src_name, 64, src, i + 1);
+    snprintf(src_name, 64, src, i + k + 1);
     snprintf(dst_name, 64, dst, i + 1);
     jack_port_connect_named(client,src_name,dst_name);
   }
