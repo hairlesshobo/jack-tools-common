@@ -5,7 +5,6 @@
 #include "print.h"
 
 /* Make a basic seq queue. */
-
 int alsa_seq_make_default_queue(snd_seq_t *seq)
 {
   int queue;
@@ -17,7 +16,6 @@ int alsa_seq_make_default_queue(snd_seq_t *seq)
 
 /* Apart from setting the event destination, all the code for _send
    and _send_to is shared. */
-
 static void alsa_seq_send_common(snd_seq_t *seq, int queue,
 				 int src_port,
 				 snd_midi_event_t *encoder,
@@ -33,7 +31,7 @@ static void alsa_seq_send_common(snd_seq_t *seq, int queue,
   snd_seq_ev_set_source(&e, src_port);
   snd_midi_event_reset_encode(encoder);
   err = snd_midi_event_encode(encoder, c, n, &e);
-  if(err < 0) {
+  if(err < 0 || e.type == SND_SEQ_EVENT_NONE) {
     eprintf("%s: encoding failed: %s\n", __func__, snd_strerror(errno));
     return;
   }
@@ -48,7 +46,6 @@ static void alsa_seq_send_common(snd_seq_t *seq, int queue,
 
 /* Encode the MIDI data at `c' as an ALSA sequencer event and send it
    to the registered subscribers. */
-
 void alsa_seq_send(snd_seq_t *seq, int queue,
 		   int src_port,
 		   snd_midi_event_t *encoder,
@@ -62,7 +59,6 @@ void alsa_seq_send(snd_seq_t *seq, int queue,
 
 /* Encode the MIDI data at `c' as an ALSA sequencer event and send it
    to indicated destination port. */
-
 void alsa_seq_send_to(snd_seq_t *seq, int queue,
 		      int src_port,
 		      int dst_client, int dst_port,

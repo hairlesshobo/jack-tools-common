@@ -7,6 +7,11 @@
 #include "byte-order.h"
 #include "failure.h"
 #include "osc.h"
+#include "print.h"
+
+i32 osc_align(i32 n) {return (((n + 3) & (~3)) - n);}
+i32 osc_cstr_bound(i32 n) {return n + 1 + osc_align(n + 1);}
+i32 osc_blob_bound(i32 n) {return n + osc_align(n);}
 
 void osc_print_packet(const u8 *packet, i32 packet_sz)
 {
@@ -17,11 +22,6 @@ void osc_print_packet(const u8 *packet, i32 packet_sz)
       fprintf(stderr, "\n");
     }
   }
-}
-
-i32 osc_str_bound(i32 n)
-{
-  return n +(4 -(n % 4));
 }
 
 bool osc_is_numerical_type(u8 c)
@@ -138,10 +138,10 @@ i32 osc_collect_arguments(const char *dsc, const u8 *p, osc_data_t *data)
       p += 8;
     } else if(c == 's') {
       data[i].s = (char*)p;
-      p += osc_str_bound(u8strlen(p));
+      p += osc_cstr_bound(u8strlen(p));
     } else if(c == 'S') {
       data[i].S = (char*)p;
-      p += osc_str_bound(u8strlen(p));
+      p += osc_cstr_bound(u8strlen(p));
     } else if(c == 'c') {
       data[i].c = ntoh_u32_from_buf(p);
       p += 4;
@@ -187,12 +187,12 @@ i32 osc_pack_arguments(const char *dsc, const osc_data_t *data, u8 *p)
       p += 8;
     } else if(c == 's') {
       i32 n = strlen(data[i].s);
-      memcpy(p, data[i].s, n+1);
-      p += osc_str_bound(n);
+      memcpy(p, data[i].s, n + 1);
+      p += osc_cstr_bound(n);
     } else if(c == 'S') {
       i32 n = strlen(data[i].s);
-      memcpy(p, data[i].S, n+1);
-      p += osc_str_bound(n);
+      memcpy(p, data[i].S, n + 1);
+      p += osc_cstr_bound(n);
     } else if(c == 'c') {
       ntoh_u32_to_buf(p, data[i].c);
       p += 4;
@@ -205,7 +205,7 @@ i32 osc_pack_arguments(const char *dsc, const osc_data_t *data, u8 *p)
     } else if(c == 'b') {
       ntoh_i32_to_buf(p, data[i].b.size);
       memcpy(p + 4, data[i].b.data, data[i].b.size);
-      p += osc_str_bound(data[i].b.size)+ 4;
+      p += osc_blob_bound(data[i].b.size) + 4;
     } else {
       return -1;
     }
@@ -229,9 +229,9 @@ i32 osc_dsc_read_arg_len(const char *dsc, const u8 *p)
     } else if(c == 'd' || c == 'h' || c == 't') {
       n += 8;
     } else if(c == 's' || c == 'S') {
-      n += osc_str_bound(u8strlen(p + n));
+      n += osc_cstr_bound(u8strlen(p + n));
     } else if(c == 'b') {
-      n += osc_str_bound(ntoh_i32_from_buf(p + n)) + 4;
+      n += osc_blob_bound(ntoh_i32_from_buf(p + n)) + 4;
     } else {
       return -1;
     }
@@ -255,11 +255,11 @@ osc_dsc_calculate_arg_len(const char *dsc, const osc_data_t *data)
     } else if(c == 'd' || c == 'h' || c == 't') {
       n += 8;
     } else if(c == 's') {
-      n += osc_str_bound(strlen(data->s));
+      n += osc_cstr_bound(strlen(data->s));
     } else if(c == 'S') {
-      n += osc_str_bound(strlen(data->S));
+      n += osc_cstr_bound(strlen(data->S));
     } else if(c == 'b') {
-      n += osc_str_bound(data->b.size)+ 4;
+      n += osc_cstr_bound(data->b.size)+ 4;
     } else {
       return -1;
     }
@@ -275,7 +275,7 @@ i32 osc_match_address(const char *addr, const u8 *packet)
   if(strncmp(addr, (char*)packet, addr_n)!= 0) {
     return 0;
   } else {
-    return osc_str_bound(addr_n);
+    return osc_cstr_bound(addr_n);
   }
 }
 
@@ -290,27 +290,31 @@ i32 osc_match_dsc(const char *u_dsc, const char *p_dsc)
       return 0;
     }
   }
-  return osc_str_bound(u_dsc_n);
+  return osc_cstr_bound(u_dsc_n);
 }
 
 i32 osc_parse_message(const char *addr, const char *dsc, const u8 *packet, i32 packet_sz, osc_data_t *data)
 {
   i32 addr_len = osc_match_address(addr, packet);
-  if(! addr_len) {
+  if(addr_len == 0) {
     return 0;
   }
   const char *p_dsc = (char*)packet + addr_len;
   i32 dsc_len = osc_match_dsc(dsc, p_dsc);
-  if(! dsc_len) {
+  if(dsc_len == 0) {
     return 0;
   }
   const u8 *p_arg = (u8*)p_dsc + dsc_len;
   i32 arg_len = osc_dsc_read_arg_len(p_dsc, p_arg);
   if(packet_sz < addr_len + dsc_len + arg_len) {
+    eprintf("%s: packet_sz: (%d,%d,%d,%d)\n"
+            ,__func__,packet_sz
+            ,addr_len,dsc_len,arg_len);
     return 0;
   }
   i32 err = osc_collect_arguments(p_dsc, p_arg, data);
   if(err) {
+    eprintf("%s: osc_collect_arguments\n",__func__);
     return 0;
   }
   osc_coerce_arguments(dsc, p_dsc, data);
@@ -320,9 +324,9 @@ i32 osc_parse_message(const char *addr, const char *dsc, const u8 *packet, i32 p
 i32 osc_construct_message(const char *addr, const char *dsc, const osc_data_t *data, u8 *packet, i32 packet_sz)
 {
   i32 addr_n = strlen(addr);
-  i32 addr_len = osc_str_bound(addr_n);
+  i32 addr_len = osc_cstr_bound(addr_n);
   i32 dsc_n = strlen(dsc);
-  i32 dsc_len = osc_str_bound(dsc_n);
+  i32 dsc_len = osc_cstr_bound(dsc_n);
   i32 arg_len = osc_dsc_calculate_arg_len(dsc, data);
   memset(packet, 0, addr_len + dsc_len + arg_len);
   memcpy(packet, addr, addr_n);

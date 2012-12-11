@@ -34,8 +34,10 @@ typedef struct
   osc_data_t value;
 } osc_arg_t;
 
+i32 osc_align(i32 n);
+i32 osc_cstr_bound(i32 n);
+i32 osc_blob_bound(i32 n);
 void osc_print_packet(const u8 *packet, i32 packet_sz);
-i32 osc_str_bound(i32 n);
 bool osc_is_numerical_type(u8 c);
 bool osc_is_string_type(u8 c);
 bool osc_can_coerce(u8 u, u8 d);
