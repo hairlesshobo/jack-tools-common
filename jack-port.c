@@ -97,3 +97,25 @@ void jack_port_connect_pattern(jack_client_t *client, int n, int k, char *src, c
     jack_port_connect_named(client,src_name,dst_name);
   }
 }
+
+void jack_port_connect_to_env(jack_client_t *c, int n, int k, char *env)
+{
+  char *dst_pattern = getenv(env);
+  if (dst_pattern) {
+    char src_pattern[128];
+    char *c_name = jack_get_client_name(c);
+    snprintf(src_pattern, 128, "%s:out_%%d", c_name);
+    jack_port_connect_pattern(c, n, k, src_pattern, dst_pattern);
+  }
+}
+
+void jack_port_connect_from_env(jack_client_t *c, int n, int k, char *env)
+{
+  char *src_pattern = getenv(env);
+  if (src_pattern) {
+    char dst_pattern[128];
+    char *c_name = jack_get_client_name(c);
+    snprintf(dst_pattern, 128, "%s:in_%%d", c_name);
+    jack_port_connect_pattern(c, n, k, src_pattern, dst_pattern);
+  }
+}
