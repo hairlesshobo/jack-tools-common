@@ -1,5 +1,5 @@
-PREFIX = $(HOME)/opt
-OBJ =	alsa-seq-endpoint.o \
+prefix = $(HOME)/opt
+obj =	alsa-seq-endpoint.o \
 	alsa-seq-listener.o \
 	alsa-seq-print.o \
 	alsa-seq-send.o \
@@ -49,17 +49,17 @@ OBJ =	alsa-seq-endpoint.o \
 %.o : %.c %.h
 	gcc -Wall -O2 -c $*.c
 
-all: $(OBJ)
-	ar -rcs lib-c-common.a $(OBJ)
+all: $(obj)
+	ar -rcs lib-c-common.a $(obj)
 
 clean:
 	rm -f *.o *.a
 
 install:
-	cp lib-c-common.a $(PREFIX)/lib
-	mkdir -p $(PREFIX)/include/c-common
-	cp *.h $(PREFIX)/include/c-common
+	cp lib-c-common.a $(prefix)/lib
+	mkdir -p $(prefix)/include/c-common
+	cp *.h $(prefix)/include/c-common
 
 uninstall:
-	rm -f $(PREFIX)/lib/lib-c-common.a
-	rm -Rf $(PREFIX)/include/c-common
+	rm -f $(prefix)/lib/lib-c-common.a
+	rm -Rf $(prefix)/include/c-common
