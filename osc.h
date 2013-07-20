@@ -15,17 +15,17 @@ typedef struct
 
 typedef union
 {
-  i32 i;
-  i64 h;
-  u64 t;
-  f32 f;
-  f64 d;
-  const char *s;
-  const char *S;
-  u32 c;
-  u32 m;
-  u32 r;
-  osc_blob_t b;
+  i32 i; /* Signed Integer (32 bits) */
+  i64 h; /* Signed Integer (64 bits) */
+  u64 t; /* NTP TimeStamp */
+  f32 f; /* IEEE Float (32 bits) */
+  f64 d; /* IEEE Float (64 bits) */
+  const char *s; /* ASCII String (NULL suffix) */
+  const char *S; /* Symbol */
+  u32 c; /* ASCII Character */
+  u32 m; /* MIDI message (4 bytes) */
+  u32 r; /* RGBA Colour (4 bytes) */
+  osc_blob_t b; /* Blob (bytestring) */
 } osc_data_t;
 
 typedef struct
