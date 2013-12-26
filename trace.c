@@ -1,6 +1,7 @@
 #include <string.h>
 #include "int.h"
 #include "float.h"
+#include "print.h"
 #include "trace.h"
 
 #define TRACE_CPY(r,d,m) memcpy(r,d,m*sizeof(f32))
@@ -37,7 +38,8 @@ int trace_lookup(const f32 * d, i32 n, i32 m, f32 time, f32 * r)
 	    f32 t_right = TRACE_T(d, m, i);
 	    if (time >= t_left && time <= t_right) {
 		f32 z = (time - t_left) / (t_right - t_left);
-		trace_interpolate(TRACE_PTR(d, m, i), m, time, z, r);
+		trace_interpolate(TRACE_PTR(d, m, i - 1), m, time, z, r);
+                dprintf("(%f,%f) %f = %f\n",t_left,t_right,time,r[1]);
 		return 0;
 	    }
 	    t_left = t_right;
@@ -46,3 +48,16 @@ int trace_lookup(const f32 * d, i32 n, i32 m, f32 time, f32 * r)
     TRACE_CPY(r, TRACE_PTR(d, m, trace_n - 1), m);
     return -1;
 }
+
+/*
+main () {
+  f32 tr[10] = {0,-1,0.25,0,0.5,1,0.75,0,1,-1};
+  i32 i;
+  for (i = 0; i < 20; i++) {
+    f32 r[2];
+    f32 tm = (f32)i / 20.0;
+    trace_lookup(tr,10,2,tm,r);
+    printf("main: %f = %f\n",tm,r[1]);
+  }
+}
+*/
