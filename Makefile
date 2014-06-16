@@ -63,3 +63,9 @@ install:
 uninstall:
 	rm -f $(prefix)/lib/lib-c-common.a
 	rm -Rf $(prefix)/include/c-common
+
+push-sp:
+	darcs push -a rd@slavepianos.org:sw/c-common
+
+pull-sp:
+	darcs pull -a http://rd.slavepianos.org/sw/c-common
