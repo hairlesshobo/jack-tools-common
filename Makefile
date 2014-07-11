@@ -38,6 +38,7 @@ obj =	alsa-seq-endpoint.o \
 	taus88.o \
 	time-current.o \
 	time-ntp.o \
+	time-pause.o \
 	time-timespec.o \
 	time-timeval.o \
 	trace.o \

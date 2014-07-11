@@ -1,23 +1,17 @@
-#include <stdlib.h>
-
 #include <sys/time.h>
 
-#include "float.h"
-#include "time-timeval.h"
 #include "time-current.h"
+#include "time-timespec.h"
 
-/* Get the current time as a UTC double precision value. */
-
-f64 current_time_as_utc_real(void)
+struct timespec current_time_as_utc_timespec(void)
 {
-  struct timeval current;
-  gettimeofday(&current, NULL);
-  return timeval_to_real(current);
+  struct timespec t;
+  clock_gettime(CLOCK_REALTIME,&t);
+  return t;
 }
 
-struct timeval current_time_as_utc_timeval(void)
+/* Get the current time as a UTC double precision value. */
+double current_time_as_utc_real(void)
 {
-  struct timeval tv;
-  gettimeofday(&tv, 0);
-  return tv;
+  return timespec_to_double(current_time_as_utc_timespec());
 }
