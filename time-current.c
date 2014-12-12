@@ -2,6 +2,7 @@
 
 #include "time-current.h"
 #include "time-timespec.h"
+#include "time-timeval.h"
 
 struct timespec current_time_as_utc_timespec(void)
 {
@@ -14,4 +15,11 @@ struct timespec current_time_as_utc_timespec(void)
 double current_time_as_utc_real(void)
 {
   return timespec_to_double(current_time_as_utc_timespec());
+}
+
+struct timeval current_time_as_utc_timeval(void)
+{
+  struct timeval t;
+  gettimeofday(&t, NULL);
+  return t;
 }

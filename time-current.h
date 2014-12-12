@@ -5,5 +5,6 @@
 
 double current_time_as_utc_real(void);
 struct timespec current_time_as_utc_timespec(void);
+struct timeval current_time_as_utc_timeval(void);
 
 #endif
