@@ -15,6 +15,7 @@ obj =	alsa-seq-endpoint.o \
 	gl-sphere.o \
 	glu-screen-capture.o \
 	img.o \
+	img-png.o \
 	img-ppm.o \
 	jack-client.o \
 	jack-port.o \
