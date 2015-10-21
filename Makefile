@@ -30,12 +30,13 @@ obj =	alsa-seq-endpoint.o \
 	rand.o \
 	rgba.o \
 	segment-transfer.o \
+	sf-au.o \
+	sf-sndfile.o \
 	signal-clip.o \
 	signal-copy.o \
 	signal-interleave.o \
 	signal-interpolate.o \
 	signal-print.o \
-	sound-file.o \
 	taus88.o \
 	time-current.o \
 	time-ntp.o \

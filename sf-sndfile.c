@@ -1,13 +1,15 @@
 #include <stdlib.h>
+#include <string.h>
 
 #include "failure.h"
 #include "memory.h"
-#include "sound-file.h"
+#include "sf-sndfile.h"
 
 SNDFILE *xsf_open(const char *path, int mode, SF_INFO *sfinfo)
 {
   SNDFILE *s = sf_open(path, mode, sfinfo);
   if(!s) {
+    fprintf(stderr, "sf_open() failed\n");
     sf_perror(s);
     FAILURE;
   }
@@ -40,8 +42,8 @@ sf_count_t xsf_write_float(SNDFILE *sndfile, float *ptr, sf_count_t items)
   return err;
 }
 
-/* Read the single channel sound file at `name' to a newly allocated
-   array and store the size at `n'. */
+/* Read the sound file at `name' to a newly allocated array and store
+   the size (in samples) at `n'. */
 
 float *read_signal_file(const char *name, int nc, int *n)
 {
@@ -62,23 +64,27 @@ float *read_signal_file(const char *name, int nc, int *n)
   return data;
 }
 
-void write_signal_file(const char *name, int nc, int nf, const float *data )
+/* Write a NeXT F32 sound file */
+
+bool write_au_f32(const char *name, int nc, int nf,int sr,const float *data )
 {
-  SF_INFO sfi;
+    SF_INFO sfi;
+    memset (&sfi, 0, sizeof (sfi)) ;
   sfi.channels = nc;
-  sfi.samplerate = 44100;
-  sfi.frames = 0;
-  sfi.format = SF_FORMAT_WAV | SF_FORMAT_FLOAT;
-  SNDFILE *sfp = sf_open(name, SFM_WRITE, &sfi);
-  if(!sfp) {
-    sf_perror(sfp);
-    FAILURE;
+  sfi.samplerate = sr;
+  sfi.frames = nf;
+  sfi.format = (SF_FORMAT_AU | SF_FORMAT_FLOAT);
+  if(!sf_format_check(&sfi)) {
+      fprintf(stderr, "sf_format_check() failed\n");
+      return false;
   }
+  SNDFILE *sfp = xsf_open(name, SFM_WRITE, &sfi);
   int err = sf_write_float(sfp, data, nf * nc);
   if(err == -1) {
     fprintf(stderr, "sf_write_float() failed\n");
     sf_perror(sfp);
-    FAILURE;
+    return false;
   }
   sf_close(sfp);
+  return true;
 }
