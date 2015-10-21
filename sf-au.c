@@ -2,7 +2,9 @@
 
 #include "byte-order.h"
 #include "int.h"
+#include "failure.h"
 #include "float.h"
+#include "memory.h"
 #include "sf-au.h"
 
 void write_i32(FILE * fp, i32 i)
@@ -39,4 +41,54 @@ void write_au_f32(char *nm, i32 nc, i32 nf, i32 sr, f32 * d)
         write_f32(fp, d[i]);
     }
     fclose(fp);
+}
+
+i32 read_i32(FILE * fp)
+{
+    i32 i;
+    fread(&i, sizeof(i), 1, fp);
+    return ntoh_i32(i);
+}
+
+f32 read_f32(FILE * fp)
+{
+    f32 i;
+    fread(&i, sizeof(i), 1, fp);
+    return ntoh_f32(i);
+}
+
+void read_header(FILE * fp, i32 *nc, i32 *nf, i32 *sr)
+{
+    if(read_i32(fp) != 0x2e736e64) {
+	die("sf-au:read_header:magic");
+    }
+    if(read_i32(fp) != 28) {
+	die("sf-au:read_header:data offset");
+    }
+    i32 b = read_i32(fp);
+    if(read_i32(fp) != 6) {
+	die("sf-au:read_header:encoding");
+    }
+    *sr = read_i32(fp);
+    *nc = read_i32(fp);
+    *nf = (b / 4) / *nc;
+    if(read_i32(fp) != 0) {
+	die("sf-au:read_header:padding");
+    }
+}
+
+f32 *read_au_f32(char *nm, i32 *nc, i32 *nf, i32 *sr)
+{
+    FILE *fp;
+    i32 i;
+    byte_order_confirm();
+    fp = fopen(nm, "r");
+    read_header(fp, nc, nf, sr);
+    i32 n = *nf * *nc;
+    f32 *d = xmalloc(n * sizeof(f32));
+    for (i = 0; i < n; i++) {
+        d[i] = read_f32(fp);
+    }
+    fclose(fp);
+    return d;
 }

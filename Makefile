@@ -50,7 +50,7 @@ obj =	alsa-seq-endpoint.o \
 	xregcomp.o
 
 %.o : %.c %.h
-	gcc -Wall -O2 -c $*.c
+	gcc -g -Wall -O2 -c $*.c
 
 all: $(obj)
 	ar -rcs lib-c-common.a $(obj)
