@@ -46,12 +46,7 @@ sf_count_t xsf_write_float(SNDFILE *sndfile, float *ptr, sf_count_t items)
 float *read_signal_file(const char *name, int nc, int *n)
 {
   SF_INFO sfi;
-  SNDFILE *sfp = sf_open(name, SFM_READ, &sfi);
-  if(!sfp) {
-    fprintf(stderr, "sf_open() failed\n");
-    sf_perror(sfp);
-    FAILURE;
-  }
+  SNDFILE *sfp = xsf_open(name, SFM_READ, &sfi);
   if(sfi.channels != nc) {
     fprintf(stderr, "illegal channel count: %d\n", sfi.channels);
     FAILURE;
@@ -67,10 +62,10 @@ float *read_signal_file(const char *name, int nc, int *n)
   return data;
 }
 
-void write_signal_file(const char *name, const float *data, int n)
+void write_signal_file(const char *name, int nc, int nf, const float *data )
 {
   SF_INFO sfi;
-  sfi.channels = 1;
+  sfi.channels = nc;
   sfi.samplerate = 44100;
   sfi.frames = 0;
   sfi.format = SF_FORMAT_WAV | SF_FORMAT_FLOAT;
@@ -79,7 +74,7 @@ void write_signal_file(const char *name, const float *data, int n)
     sf_perror(sfp);
     FAILURE;
   }
-  int err = sf_write_float(sfp, data, n);
+  int err = sf_write_float(sfp, data, nf * nc);
   if(err == -1) {
     fprintf(stderr, "sf_write_float() failed\n");
     sf_perror(sfp);
