@@ -66,3 +66,33 @@ bool read_png_data(FILE * fp, i32 w, i32 h, i32 depth, u8 * data)
   }
   return true;
 }
+
+bool load_png_rgb8(char *fn,i32 *w, i32 *h,u8 **frm)
+{
+    FILE *fp = fopen(fn, "r");
+    if (!fp) {
+	fprintf(stderr,"load_png_rgb8: fopen failed\n");
+	return false;
+    }
+    i32 depth;
+    if (!read_png_hdr(fp, w, h, &depth)) {
+	fprintf(stderr,"load_png_rgb8: read_png_hdr failed\n");
+	return false;
+    }
+    if (depth != 8) {
+	fprintf(stderr,"load_png_rgb8: not 8bit\n");
+	return false;
+    }
+    i32 sz = *w * *h * 3;
+    *frm = malloc(sz);
+    if (!*frm) {
+	fprintf(stderr,"load_png_rgb8: malloc failed (sz = %d)\n",sz);
+	return false;
+    }
+    if (!read_png_data(fp, *w, *h, depth, *frm)) {
+	fprintf(stderr,"load_png_rgb8: read_png_data failed\n");
+	return false;
+    }
+    fclose(fp);
+    return true;
+}

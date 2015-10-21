@@ -8,7 +8,7 @@ tested-with: [gcc][gcc] 4.8.2
 [c]: http://www.open-std.org/jtc1/sc22/wg14/
 [gcc]: http://gcc.gnu.org/
 
-© [rohan drape][rd], 2003-2014, [gpl]
+© [rohan drape][rd], 2003-2015, [gpl]
 
 [rd]: http://rd.slavepianos.org/
 [gpl]: http://gnu.org/copyleft/
