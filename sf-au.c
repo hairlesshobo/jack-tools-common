@@ -21,14 +21,14 @@ void write_f32(FILE * fp, f32 i)
 
 void write_header(FILE * fp, i32 nc, i32 nf, i32 sr)
 {
-    write_i32(fp, 0x2e736e64);  /* magic */
-    write_i32(fp, 32);          /* data offset */
-    write_i32(fp, nf * nc * 4); /* number of bytes */
-    write_i32(fp, 6);           /* encoding = float */
-    write_i32(fp, sr);
-    write_i32(fp, nc);
-    write_i32(fp, 0);
-    write_i32(fp, 0);
+    write_i32(fp, 0x2e736e64);  /* 0-4: magic */
+    write_i32(fp, 32);          /* 4-8: data offset */
+    write_i32(fp, nf * nc * 4); /* 8-12: number of bytes */
+    write_i32(fp, 6);           /* 12-16: encoding = float */
+    write_i32(fp, sr);          /* 16-20: sample rate */
+    write_i32(fp, nc);          /* 20-24: channel count */
+    write_i32(fp, 0);           /* 24-28: align */
+    write_i32(fp, 0);           /* 28-32: align */
 }
 
 void write_au_f32(char *nm, i32 nc, i32 nf, i32 sr, f32 * d)
@@ -61,15 +61,15 @@ f32 read_f32(FILE * fp)
 void read_header(FILE * fp, i32 * nc, i32 * nf, i32 * sr)
 {
     if (read_i32(fp) != 0x2e736e64) {
-        die("sf-au:read_header:magic");
+        die("sf-au: read_header: magic != '.snd'");
     }
     i32 off = read_i32(fp);
     if (off < 24) {
-        die("sf-au:read_header:data offset < 24");
+        die("sf-au: read_header: data offset < 24");
     }
     i32 b = read_i32(fp);
     if (read_i32(fp) != 6) {
-        die("sf-au:read_header:encoding");
+        die("sf-au: read_header: encoding != 6 (float)");
     }
     *sr = read_i32(fp);
     *nc = read_i32(fp);
