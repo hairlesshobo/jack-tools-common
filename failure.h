@@ -7,6 +7,6 @@
 #define FAILURE exit(1)
 #endif
 
-#define die(msg) fprintf(stderr,msg); FAILURE;
+#define die(...) fprintf(stderr,__VA_ARGS__); exit(1)
 
 #endif
