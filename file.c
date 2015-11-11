@@ -29,8 +29,8 @@ bool file_exists_p(const char *filename)
     return buf.st_##name;				\
   }
 
-GENERATE_STAT_FIELD(time_t, mtime);
-GENERATE_STAT_FIELD(size_t, size);
+GENERATE_STAT_FIELD(time_t, mtime)
+GENERATE_STAT_FIELD(size_t, size)
 
 int xpipe(int filedes[2])
 {

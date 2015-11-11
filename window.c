@@ -93,31 +93,30 @@ make_##name##_window ( float * data , int n , float beta )	\
   float freq = TWO_PI / (float)n ;							\
   for ( i = 0 , j = n - 1 , angle = 0.0 ; i <= midn ; i++ , j-- , angle += freq )
 
-GENERATE_WINDOW_AT(rectangular, return 1.0;);
-GENERATE_APPLY_WINDOW(rectangular, FREQ_BASE_SETUP);
-GENERATE_MAKE_WINDOW(rectangular);
+GENERATE_WINDOW_AT(rectangular, return 1.0;)
+GENERATE_APPLY_WINDOW(rectangular, FREQ_BASE_SETUP)
+GENERATE_MAKE_WINDOW(rectangular)
 
-GENERATE_WINDOW_AT(hanning, return 0.5 - 0.5 * cosf(angle););
-GENERATE_APPLY_WINDOW(hanning, FREQ_BASE_SETUP);
-GENERATE_MAKE_WINDOW(hanning);
+GENERATE_WINDOW_AT(hanning, return 0.5 - 0.5 * cosf(angle);)
+GENERATE_APPLY_WINDOW(hanning, FREQ_BASE_SETUP)
+GENERATE_MAKE_WINDOW(hanning)
 
-GENERATE_WINDOW_AT(hamming, return 0.54 - 0.46 * cosf(angle););
-GENERATE_APPLY_WINDOW(hamming, FREQ_BASE_SETUP);
-GENERATE_MAKE_WINDOW(hamming);
+GENERATE_WINDOW_AT(hamming, return 0.54 - 0.46 * cosf(angle);)
+GENERATE_APPLY_WINDOW(hamming, FREQ_BASE_SETUP)
+GENERATE_MAKE_WINDOW(hamming)
 
 GENERATE_WINDOW_AT(blackman2,
 		   float c = cosf(angle);
-		   return 0.34401 + (c * (-0.49755 + (c * 0.15844))););
-GENERATE_APPLY_WINDOW(blackman2, FREQ_BASE_SETUP);
-GENERATE_MAKE_WINDOW(blackman2);
+		   return 0.34401 + (c * (-0.49755 + (c * 0.15844)));)
+GENERATE_APPLY_WINDOW(blackman2, FREQ_BASE_SETUP)
+GENERATE_MAKE_WINDOW(blackman2)
 
 GENERATE_WINDOW_AT(blackman3,
 		   float c = cosf(angle);
 		   return 0.21747 +
-		   (c * (-0.45325 + (c * (0.28256 - (c * 0.04672))))););
-GENERATE_APPLY_WINDOW(blackman3, FREQ_BASE_SETUP);
-GENERATE_MAKE_WINDOW(blackman3);
-
+		   (c * (-0.45325 + (c * (0.28256 - (c * 0.04672)))));)
+GENERATE_APPLY_WINDOW(blackman3, FREQ_BASE_SETUP)
+GENERATE_MAKE_WINDOW(blackman3)
 
 GENERATE_WINDOW_AT(blackman4,
 		   float c = cosf(angle);
@@ -125,9 +124,9 @@ GENERATE_WINDOW_AT(blackman4,
 		   (c *
 		    (-0.29145 +
 		     (c *
-		      (0.375696 + (c * (-0.20762 + (c * 0.041194))))))););
-GENERATE_APPLY_WINDOW(blackman4, FREQ_BASE_SETUP);
-GENERATE_MAKE_WINDOW(blackman4);
+		      (0.375696 + (c * (-0.20762 + (c * 0.041194)))))));)
+GENERATE_APPLY_WINDOW(blackman4, FREQ_BASE_SETUP)
+GENERATE_MAKE_WINDOW(blackman4)
 
 #define RATE_BASE_SETUP									\
   int i , j ;										\
@@ -136,31 +135,30 @@ GENERATE_MAKE_WINDOW(blackman4);
   float rate = 1.0 / (float)midn ;							\
   for ( i = 0 , j = n - 1 , angle = 1.0 ; i <= midn ; i++ , j-- , angle -= rate )
 
-GENERATE_WINDOW_AT(bartlett, return angle;);
-GENERATE_APPLY_WINDOW(bartlett, RATE_BASE_SETUP);
-GENERATE_MAKE_WINDOW(bartlett);
-
+GENERATE_WINDOW_AT(bartlett, return angle;)
+GENERATE_APPLY_WINDOW(bartlett, RATE_BASE_SETUP)
+GENERATE_MAKE_WINDOW(bartlett)
 
 GENERATE_WINDOW_AT_BETA(kaiser,
 			float I0beta = bessi0(beta);
 			return bessi0(beta * sqrt(1.0 - fsquare(angle))) /
-			I0beta;);
-GENERATE_APPLY_WINDOW_BETA(kaiser, RATE_BASE_SETUP);
-GENERATE_MAKE_WINDOW_BETA(kaiser);
+			I0beta;)
+GENERATE_APPLY_WINDOW_BETA(kaiser, RATE_BASE_SETUP)
+GENERATE_MAKE_WINDOW_BETA(kaiser)
 
 GENERATE_WINDOW_AT_BETA(cauchy,
-			return 1.0 / (1.0 + fsquare(beta * angle)););
-GENERATE_APPLY_WINDOW_BETA(cauchy, RATE_BASE_SETUP);
-GENERATE_MAKE_WINDOW_BETA(cauchy);
+			return 1.0 / (1.0 + fsquare(beta * angle));)
+GENERATE_APPLY_WINDOW_BETA(cauchy, RATE_BASE_SETUP)
+GENERATE_MAKE_WINDOW_BETA(cauchy)
 
-GENERATE_WINDOW_AT_BETA(poisson, return exp((-beta) * angle););
-GENERATE_APPLY_WINDOW_BETA(poisson, RATE_BASE_SETUP);
-GENERATE_MAKE_WINDOW_BETA(poisson);
+GENERATE_WINDOW_AT_BETA(poisson, return exp((-beta) * angle);)
+GENERATE_APPLY_WINDOW_BETA(poisson, RATE_BASE_SETUP)
+GENERATE_MAKE_WINDOW_BETA(poisson)
 
 GENERATE_WINDOW_AT_BETA(gaussian,
-			return exp(-0.5 * fsquare(beta * angle)););
-GENERATE_APPLY_WINDOW_BETA(gaussian, RATE_BASE_SETUP);
-GENERATE_MAKE_WINDOW_BETA(gaussian);
+			return exp(-0.5 * fsquare(beta * angle));)
+GENERATE_APPLY_WINDOW_BETA(gaussian, RATE_BASE_SETUP)
+GENERATE_MAKE_WINDOW_BETA(gaussian)
 
 #define MID_BASE_SETUP					\
   int i , j ;						\
@@ -172,14 +170,14 @@ GENERATE_MAKE_WINDOW_BETA(gaussian);
 GENERATE_APPLY_WINDOW_B(welch,
 			MID_BASE_SETUP,
 			float scalar =
-			1.0 - fsquare((float)(i - midm1) / (float)midp1););
-GENERATE_MAKE_WINDOW(welch);
+			1.0 - fsquare((float)(i - midm1) / (float)midp1);)
+GENERATE_MAKE_WINDOW(welch)
 
 GENERATE_APPLY_WINDOW_B(parzen,
 			MID_BASE_SETUP,
 			float scalar =
-			1.0 - fabs((float) (i - midm1) / (float) midp1););
-GENERATE_MAKE_WINDOW(parzen);
+			1.0 - fabs((float) (i - midm1) / (float) midp1);)
+GENERATE_MAKE_WINDOW(parzen)
 
 #define COUNTER_BASE_SETUP				\
   int i , j ;						\
@@ -193,23 +191,23 @@ GENERATE_APPLY_WINDOW_B(riemann,
 			(i ==
 			 midn) ? 1.0 : sinf(sr * (midn -
 						  i)) / (sr * (midn -
-							       i)););
-GENERATE_MAKE_WINDOW(riemann);
+							       i));)
+GENERATE_MAKE_WINDOW(riemann)
 
 GENERATE_APPLY_WINDOW_B(exponential,
 			float expsum = 1.0;
 			float expn = log(2) / (float) ((n >> 1) + 1.0);
 			COUNTER_BASE_SETUP, float scalar = expsum - 1.0;
-			expsum *= expn;);
-GENERATE_MAKE_WINDOW(exponential);
+			expsum *= expn;)
+GENERATE_MAKE_WINDOW(exponential)
 
 GENERATE_APPLY_WINDOW_BETA_B(tukey,
 			     COUNTER_BASE_SETUP,
 			     float c = midn * (1.0 - beta);
 			     float scalar =
 			     (i >=
-			      c) ? 1.0 : 0.5 * (1.0 - cosf(PI * i / c)););
-GENERATE_MAKE_WINDOW_BETA(tukey);
+			      c) ? 1.0 : 0.5 * (1.0 - cosf(PI * i / c));)
+GENERATE_MAKE_WINDOW_BETA(tukey)
 
 #define EOS(c) (c == '\0')
 
