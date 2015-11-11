@@ -72,3 +72,6 @@ push-sp:
 
 pull-sp:
 	darcs pull -a http://rd.slavepianos.org/sw/c-common
+
+indent:
+	indent -kr -nut sf-au.c

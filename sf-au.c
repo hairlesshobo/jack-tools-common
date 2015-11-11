@@ -22,11 +22,12 @@ void write_f32(FILE * fp, f32 i)
 void write_header(FILE * fp, i32 nc, i32 nf, i32 sr)
 {
     write_i32(fp, 0x2e736e64);  /* magic */
-    write_i32(fp, 28);          /* data offset */
+    write_i32(fp, 32);          /* data offset */
     write_i32(fp, nf * nc * 4); /* number of bytes */
     write_i32(fp, 6);           /* encoding = float */
     write_i32(fp, sr);
     write_i32(fp, nc);
+    write_i32(fp, 0);
     write_i32(fp, 0);
 }
 
@@ -57,27 +58,29 @@ f32 read_f32(FILE * fp)
     return ntoh_f32(i);
 }
 
-void read_header(FILE * fp, i32 *nc, i32 *nf, i32 *sr)
+void read_header(FILE * fp, i32 * nc, i32 * nf, i32 * sr)
 {
-    if(read_i32(fp) != 0x2e736e64) {
-	die("sf-au:read_header:magic");
+    if (read_i32(fp) != 0x2e736e64) {
+        die("sf-au:read_header:magic");
     }
-    if(read_i32(fp) != 28) {
-	die("sf-au:read_header:data offset");
+    i32 off = read_i32(fp);
+    if (off < 24) {
+        die("sf-au:read_header:data offset < 24");
     }
     i32 b = read_i32(fp);
-    if(read_i32(fp) != 6) {
-	die("sf-au:read_header:encoding");
+    if (read_i32(fp) != 6) {
+        die("sf-au:read_header:encoding");
     }
     *sr = read_i32(fp);
     *nc = read_i32(fp);
     *nf = (b / 4) / *nc;
-    if(read_i32(fp) != 0) {
-	die("sf-au:read_header:padding");
+    i32 i;
+    for (i = 0; i < off - 24; i++) {
+        fgetc(fp);
     }
 }
 
-f32 *read_au_f32(char *nm, i32 *nc, i32 *nf, i32 *sr)
+f32 *read_au_f32(char *nm, i32 * nc, i32 * nf, i32 * sr)
 {
     FILE *fp;
     i32 i;
