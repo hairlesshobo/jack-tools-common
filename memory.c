@@ -35,7 +35,7 @@ void *xrealloc(void *p, size_t size)
 
 float *fmalloc(size_t n)
 {
-  float *d = xmalloc(n * sizeof(float));
+  float *d = (float *)xmalloc(n * sizeof(float));
   size_t i;
   for(i = 0; i < n; i++) {
     d[i] = 0.0;
