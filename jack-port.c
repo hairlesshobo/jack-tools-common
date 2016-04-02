@@ -10,14 +10,14 @@
 #include "jack-port.h"
 #include "print.h"
 
-void jack_port_make_standard(jack_client_t *client, jack_port_t **ports, int n, bool output)
+void jack_port_make_standard(jack_client_t *client, jack_port_t **ports, int n, bool output, bool midi)
 {
   int i;
   for(i = 0; i < n; i++) {
     char name[64];
     int direction = output ? JackPortIsOutput : JackPortIsInput;
-    snprintf(name, 64, output ? "out_%d" : "in_%d", i + 1);
-    ports[i] = jack_port_register(client, name, JACK_DEFAULT_AUDIO_TYPE, direction, 0);
+    snprintf(name, 64, output ? (midi ? "midi_out_%d" : "out_%d") : (midi ? "midi_in_%d" : "in_%d"), i + 1);
+    ports[i] = jack_port_register(client, name, midi ? JACK_DEFAULT_MIDI_TYPE : JACK_DEFAULT_AUDIO_TYPE, direction, 0);
     if(!ports[i]) {
       eprintf("jack_port_register() failed\n");
       FAILURE;
@@ -73,7 +73,6 @@ int jack_port_is_connected_p(jack_client_t *j, const char *l, const char *r)
 }
 
 /* Delete all connections at the port `l'. */
-
 void jack_port_clear_all_connections(jack_client_t *j, const char *l)
 {
   const char **c;

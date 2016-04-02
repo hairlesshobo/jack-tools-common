@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <jack/jack.h>
 
-void jack_port_make_standard(jack_client_t *client, jack_port_t **ports, int n, bool output);
+void jack_port_make_standard(jack_client_t *client, jack_port_t **ports, int n, bool output,bool midi);
 int jack_port_connect_named(jack_client_t *client, const char *src, const char *dst);
 int jack_port_disconnect_named(jack_client_t *client, const char *src, const char *dst);
 int jack_port_is_connected_p(jack_client_t *j, const char *l, const char *r);
