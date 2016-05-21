@@ -7,12 +7,18 @@
 #include "int.h"
 #include "float.h"
 
-/* data = pixel map, w = width, x = column number, y = row number,
-   pixel = RGB */
+/* data is RGB u8 triples in row order */
+i32 img_wxy_to_offset(i32 w, i32 x, i32 y)
+{
+  return ((w * y) + x) * 3;
+}
+
+/* data = pixel map (row order), w = width, x = column number, y = row number,
+   pixel = RGB (ie. 3 consecutive u8 values) */
 
 void img_set_pixel(u8 *data, i32 w, i32 x, i32 y, const u8 *pixel)
 {
-  i32 n = ((w * y) + x) * 3;
+  i32 n = img_wxy_to_offset(w,x,y);
   memcpy(data + n, pixel, 3);
 }
 
