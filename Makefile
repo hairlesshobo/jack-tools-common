@@ -17,6 +17,7 @@ obj =	alsa-seq-endpoint.o \
 	img.o \
 	img-png.o \
 	img-ppm.o \
+	int.o \
 	jack-client.o \
 	jack-port.o \
 	jack-ringbuffer.o \

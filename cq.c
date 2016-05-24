@@ -3,8 +3,8 @@
 
 /* cq = circular queue
    n = buffer length
-   ri = read index
-   wi = write index
+   ri = read index (float)
+   wi = write index (int)
    ai = absolute index
    s = buffer */
 
