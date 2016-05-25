@@ -94,10 +94,10 @@ bool load_png_rgb8(char *fn,i32 *w, i32 *h,u8 **frm)
     return true;
 }
 
-u8 **load_png_rgb8_seq(char **fn,i32 fn_n,i32 *w, i32 *h)
+u8 **load_png_rgb8_seq(char **fn,i32 n,i32 *w, i32 *h)
 {
-    u8 **frm = xmalloc(sizeof(u8 *) * fn_n);
-    for (i32 i = 0; i < fn_n; i++) {
+    u8 **frm = xmalloc(sizeof(u8 *) * n);
+    for (i32 i = 0; i < n; i++) {
         i32 width, height;
         if (!load_png_rgb8(fn[i], &width, &height, &frm[i])) {
             return NULL;
