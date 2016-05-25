@@ -7,21 +7,24 @@
 #include "int.h"
 #include "float.h"
 
-/* data is RGB u8 triples in row order */
-i32 img_wxy_to_offset(i32 w, i32 x, i32 y)
+/* data is in row order (ie. y/h scanlines of x/w pixels) */
+
+/* w = width, n = channels (1 = GREY,3 = RGB, 4 = RGBA) */
+i32 img_wnxy_to_offset(i32 w, i32 n, i32 x, i32 y)
 {
-  return ((w * y) + x) * 3;
+  return ((w * y) + x) * n;
 }
 
-/* data = pixel map (row order), w = width, x = column number, y = row number,
-   pixel = RGB (ie. 3 consecutive u8 values) */
+/* data = pixel map (row order), w = width, n = channels, x = column number, y = row number,
+   pixel = GREY|RGB|RGBA (ie. n consecutive u8 values) */
 
-void img_set_pixel(u8 *data, i32 w, i32 x, i32 y, const u8 *pixel)
+void img_set_pixel(u8 *data, i32 w, i32 n, i32 x, i32 y, const u8 *pixel)
 {
-  i32 n = img_wxy_to_offset(w,x,y);
-  memcpy(data + n, pixel, 3);
+  i32 o = img_wnxy_to_offset(w,n,x,y);
+  memcpy(data + o, pixel, n);
 }
 
+/* signal = (-1,1), screen = (0,w) & (h,0) */
 i32 signal_x_to_screen_x(f32 x, i32 width)
 {
   f32 xx = (x / 2.0) + 0.5;
@@ -34,6 +37,7 @@ i32 signal_y_to_screen_y(f32 y, i32 height)
   return floorf(yy * (f32)height);
 }
 
+/* normal = (0,1), screen = (0,w) & (h,0) */
 i32 normal_x_to_screen_x(f32 x, i32 width)
 {
   return floorf(x * (f32)width);

@@ -3,6 +3,7 @@
 
 #include "int.h"
 #include "img-png.h"
+#include "memory.h"
 
 bool read_png_hdr(FILE * fp, i32 * w, i32 * h, i32 * depth)
 {
@@ -84,15 +85,31 @@ bool load_png_rgb8(char *fn,i32 *w, i32 *h,u8 **frm)
 	return false;
     }
     i32 sz = *w * *h * 3;
-    *frm = malloc(sz);
-    if (!*frm) {
-	fprintf(stderr,"load_png_rgb8: malloc failed (sz = %d)\n",sz);
-	return false;
-    }
+    *frm = xmalloc(sz);
     if (!read_png_data(fp, *w, *h, depth, *frm)) {
 	fprintf(stderr,"load_png_rgb8: read_png_data failed\n");
 	return false;
     }
     fclose(fp);
     return true;
+}
+
+u8 **load_png_rgb8_seq(char **fn,i32 fn_n,i32 *w, i32 *h)
+{
+    u8 **frm = xmalloc(sizeof(u8 *) * fn_n);
+    for (i32 i = 0; i < fn_n; i++) {
+        i32 width, height;
+        if (!load_png_rgb8(fn[i], &width, &height, &frm[i])) {
+            return NULL;
+        }
+        if (i == 0) {
+            *w = width;
+            *h = height;
+        } else {
+            if (*w != width || *h != height) {
+                return NULL;
+            }
+        }
+    }
+    return frm;
 }
