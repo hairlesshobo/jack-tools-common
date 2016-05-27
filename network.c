@@ -14,6 +14,7 @@
 
 #include "int.h"
 #include "failure.h"
+#include "network.h"
 #include "time-timeval.h"
 
 int socket_udp(int flags)

@@ -6,6 +6,7 @@
 
 #include "byte-order.h"
 #include "failure.h"
+#include "memory.h"
 #include "osc.h"
 #include "print.h"
 
@@ -187,11 +188,11 @@ i32 osc_pack_arguments(const char *dsc, const osc_data_t *data, u8 *p)
       p += 8;
     } else if(c == 's') {
       i32 n = strlen(data[i].s);
-      memcpy(p, data[i].s, n + 1);
+      xmemcpy(p, data[i].s, n + 1);
       p += osc_cstr_bound(n);
     } else if(c == 'S') {
       i32 n = strlen(data[i].s);
-      memcpy(p, data[i].S, n + 1);
+      xmemcpy(p, data[i].S, n + 1);
       p += osc_cstr_bound(n);
     } else if(c == 'c') {
       ntoh_u32_to_buf(p, data[i].c);
@@ -204,7 +205,7 @@ i32 osc_pack_arguments(const char *dsc, const osc_data_t *data, u8 *p)
       p += 4;
     } else if(c == 'b') {
       ntoh_i32_to_buf(p, data[i].b.size);
-      memcpy(p + 4, data[i].b.data, data[i].b.size);
+      xmemcpy(p + 4, data[i].b.data, data[i].b.size);
       p += osc_blob_bound(data[i].b.size) + 4;
     } else {
       return -1;
@@ -328,9 +329,9 @@ i32 osc_construct_message(const char *addr, const char *dsc, const osc_data_t *d
   i32 dsc_n = strlen(dsc);
   i32 dsc_len = osc_cstr_bound(dsc_n);
   i32 arg_len = osc_dsc_calculate_arg_len(dsc, data);
-  memset(packet, 0, addr_len + dsc_len + arg_len);
-  memcpy(packet, addr, addr_n);
-  memcpy(packet + addr_len, dsc, dsc_n);
+  xmemset(packet, 0, addr_len + dsc_len + arg_len);
+  xmemcpy(packet, addr, addr_n);
+  xmemcpy(packet + addr_len, dsc, dsc_n);
   if(packet_sz < addr_len + dsc_len + arg_len) {
     return 0;
   }

@@ -4,6 +4,7 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "glu-screen-capture.h"
 #include "img-ppm.h"
 #include "memory.h"
 

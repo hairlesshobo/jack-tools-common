@@ -4,6 +4,7 @@
 #include "failure.h"
 #include "float.h"
 #include "int.h"
+#include "memory.h"
 #include "print.h"
 
 u16 hton16(u16 n)
@@ -52,7 +53,7 @@ void byte_order_confirm(void)
   void proc##size##_to_buf(u8 *buf,u##size n)   \
   {                                             \
     n = proc##size(n);                          \
-    memcpy(buf,&n,size/8);                      \
+    xmemcpy(buf,&n,size/8);                      \
   }
 
 GENERATE_NC_TO_BUF(hton,16)
@@ -66,7 +67,7 @@ GENERATE_NC_TO_BUF(ntoh,64)
   u##size proc##size##_from_buf(const u8 *buf)  \
   {                                             \
     u##size n;                                  \
-    memcpy(&n,buf,size/8);                      \
+    xmemcpy(&n,buf,size/8);                      \
     return proc##size(n);                       \
   }
 
@@ -81,7 +82,7 @@ GENERATE_NC_FROM_BUF(ntoh,64)
   void proc##size##_buf(u8 *dst,const u8 *src)  \
   {                                             \
     u##size n = proc##size##_from_buf(src);     \
-    memcpy(dst,&n,size/8);                      \
+    xmemcpy(dst,&n,size/8);                      \
   }
 
 GENERATE_NC_BUF(hton,16)

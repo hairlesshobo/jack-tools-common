@@ -68,15 +68,15 @@ float *read_signal_file(const char *name, int nc, int *n)
 
 bool write_au_f32(const char *name, int nc, int nf,int sr,const float *data )
 {
-    SF_INFO sfi;
-    memset (&sfi, 0, sizeof (sfi)) ;
+  SF_INFO sfi;
+  xmemset (&sfi, 0, sizeof (sfi)) ;
   sfi.channels = nc;
   sfi.samplerate = sr;
   sfi.frames = nf;
   sfi.format = (SF_FORMAT_AU | SF_FORMAT_FLOAT);
   if(!sf_format_check(&sfi)) {
-      fprintf(stderr, "sf_format_check() failed\n");
-      return false;
+    fprintf(stderr, "sf_format_check() failed\n");
+    return false;
   }
   SNDFILE *sfp = xsf_open(name, SFM_WRITE, &sfi);
   int err = sf_write_float(sfp, data, nf * nc);

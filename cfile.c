@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdint.h>
+
 #include "byte-order.h"
+#include "cfile.h"
 #include "failure.h"
 #include "memory.h"
 

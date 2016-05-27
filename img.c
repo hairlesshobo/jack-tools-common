@@ -4,6 +4,7 @@
 
 #include "failure.h"
 #include "memory.h"
+#include "img.h"
 #include "int.h"
 #include "float.h"
 
@@ -21,7 +22,13 @@ i32 img_wnxy_to_offset(i32 w, i32 n, i32 x, i32 y)
 void img_set_pixel(u8 *data, i32 w, i32 n, i32 x, i32 y, const u8 *pixel)
 {
   i32 o = img_wnxy_to_offset(w,n,x,y);
-  memcpy(data + o, pixel, n);
+  xmemcpy(data + o, pixel, n);
+}
+
+void img_get_pixel(u8 *data, i32 w, i32 n, i32 x, i32 y, u8 *pixel)
+{
+  i32 o = img_wnxy_to_offset(w,n,x,y);
+  xmemcpy(pixel, data + o, n);
 }
 
 /* signal = (-1,1), screen = (0,w) & (h,0) */

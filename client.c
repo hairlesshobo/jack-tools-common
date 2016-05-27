@@ -64,7 +64,7 @@ void edit_client_register(client_register_t *r,
   }
   for(i = 0; i < r->n; i++) {
     if(! r->c[i].in_use) {
-      memcpy(&(r->c[i].address), &addr, sizeof(addr));
+      xmemcpy(&(r->c[i].address), &addr, sizeof(addr));
       r->c[i].mask = mask;
       r->c[i].in_use = 1;
       return;

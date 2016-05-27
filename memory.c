@@ -1,5 +1,7 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "failure.h"
 #include "memory.h"
 
@@ -33,6 +35,26 @@ void *xrealloc(void *p, size_t size)
   return p;
 }
 
+void *xmemcpy(void *dst,const void *src, size_t n)
+{
+  if(dst == NULL || src == NULL) {
+    perror("xmemcpy() failed");
+    FAILURE;
+  } else {
+    return memcpy(dst,src,n);
+  }
+}
+
+void *xmemset(void *s, int c, size_t n)
+{
+  if(s == NULL) {
+    perror("xmemset() failed");
+    FAILURE;
+  } else {
+    return memset(s,c,n);
+  }
+}
+
 float *fmalloc(size_t n)
 {
   float *d = (float *)xmalloc(n * sizeof(float));
@@ -45,8 +67,13 @@ float *fmalloc(size_t n)
 
 void fmemset(float *data, int n, float value)
 {
-  int i;
-  for(i = 0; i < n; i++) {
-    data[i] = value;
+  if(data == NULL) {
+    perror("fmemset() failed");
+    FAILURE;
+  } {
+    int i;
+    for(i = 0; i < n; i++) {
+      data[i] = value;
+    }
   }
 }
