@@ -8,6 +8,22 @@
 #include "int.h"
 #include "float.h"
 
+
+i32 img_bytes(i32 w, i32 h, i32 n)
+{
+    return w * h * n;
+}
+
+u8 *img_alloc(i32 w, i32 h, i32 n)
+{
+  return xmalloc(img_bytes(w,h,n));
+}
+
+void img_memset(u8 *img,i32 w, i32 h, i32 n,u8 c)
+{
+    xmemset(img,c,img_bytes(w,h,n));
+}
+
 /* data is in row order (ie. y/h scanlines of x/w pixels) */
 
 /* w = width, n = channels (1 = GREY,3 = RGB, 4 = RGBA) */
