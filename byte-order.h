@@ -2,7 +2,7 @@
 #define _COMMON_BYTE_ORDER_H
 
 #include <arpa/inet.h>
-#include <netinet/in.h>
+/*#include <netinet/in.h>*/
 
 #include "float.h"
 #include "int.h"

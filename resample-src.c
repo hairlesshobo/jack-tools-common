@@ -1,9 +1,9 @@
-#include <stdbool.h>
+#include <stdbool.h>		/* C99 */
 #include <stdio.h>
 
-#include <samplerate.h> /* libsamplerate */
+#include <samplerate.h>		/* libsamplerate */
 
-#include "memory.h"
+#include "memory.h"		/* c-common */
 #include "resample-src.h"
 
 bool src_resample_block(float *dst,long dst_n,float *src,long src_n,int nc)

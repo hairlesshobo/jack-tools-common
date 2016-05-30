@@ -1,6 +1,7 @@
 #ifndef _COMMON_NETWORK_H
 #define _COMMON_NETWORK_H
 
+#include <netinet/in.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 
