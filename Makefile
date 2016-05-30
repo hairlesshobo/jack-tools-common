@@ -24,6 +24,7 @@ obj =	alsa-seq-endpoint.o \
 	jack-transport.o \
 	memory.o \
 	network.o \
+	numeric-type.o\
 	observe-signal.o \
 	osc.o \
 	plane.o \
