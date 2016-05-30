@@ -1,12 +1,12 @@
 #define _XOPEN_SOURCE 600 /* To use SA_RESTART and SA_RESETHAND */
 
+#include <errno.h>		/* C99 */
+#include <signal.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-#include <signal.h>
-#include <errno.h>
 
-#include <pthread.h>
+#include <pthread.h>		/* POSIX */
 
 #include "observe-signal.h"
 
@@ -45,8 +45,7 @@ int observe_signals(void)
   action.sa_handler = signal_management_handler;
   action.sa_mask = signals;
   action.sa_flags = SA_RESTART | SA_RESETHAND;
-  int i;
-  for(i = 1; i < 32; i++) {
+  for(int i = 1; i < 32; i++) {	/* SIGSYS = 31 */
     if(sigismember(&signals, i)) {
       if(sigaction(i, &action, 0)) {
 	fprintf(stderr, "sigaction() failed: %d\n", i);

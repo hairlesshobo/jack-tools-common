@@ -29,6 +29,7 @@ obj =	alsa-seq-endpoint.o \
 	plane.o \
 	quantize.o \
 	rand.o \
+	resample-src.o \
 	rgba.o \
 	segment-transfer.o \
 	sf-au.o \
