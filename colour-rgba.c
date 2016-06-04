@@ -1,5 +1,5 @@
+#include "colour-rgba.h"
 #include "float.h"
-#include "rgba.h"
 
 rgba make_rgba(f32 r, f32 g, f32 b, f32 a)
 {

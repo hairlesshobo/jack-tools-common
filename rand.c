@@ -1,9 +1,9 @@
 #include <stdlib.h>
 
+#include "colour-rgba.h"
 #include "float.h"
 #include "taus88.h"
 #include "rand.h"
-#include "rgba.h"
 #include "vector.h"
 
 static taus88_t taus88_std = {1243598713U, 3093459404U, 1821928721U};

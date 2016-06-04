@@ -8,7 +8,9 @@ obj =	alsa-seq-endpoint.o \
 	cfile.o \
 	client.o \
 	clip.o \
-	cq.o \
+	colour.o \
+	colour-rgba.o \
+        cq.o \
 	file.o \
 	gen-trapezoid.o \
 	gl-cube.o \
@@ -31,7 +33,6 @@ obj =	alsa-seq-endpoint.o \
 	quantize.o \
 	rand.o \
 	resample-src.o \
-	rgba.o \
 	segment-transfer.o \
 	sf-au.o \
 	sf-sndfile.o \
