@@ -25,6 +25,7 @@ obj =	alsa-seq-endpoint.o \
 	jack-ringbuffer.o \
 	jack-transport.o \
 	memory.o \
+	midi.o \
 	network.o \
 	numeric-type.o\
 	observe-signal.o \
