@@ -1,4 +1,6 @@
+#ifndef _XOPEN_SOURCE
 #define _XOPEN_SOURCE 600 /* To use SA_RESTART and SA_RESETHAND */
+#endif
 
 #include <errno.h>		/* C99 */
 #include <signal.h>
