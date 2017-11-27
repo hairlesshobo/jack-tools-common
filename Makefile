@@ -1,4 +1,5 @@
 prefix = $(HOME)/opt
+
 obj =	alsa-seq-endpoint.o \
 	alsa-seq-listener.o \
 	alsa-seq-print.o \
@@ -54,8 +55,10 @@ obj =	alsa-seq-endpoint.o \
 	ximg.o \
 	xregcomp.o
 
+CPPFLAGS += -g -Wall -pedantic -O2
+
 %.o : %.c %.h
-	gcc -g -Wall -pedantic -O2 -c $*.c
+	gcc $(CPPFLAGS) $(CFLAGS) -c $*.c
 
 all: $(obj)
 	ar -rcs lib-c-common.a $(obj)
