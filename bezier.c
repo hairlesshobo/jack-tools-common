@@ -8,15 +8,19 @@ void bezier4(R x0, R y0, R x1, R y1, R x2, R y2, R x3, R y3, R mu, R * rx, R * r
   R a = 1 - mu;
   R b = a * a * a;
   R c = mu * mu * mu;
-  *rx = b * x0 + 3 * mu * a * a * x1 + 3 * mu * mu * a * x2 + c * x3;
-  *ry = b * y0 + 3 * mu * a * a * y1 + 3 * mu * mu * a * y2 + c * y3;
+  R x = b * x0 + 3 * mu * a * a * x1 + 3 * mu * mu * a * x2 + c * x3;
+  R y = b * y0 + 3 * mu * a * a * y1 + 3 * mu * mu * a * y2 + c * y3;
   assert(mu >= 0.0 && mu <= 1.0);
   assert(x0 < x3);
-  assert(*rx >= x0 && *rx <= x3);
+  assert(x >= x0 && x <= x3);
+  assert(y >= y0 && x <= y3);
+  *rx = x;
+  *ry = y;
 }
 
 R unwrap_mu(R x0, R x3, R mu) {
   assert(mu >= x0 && mu <= x3);
+  assert(x3 > x0);
   return (mu - x0) / (x3 - x0);
 }
 
