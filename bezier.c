@@ -13,14 +13,13 @@ void bezier4(R x0, R y0, R x1, R y1, R x2, R y2, R x3, R y3, R mu, R * rx, R * r
   assert(mu >= 0.0 && mu <= 1.0);
   assert(x0 < x3);
   assert(x >= x0 && x <= x3);
-  assert(y >= y0 && x <= y3);
   *rx = x;
   *ry = y;
 }
 
 R unwrap_mu(R x0, R x3, R mu) {
   assert(mu >= x0 && mu <= x3);
-  assert(x3 > x0);
+  assert(x0 < x3);
   return (mu - x0) / (x3 - x0);
 }
 
