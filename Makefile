@@ -5,6 +5,7 @@ obj =	alsa-seq-endpoint.o \
 	alsa-seq-print.o \
 	alsa-seq-send.o \
 	bessel.o \
+	bezier.o \
 	byte-order.o \
 	cfile.o \
 	client.o \
