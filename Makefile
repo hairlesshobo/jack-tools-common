@@ -18,6 +18,7 @@ obj =	alsa-seq-endpoint.o \
 	gl-cube.o \
 	gl-sphere.o \
 	glu-screen-capture.o \
+	hermite.o \
 	img.o \
 	img-png.o \
 	img-ppm.o \

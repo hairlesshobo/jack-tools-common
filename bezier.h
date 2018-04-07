@@ -1,5 +1,5 @@
-#ifndef _COMMON_BESSEL_H
-#define _COMMON_BESSEL_H
+#ifndef _COMMON_BEZIER_H
+#define _COMMON_BEZIER_H
 
 #define R float
 
