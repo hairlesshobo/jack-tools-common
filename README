@@ -3,10 +3,9 @@ c-common
 
 library of functions common to [c][c] projects
 
-tested-with: [gcc][gcc] 7.3.0
+tested-with: [gcc](http://gcc.gnu.org/) 7.3.0
 
 [c]: http://www.open-std.org/jtc1/sc22/wg14/
-[gcc]: http://gcc.gnu.org/
 
 © [rohan drape][rd], 2003-2018, [gpl]
 
