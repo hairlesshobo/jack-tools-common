@@ -25,7 +25,7 @@ jack_client_t *jack_client_unique_store(char *name)
 {
   int n = (int)getpid();
   char uniq[64];
-  snprintf(uniq, 64, "%s-%d", name, n);
+  snprintf(uniq, 64 , "%.*s-%*d", 50, name, 12, n);
   strncpy(name,uniq,64);
   jack_client_t *client = jack_client_open(uniq,JackNullOption,NULL);
   if(! client) {
