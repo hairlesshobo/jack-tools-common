@@ -38,7 +38,7 @@ jack_client_t *jack_client_unique_store(char *name)
 jack_client_t *jack_client_unique(const char *name)
 {
   char uniq[64];
-  strncpy(uniq,name,64);
+  strncpy(uniq,name,64 - 1);
   return jack_client_unique_store(uniq);
 }
 

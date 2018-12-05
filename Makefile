@@ -77,11 +77,11 @@ uninstall:
 	rm -f $(prefix)/lib/lib-c-common.a
 	rm -Rf $(prefix)/include/c-common
 
-push-sp:
-	darcs push -a rd@slavepianos.org:sw/c-common
+push-rd:
+	darcs push -a rd@rohandrape.net:sw/c-common
 
-pull-sp:
-	darcs pull -a http://rd.slavepianos.org/sw/c-common
+pull-rd:
+	darcs pull -a http://rohandrape.net/sw/c-common
 
 indent:
 	indent -kr -nut sf-au.c
