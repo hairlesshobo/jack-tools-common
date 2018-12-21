@@ -7,6 +7,8 @@ tested-with: [gcc](http://gcc.gnu.org/) 8.2.0
 
 [c]: http://www.open-std.org/jtc1/sc22/wg14/
 
+debian: freeglut3-dev libglu1-mesa-dev libjack-dev libsamplerate-dev
+
 © [rohan drape][rd], 2003-2018, [gpl]
 
 [rd]: http://rohandrape.net/
