@@ -23,7 +23,7 @@ typedef union
   const char *s; /* ASCII String (NULL suffix) */
   const char *S; /* Symbol */
   u32 c; /* ASCII Character */
-  u32 m; /* MIDI message (4 bytes) */
+  u8 m[4]; /* MIDI message (4 bytes) */
   u32 r; /* RGBA Colour (4 bytes) */
   osc_blob_t b; /* Blob (bytestring) */
 } osc_data_t;

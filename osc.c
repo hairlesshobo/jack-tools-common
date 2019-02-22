@@ -147,7 +147,7 @@ i32 osc_collect_arguments(const char *dsc, const u8 *p, osc_data_t *data)
       data[i].c = ntoh_u32_from_buf(p);
       p += 4;
     } else if(c == 'm') {
-      data[i].m = ntoh_u32_from_buf(p);
+      memcpy(&(data[i].m),p,4);
       p += 4;
     } else if(c == 'r') {
       data[i].r = ntoh_u32_from_buf(p);
@@ -198,7 +198,7 @@ i32 osc_pack_arguments(const char *dsc, const osc_data_t *data, u8 *p)
       ntoh_u32_to_buf(p, data[i].c);
       p += 4;
     } else if(c == 'm') {
-      ntoh_u32_to_buf(p, data[i].m);
+      memcpy(p, data[i].m, 4);
       p += 4;
     } else if(c == 'r') {
       ntoh_u32_to_buf(p, data[i].r);
@@ -380,7 +380,7 @@ i32 osc_build_message(u8 *packet, i32 packet_sz,
       data[index].c = va_arg(ap, u32);
       break;
     case 'm':
-      data[index].m = va_arg(ap, u32);
+      memcpy(data[index].m, va_arg(ap, u8*), 4);
       break;
     case 'r':
       data[index].r = va_arg(ap, u32);
