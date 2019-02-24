@@ -308,14 +308,14 @@ i32 osc_parse_message(const char *addr, const char *dsc, const u8 *packet, i32 p
   const u8 *p_arg = (u8*)p_dsc + dsc_len;
   i32 arg_len = osc_dsc_read_arg_len(p_dsc, p_arg);
   if(packet_sz < addr_len + dsc_len + arg_len) {
-    eprintf("%s: packet_sz: (%d,%d,%d,%d)\n"
+    eprintf("ERROR: %s: packet_sz: (%d < %d + %d + %d)\n"
             ,__func__,packet_sz
             ,addr_len,dsc_len,arg_len);
     return 0;
   }
   i32 err = osc_collect_arguments(p_dsc, p_arg, data);
   if(err) {
-    eprintf("%s: osc_collect_arguments\n",__func__);
+    eprintf("ERROR: %s: osc_collect_arguments\n",__func__);
     return 0;
   }
   osc_coerce_arguments(dsc, p_dsc, data);
