@@ -19,7 +19,7 @@ void osc_print_packet(const u8 *packet, i32 packet_sz)
   i32 i;
   for(i = 0; i < packet_sz; i++) {
     fprintf(stderr, "%3d (%1.1s) ", packet[i], packet + i);
-    if(( i + 1)% 4  == 0) {
+    if(( i + 1) % 4  == 0) {
       fprintf(stderr, "\n");
     }
   }
@@ -167,7 +167,7 @@ i32 osc_collect_arguments(const char *dsc, const u8 *p, osc_data_t *data)
 
 i32 osc_pack_arguments(const char *dsc, const osc_data_t *data, u8 *p)
 {
-  dsc++;
+  dsc++; /* , */
   i32 i = 0;
   while(*dsc != '\0') {
     u8 c = *dsc;
@@ -191,7 +191,7 @@ i32 osc_pack_arguments(const char *dsc, const osc_data_t *data, u8 *p)
       xmemcpy(p, data[i].s, n + 1);
       p += osc_cstr_bound(n);
     } else if(c == 'S') {
-      i32 n = strlen(data[i].s);
+      i32 n = strlen(data[i].S);
       xmemcpy(p, data[i].S, n + 1);
       p += osc_cstr_bound(n);
     } else if(c == 'c') {
@@ -206,7 +206,7 @@ i32 osc_pack_arguments(const char *dsc, const osc_data_t *data, u8 *p)
     } else if(c == 'b') {
       ntoh_i32_to_buf(p, data[i].b.size);
       xmemcpy(p + 4, data[i].b.data, data[i].b.size);
-      p += osc_blob_bound(data[i].b.size) + 4;
+      p += 4 + osc_blob_bound(data[i].b.size);
     } else {
       return -1;
     }
@@ -260,7 +260,7 @@ osc_dsc_calculate_arg_len(const char *dsc, const osc_data_t *data)
     } else if(c == 'S') {
       n += osc_cstr_bound(strlen(data->S));
     } else if(c == 'b') {
-      n += osc_cstr_bound(data->b.size)+ 4;
+      n += osc_blob_bound(data->b.size) + 4;
     } else {
       return -1;
     }
@@ -345,7 +345,7 @@ i32 osc_construct_message(const char *addr, const char *dsc, const osc_data_t *d
 i32 osc_build_message(u8 *packet, i32 packet_sz,
 		      const char *addr, const char *dsc, ...)
 {
-  osc_data_t data[256];
+  osc_data_t data[256]; /* LIMIT */
 
   va_list ap;
   va_start(ap, dsc);
