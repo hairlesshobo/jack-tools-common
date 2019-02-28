@@ -11,12 +11,10 @@
 void u64_verify_eq(char *err,u64 p,u64 q)
 {
     if(p != q) {
-	printf("U64_VERIFY_EQ: %s: %lX != %lX\n",err,p,q);
+	printf("U64_VERIFY_EQ: %s: 0x%lX != 0x%lX\n",err,p,q);
 	exit(EXIT_FAILURE);
     }
 }
-
-u8 dx7_fmt9_sy_begin[6] = {0xF0,0x43,0x00,0x09,0x20,0x00};
 
 u8 dx7_checksum(u8 *p,int n)
 {
@@ -27,18 +25,6 @@ u8 dx7_checksum(u8 *p,int n)
     sum = (~sum) + 1;
     sum &= 0x7F;
     return sum;
-}
-
-void dx7_fmt9_sysex_verify(struct dx7_fmt9_sysex *sysex)
-{
-    u8_verify_eq("F0",sysex->sy_begin[0],0xF0);
-    u8_verify_eq("43",sysex->sy_begin[1],0x43);
-    u8_verify_eq("0.",sysex->sy_begin[2] >> 4,0x00);
-    u8_verify_eq("09",sysex->sy_begin[3],0x09);
-    u8_verify_eq("20",sysex->sy_begin[4],0x20);
-    u8_verify_eq("00",sysex->sy_begin[5],0x00);
-    u8_verify_eq("CS",sysex->sy_end[0],dx7_checksum((u8 *)sysex->vc,4096));
-    u8_verify_eq("F7",sysex->sy_end[1],0xF7);
 }
 
 struct dx7_operator_packed dx7_pack_operator(u8 *b)
@@ -77,16 +63,13 @@ struct dx7_voice_packed dx7_pack_voice(u8 *b)
     return v;
 }
 
-struct dx7_fmt9_sysex dx7_pack_fmt9_sysex(u8 *b)
+struct dx7_bank_packed dx7_pack_bank(u8 *d)
 {
-    struct dx7_fmt9_sysex s;
-    memcpy(&(s.sy_begin),&dx7_fmt9_sy_begin,6);
+    struct dx7_bank_packed b;
     for (int i = 0;i < 32;i ++) {
-	s.vc[i] = dx7_pack_voice(b + (i * 155));
+	b.vc[i] = dx7_pack_voice(d + (i * 155));
     }
-    s.sy_end[0] = dx7_checksum((u8 *)&(s.vc[0]),4096);
-    s.sy_end[1] = 0xF7;
-    return s;
+    return b;
 }
 
 void dx7_unpack_operator(struct dx7_operator_packed o,u8 *b)
@@ -123,9 +106,23 @@ void dx7_unpack_voice(struct dx7_voice_packed v,u8 *b)
 }
 
 /* 4960 = 32 * 155 */
-void dx7_unpack_fmt9_sysex(struct dx7_fmt9_sysex s,u8 *b)
+void dx7_unpack_bank(struct dx7_bank_packed b,u8 *d)
 {
     for (int i = 0;i < 32;i ++) {
-	dx7_unpack_voice(s.vc[i],b + (i * 155));
+	dx7_unpack_voice(b.vc[i],d + (i * 155));
     }
+}
+
+u8 dx7_fmt9_sy_begin[6] = {0xF0,0x43,0x00,0x09,0x20,0x00};
+
+void dx7_fmt9_sysex_verify(u8 *sy_begin,u8 *sy_dat,u8 *sy_end)
+{
+    u8_verify_eq("F0",sy_begin[0],0xF0);
+    u8_verify_eq("43",sy_begin[1],0x43);
+    u8_verify_eq("0.",sy_begin[2] >> 4,0x00);
+    u8_verify_eq("09",sy_begin[3],0x09);
+    u8_verify_eq("20",sy_begin[4],0x20);
+    u8_verify_eq("00",sy_begin[5],0x00);
+    u8_verify_eq("CS",sy_end[0],dx7_checksum(sy_dat,4096));
+    u8_verify_eq("F7",sy_end[1],0xF7);
 }
