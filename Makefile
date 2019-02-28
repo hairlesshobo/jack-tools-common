@@ -13,6 +13,7 @@ obj =	alsa-seq-endpoint.o \
 	colour.o \
 	colour-rgba.o \
         cq.o \
+	dx7.o \
 	file.o \
 	gen-trapezoid.o \
 	gl-cube.o \

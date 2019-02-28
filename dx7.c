@@ -1,0 +1,131 @@
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "int.h"
+
+#include "dx7.h"
+
+void u64_verify_eq(char *err,u64 p,u64 q)
+{
+    if(p != q) {
+	printf("U64_VERIFY_EQ: %s: %lX != %lX\n",err,p,q);
+	exit(EXIT_FAILURE);
+    }
+}
+
+u8 dx7_fmt9_sy_begin[6] = {0xF0,0x43,0x00,0x09,0x20,0x00};
+
+u8 dx7_checksum(u8 *p,int n)
+{
+    u8 sum = 0;
+    for (int i = 0; i < n; ++i) {
+        sum += (p[i] & 0x7F);
+    }
+    sum = (~sum) + 1;
+    sum &= 0x7F;
+    return sum;
+}
+
+void dx7_fmt9_sysex_verify(struct dx7_fmt9_sysex *sysex)
+{
+    u8_verify_eq("F0",sysex->sy_begin[0],0xF0);
+    u8_verify_eq("43",sysex->sy_begin[1],0x43);
+    u8_verify_eq("0.",sysex->sy_begin[2] >> 4,0x00);
+    u8_verify_eq("09",sysex->sy_begin[3],0x09);
+    u8_verify_eq("20",sysex->sy_begin[4],0x20);
+    u8_verify_eq("00",sysex->sy_begin[5],0x00);
+    u8_verify_eq("CS",sysex->sy_end[0],dx7_checksum((u8 *)sysex->vc,4096));
+    u8_verify_eq("F7",sysex->sy_end[1],0xF7);
+}
+
+struct dx7_operator_packed dx7_pack_operator(u8 *b)
+{
+    struct dx7_operator_packed o;
+    memcpy(&(o.op_00_10),b,11); /* b[0-10] are copied directly */
+    o.op_11 = b[11];
+    o.op_12 = b[12];
+    o.op_13 = b[13];
+    o.op_14 = b[14];
+    o.op_15 = b[15];
+    o.op_16 = b[16];
+    o.op_17 = b[17];
+    o.op_18 = b[18];
+    o.op_19 = b[19];
+    o.op_20 = b[20];
+    return o;
+}
+
+struct dx7_voice_packed dx7_pack_voice(u8 *b)
+{
+    struct dx7_voice_packed v;
+    for (int i = 0;i < 6;i ++) {
+	v.op[i] = dx7_pack_operator(b + (i * 21));
+    }
+    memcpy(&(v.vc_126_133),b + 126,8);
+    v.vc_134 = b[134];
+    v.vc_135 = b[135];
+    v.vc_136 = b[136];
+    memcpy(&(v.vc_137_140),b + 137,4);
+    v.vc_141 = b[141];
+    v.vc_142 = b[142];
+    v.vc_143 = b[143];
+    v.vc_144 = b[144];
+    memcpy(&(v.vc_145_154),b + 145,10);
+    return v;
+}
+
+struct dx7_fmt9_sysex dx7_pack_fmt9_sysex(u8 *b)
+{
+    struct dx7_fmt9_sysex s;
+    memcpy(&(s.sy_begin),&dx7_fmt9_sy_begin,6);
+    for (int i = 0;i < 32;i ++) {
+	s.vc[i] = dx7_pack_voice(b + (i * 155));
+    }
+    s.sy_end[0] = dx7_checksum((u8 *)&(s.vc[0]),4096);
+    s.sy_end[1] = 0xF7;
+    return s;
+}
+
+void dx7_unpack_operator(struct dx7_operator_packed o,u8 *b)
+{
+    memcpy(b,o.op_00_10,11); /* b[0-10] are copied directly */
+    b[11] = o.op_11;
+    b[12] = o.op_12;
+    b[13] = o.op_13;
+    b[14] = o.op_14;
+    b[15] = o.op_15;
+    b[16] = o.op_16;
+    b[17] = o.op_17;
+    b[18] = o.op_18;
+    b[19] = o.op_19;
+    b[20] = o.op_20;
+}
+
+/* 6 * 21 = 126 ; 126 + 29 = 155 */
+void dx7_unpack_voice(struct dx7_voice_packed v,u8 *b)
+{
+    for (int i = 0;i < 6;i ++) {
+	dx7_unpack_operator(v.op[i],b + (i * 21));
+    }
+    memcpy(b + 126,v.vc_126_133,8);
+    b[134] = v.vc_134;
+    b[135] = v.vc_135;
+    b[136] = v.vc_136;
+    memcpy(b + 137,v.vc_137_140,4);
+    b[141] = v.vc_141;
+    b[142] = v.vc_142;
+    b[143] = v.vc_143;
+    b[144] = v.vc_144;
+    memcpy(b + 145,v.vc_145_154,10);
+}
+
+/* 4960 = 32 * 155 */
+void dx7_unpack_fmt9_sysex(struct dx7_fmt9_sysex s,u8 *b)
+{
+    for (int i = 0;i < 32;i ++) {
+	dx7_unpack_voice(s.vc[i],b + (i * 155));
+    }
+}
