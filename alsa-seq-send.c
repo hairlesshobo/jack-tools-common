@@ -32,7 +32,7 @@ static void alsa_seq_send_common(snd_seq_t *seq, int queue,
   snd_midi_event_reset_encode(encoder);
   err = snd_midi_event_encode(encoder, c, n, &e);
   if(err < 0 || e.type == SND_SEQ_EVENT_NONE) {
-    eprintf("%s: encoding failed: %s\n", __func__, snd_strerror(errno));
+    eprintf("%s: encoding failed: err=%d e.type=%d strerr=%s\n", __func__, err, e.type, snd_strerror(errno));
     return;
   }
   time.tv_sec = time.tv_nsec = 0;

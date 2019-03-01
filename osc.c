@@ -12,7 +12,21 @@
 
 i32 osc_align(i32 n) {return (((n + 3) & (~3)) - n);}
 i32 osc_cstr_bound(i32 n) {return n + 1 + osc_align(n + 1);}
-i32 osc_blob_bound(i32 n) {return n + osc_align(n);}
+
+void assert_non_negative(const char *s,i32 n) {
+    if(n < 0) {
+        fprintf(stderr, "%s: s=%s, n < 0, n=%d\n", __func__, s, n);
+        FAILURE;
+    }
+}
+
+/* n = size of byte-data, returns n + osc_align(n) */
+i32 osc_blob_bound(i32 n)
+{
+    assert_non_negative(__func__,n);
+    dprintf("%s: n=%d, osc_align(n)=%d\n",__func__,n,osc_align(n));
+    return n + osc_align(n);
+}
 
 void osc_print_packet(const u8 *packet, i32 packet_sz)
 {
@@ -116,46 +130,51 @@ i32 u8strncmp(const u8 *a, const u8 *b, i32 n)
   return strncmp((const char*)a, (const char*)b, n);
 }
 
+/* read u8* 'p' data according to 'dsc' and copy/assign to osc_data_t */
 i32 osc_collect_arguments(const char *dsc, const u8 *p, osc_data_t *data)
 {
+  dprintf("%s: dsc=%s, p=%p data=%p\n",__func__,dsc,(void*)p,(void*)data);
   dsc++;
   i32 i = 0;
   while(*dsc != '\0') {
     u8 c = *dsc;
+    osc_data_t *x = data + i;
     if(c == 'i') {
-      data[i].i = ntoh_i32_from_buf(p);
+      x->i = ntoh_i32_from_buf(p);
       p += 4;
     } else if(c == 'h') {
-      data[i].h = ntoh_i64_from_buf(p);
+      x->h = ntoh_i64_from_buf(p);
       p += 8;
     } else if(c == 't') {
-      data[i].t = ntoh_u64_from_buf(p);
+      x->t = ntoh_u64_from_buf(p);
       p += 8;
     } else if(c == 'f') {
-      data[i].f = ntoh_f32_from_buf(p);
+      x->f = ntoh_f32_from_buf(p);
       p += 4;
     } else if(c == 'd') {
-      data[i].d = ntoh_f64_from_buf(p);
+      x->d = ntoh_f64_from_buf(p);
       p += 8;
     } else if(c == 's') {
-      data[i].s = (char*)p;
+      x->s = (char*)p;
       p += osc_cstr_bound(u8strlen(p));
     } else if(c == 'S') {
-      data[i].S = (char*)p;
+      x->S = (char*)p;
       p += osc_cstr_bound(u8strlen(p));
     } else if(c == 'c') {
-      data[i].c = ntoh_u32_from_buf(p);
+      x->c = ntoh_u32_from_buf(p);
       p += 4;
     } else if(c == 'm') {
-      memcpy(&(data[i].m),p,4);
+      xmemcpy(x->m, p, 4);
       p += 4;
     } else if(c == 'r') {
-      data[i].r = ntoh_u32_from_buf(p);
+      x->r = ntoh_u32_from_buf(p);
       p += 4;
     } else if(c == 'b') {
-      data[i].b.data = p + 4;
-      data[i].b.size = ntoh_i32_from_buf(p);
-      p += data[i].b.size + 4;
+      x->b.size = ntoh_i32_from_buf(p);
+      assert_non_negative(__func__,x->b.size);
+      x->b.data = p + 4;
+      dprintf("%s: b.size=%d, osc_align=%d b.data=%p\n",__func__,x->b.size,osc_align(x->b.size),(void*)x->b.data);
+      p += 4 + osc_blob_bound(x->b.size);
     } else {
       return -1;
     }
@@ -165,26 +184,28 @@ i32 osc_collect_arguments(const char *dsc, const u8 *p, osc_data_t *data)
   return 0;
 }
 
+/* encode osc_data_t to u8* */
 i32 osc_pack_arguments(const char *dsc, const osc_data_t *data, u8 *p)
 {
   dsc++; /* , */
   i32 i = 0;
   while(*dsc != '\0') {
     u8 c = *dsc;
+    dprintf("%s: c=%c i=%d p=%p\n",__func__,c,i,(void *)p);
     if(c == 'i') {
-      ntoh_i32_to_buf(p, data[i].i);
+      hton_i32_to_buf(p, data[i].i);
       p += 4;
     } else if(c == 'h') {
-      ntoh_i64_to_buf(p, data[i].h);
+      hton_i64_to_buf(p, data[i].h);
       p += 8;
     } else if(c == 't') {
-      ntoh_u64_to_buf(p, data[i].t);
+      hton_u64_to_buf(p, data[i].t);
       p += 8;
     } else if(c == 'f') {
-      ntoh_f32_to_buf(p, data[i].f);
+      hton_f32_to_buf(p, data[i].f);
       p += 4;
     } else if(c == 'd') {
-      ntoh_f64_to_buf(p, data[i].d);
+      hton_f64_to_buf(p, data[i].d);
       p += 8;
     } else if(c == 's') {
       i32 n = strlen(data[i].s);
@@ -195,16 +216,17 @@ i32 osc_pack_arguments(const char *dsc, const osc_data_t *data, u8 *p)
       xmemcpy(p, data[i].S, n + 1);
       p += osc_cstr_bound(n);
     } else if(c == 'c') {
-      ntoh_u32_to_buf(p, data[i].c);
+      hton_u32_to_buf(p, data[i].c);
       p += 4;
     } else if(c == 'm') {
-      memcpy(p, data[i].m, 4);
+      xmemcpy(p, data[i].m, 4);
       p += 4;
     } else if(c == 'r') {
-      ntoh_u32_to_buf(p, data[i].r);
+      hton_u32_to_buf(p, data[i].r);
       p += 4;
     } else if(c == 'b') {
-      ntoh_i32_to_buf(p, data[i].b.size);
+      hton_i32_to_buf(p, data[i].b.size);
+      dprintf("%s: b.data=%p b.size=%d\n",__func__,(void*)(data[i].b.data),data[i].b.size);
       xmemcpy(p + 4, data[i].b.data, data[i].b.size);
       p += 4 + osc_blob_bound(data[i].b.size);
     } else {
@@ -245,7 +267,7 @@ i32
 osc_dsc_calculate_arg_len(const char *dsc, const osc_data_t *data)
 {
   if(*dsc++ != ',') {
-    fprintf(stderr, "osc_dsc_calculate_arg_len: illegal descriptor '%s'\n", dsc);
+    fprintf(stderr, "%s: illegal descriptor '%s'\n", __func__, dsc);
     return -1;
   }
   i32 n = 0;
@@ -260,6 +282,7 @@ osc_dsc_calculate_arg_len(const char *dsc, const osc_data_t *data)
     } else if(c == 'S') {
       n += osc_cstr_bound(strlen(data->S));
     } else if(c == 'b') {
+      dprintf("%s: data=%p data->b.data=%p data->b.size=%d\n",__func__,(void*)data,(void*)data->b.data,data->b.size);
       n += osc_blob_bound(data->b.size) + 4;
     } else {
       return -1;
@@ -267,6 +290,7 @@ osc_dsc_calculate_arg_len(const char *dsc, const osc_data_t *data)
     dsc++;
     data++;
   }
+  assert_non_negative(__func__,n);
   return n;
 }
 
@@ -294,8 +318,10 @@ i32 osc_match_dsc(const char *u_dsc, const char *p_dsc)
   return osc_cstr_bound(u_dsc_n);
 }
 
+/* returns 0 on non-match, else 1 length */
 i32 osc_parse_message(const char *addr, const char *dsc, const u8 *packet, i32 packet_sz, osc_data_t *data)
 {
+  dprintf("%s: addr=%p dsc=%s pkt=%p pkt_sz=%d data=%p\n",__func__,addr,dsc,packet,packet_sz,(void*)data);
   i32 addr_len = osc_match_address(addr, packet);
   if(addr_len == 0) {
     return 0;
@@ -324,21 +350,27 @@ i32 osc_parse_message(const char *addr, const char *dsc, const u8 *packet, i32 p
 
 i32 osc_construct_message(const char *addr, const char *dsc, const osc_data_t *data, u8 *packet, i32 packet_sz)
 {
+  dprintf("%s: addr=%s dsc=%s data=%p packet=%p packet_sz=%d\n",
+          __func__,addr,dsc,(void*)data,(void*)packet,packet_sz);
   i32 addr_n = strlen(addr);
   i32 addr_len = osc_cstr_bound(addr_n);
   i32 dsc_n = strlen(dsc);
   i32 dsc_len = osc_cstr_bound(dsc_n);
-  i32 arg_len = osc_dsc_calculate_arg_len(dsc, data);
-  xmemset(packet, 0, addr_len + dsc_len + arg_len);
-  xmemcpy(packet, addr, addr_n);
-  xmemcpy(packet + addr_len, dsc, dsc_n);
+  dprintf("%s: addr_n=%d addr_len=%d dsc_n=%d dsc_len=%d\n",
+          __func__,addr_n,addr_len,dsc_n,dsc_len);
+  xmemset(packet, 0, addr_len + dsc_len);
+  xmemcpy(packet, addr, addr_n + 1);
+  xmemcpy(packet + addr_len, dsc, dsc_n + 1);
+/*
   if(packet_sz < addr_len + dsc_len + arg_len) {
     return 0;
   }
+*/
   i32 err = osc_pack_arguments(dsc, data, packet + addr_len + dsc_len);
   if(err) {
     return 0;
   }
+  i32 arg_len = osc_dsc_calculate_arg_len(dsc, data);
   return addr_len + dsc_len + arg_len;
 }
 
@@ -380,7 +412,7 @@ i32 osc_build_message(u8 *packet, i32 packet_sz,
       data[index].c = va_arg(ap, u32);
       break;
     case 'm':
-      memcpy(data[index].m, va_arg(ap, u8*), 4);
+      xmemcpy(data[index].m, va_arg(ap, u8*), 4);
       break;
     case 'r':
       data[index].r = va_arg(ap, u32);
