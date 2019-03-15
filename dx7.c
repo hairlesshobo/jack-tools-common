@@ -4,7 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "cfile.h"
 #include "int.h"
+#include "memory.h"
 
 #include "dx7.h"
 
@@ -133,4 +135,26 @@ void dx7_fmt9_sysex_verify(u8 *sy_begin,u8 *sy_dat,u8 *sy_end)
     u8_verify_eq("00",sy_begin[5],0x00);
     u8_verify_eq("CS",sy_end[0],dx7_checksum(sy_dat,4096));
     u8_verify_eq("F7",sy_end[1],0xF7);
+}
+
+/* Copy the 10-byte VOICE NAME to s and add NUL terminal at index 10. */
+void dx7_voice_name_cstr(const uint8_t *data,char *s)
+{
+    for(int i = 0;i < 10;i++) {
+        s[i] = (char)data[145 + i];
+    }
+    s[10] = '\0';
+}
+
+/* Load 4104 byte FORMAT=9 DX7 sysex file and unpack data. */
+void dx7_syx_load(const char *fn,uint8_t *data)
+{
+    uint8_t syx[4104];
+    struct dx7_bank_packed b;
+    FILE *fp = xfopen(fn,"rb");
+    xfread(syx,1,4104,fp);
+    fclose(fp);
+    dx7_fmt9_sysex_verify(syx,syx + 6,syx + 4102);
+    xmemcpy(&b,syx + 6,4096);
+    dx7_unpack_bank(b,data);
 }

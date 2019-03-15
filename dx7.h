@@ -46,4 +46,8 @@ void dx7_unpack_bank(struct dx7_bank_packed b,u8 *d);
 
 void dx7_fmt9_sysex_verify(u8 *sy_begin,u8 *sy_dat,u8 *sy_end);
 
+void dx7_voice_name_cstr(const uint8_t *data,char *s);
+
+void dx7_syx_load(const char *fn,uint8_t *data);
+
 #endif
