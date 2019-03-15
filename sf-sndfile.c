@@ -54,7 +54,7 @@ float *read_signal_file(const char *name, int nc, int *n)
     FAILURE;
   }
   *n = sfi.frames * sfi.channels;
-  float *data = xmalloc(*n * sizeof(float));
+  float *data = (float*)xmalloc((size_t)*n * sizeof(float));
   int err = sf_read_float(sfp, data, *n);
   if(err == -1) {
     fprintf(stderr, "sf_read_float() failed\n");

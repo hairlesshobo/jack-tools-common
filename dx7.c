@@ -8,7 +8,8 @@
 
 #include "dx7.h"
 
-void u64_verify_eq(char *err,u64 p,u64 q)
+/* Require p & q to be equal */
+void u64_verify_eq(const char *err,u64 p,u64 q)
 {
     if(p != q) {
 	printf("U64_VERIFY_EQ: %s: 0x%lX != 0x%lX\n",err,p,q);
@@ -16,6 +17,7 @@ void u64_verify_eq(char *err,u64 p,u64 q)
     }
 }
 
+/* DX7 checksum algorithm */
 u8 dx7_checksum(u8 *p,int n)
 {
     u8 sum = 0;
@@ -27,6 +29,7 @@ u8 dx7_checksum(u8 *p,int n)
     return sum;
 }
 
+/* Pack operator data, input is 21 bytes, output is 17 bytes */
 struct dx7_operator_packed dx7_pack_operator(u8 *b)
 {
     struct dx7_operator_packed o;
@@ -44,6 +47,7 @@ struct dx7_operator_packed dx7_pack_operator(u8 *b)
     return o;
 }
 
+/* Pack voice data, input is 155 bytes (6 * 21 + 29), output is 128 bytes */
 struct dx7_voice_packed dx7_pack_voice(u8 *b)
 {
     struct dx7_voice_packed v;
@@ -63,6 +67,7 @@ struct dx7_voice_packed dx7_pack_voice(u8 *b)
     return v;
 }
 
+/* Pack 32 voice sequence, input is 4960 bytes (32 * 155), output is 4096 bytes (32 * 128) */
 struct dx7_bank_packed dx7_pack_bank(u8 *d)
 {
     struct dx7_bank_packed b;
@@ -72,6 +77,7 @@ struct dx7_bank_packed dx7_pack_bank(u8 *d)
     return b;
 }
 
+/* Inverse of dx7_pack_operator */
 void dx7_unpack_operator(struct dx7_operator_packed o,u8 *b)
 {
     memcpy(b,o.op_00_10,11); /* b[0-10] are copied directly */
@@ -87,7 +93,7 @@ void dx7_unpack_operator(struct dx7_operator_packed o,u8 *b)
     b[20] = o.op_20;
 }
 
-/* 6 * 21 = 126 ; 126 + 29 = 155 */
+/* Inverse of dx7_pack_voice */
 void dx7_unpack_voice(struct dx7_voice_packed v,u8 *b)
 {
     for (int i = 0;i < 6;i ++) {
@@ -105,7 +111,7 @@ void dx7_unpack_voice(struct dx7_voice_packed v,u8 *b)
     memcpy(b + 145,v.vc_145_154,10);
 }
 
-/* 4960 = 32 * 155 */
+/* Inverse of dx7_pack_bank */
 void dx7_unpack_bank(struct dx7_bank_packed b,u8 *d)
 {
     for (int i = 0;i < 32;i ++) {
@@ -113,8 +119,10 @@ void dx7_unpack_bank(struct dx7_bank_packed b,u8 *d)
     }
 }
 
+/* DX7 FORMAT-9 SYSEX 6-byte header (channel=0x0) */
 u8 dx7_fmt9_sy_begin[6] = {0xF0,0x43,0x00,0x09,0x20,0x00};
 
+/* DX7 FORMAT-9 sysex header verification */
 void dx7_fmt9_sysex_verify(u8 *sy_begin,u8 *sy_dat,u8 *sy_end)
 {
     u8_verify_eq("F0",sy_begin[0],0xF0);

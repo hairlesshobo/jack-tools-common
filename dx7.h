@@ -33,7 +33,7 @@ struct dx7_bank_packed
     struct dx7_voice_packed vc[32];
 };
 
-void u64_verify_eq(char *err,u64 p,u64 q);
+void u64_verify_eq(const char *err,u64 p,u64 q);
 #define u8_verify_eq(err,p,q) u64_verify_eq(err,(u64)p,(u64)q)
 
 u8 dx7_checksum(u8 *p,int n);

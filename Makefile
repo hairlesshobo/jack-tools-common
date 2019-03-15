@@ -7,7 +7,7 @@ obj =	alsa-seq-endpoint.o \
 	bessel.o \
 	bezier.o \
 	byte-order.o \
-	cfile.o \
+	cfile.o cfile-byte.o \
 	client.o \
 	clip.o \
 	colour.o \

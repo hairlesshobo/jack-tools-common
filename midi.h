@@ -16,7 +16,6 @@
 
 u8 status_ty(u8 st);
 u8 status_ch(u8 st);
-bool is_note_data_ty(u8 ty);
 bool is_note_data(u8 st);
 bool is_channel_voice_message(u8 st);
 bool is_sysex_message(u8 st);

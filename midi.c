@@ -8,12 +8,9 @@ u8 status_ch(u8 st) {
     return (st & 0x0F);
 }
 
-bool is_note_data_ty(u8 ty) {
-    return (ty == 0x8 || ty == 0x9);
-}
-
 bool is_note_data(u8 st) {
-    return is_note_data_ty(status_ty(st));
+    u8 ty = status_ty(st);
+    return (ty == 0x8 || ty == 0x9);
 }
 
 bool is_channel_voice_message(u8 st) {
