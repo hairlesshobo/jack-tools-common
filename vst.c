@@ -56,6 +56,13 @@ AEffect *vst_begin(void *m)
     return e;
 }
 
+void vst_set_program(AEffect *e,VstInt32 k)
+{
+    if (k < lxvst->effect->numPrograms) {
+        e->dispatcher(e, effSetProgram, 0, k, NULL, 0);
+    }
+}
+
 bool vst_check_midi(AEffect *e)
 {
     return (e->dispatcher(e, effCanDo, 0, 0, (void *)"receiveVstMidiEvent", 0) == 1);
