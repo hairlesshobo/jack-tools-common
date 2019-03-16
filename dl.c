@@ -7,26 +7,20 @@
 void *xdlopen(const char *fn,int flags)
 {
     void *m = dlopen(fn, flags);
-    if (!m) {
-        die("DLOPEN ERROR: %s, %s\n", fn, dlerror());
-    }
+    die_when(m == NULL,"DLOPEN ERROR: %s, %s\n", fn, dlerror());
     return m;
 }
 
 void *xdlsym(void *handle, const char *symbol)
 {
     void *f = dlsym(handle,symbol);
-    if (!f) {
-        die("DLSYM ERROR: %s, %s\n", symbol, dlerror());
-    }
+    die_when(f == NULL,"DLSYM ERROR: %s, %s\n", symbol, dlerror());
     return f;
 }
 
 int xdlclose(void *handle)
 {
     int err = dlclose(handle);
-    if (err != 0) {
-        die("DLCLOSE ERROR: %s\n", dlerror());
-    }
+    die_when(err != 0,"DLCLOSE ERROR: %s\n", dlerror());
     return err;
 }
