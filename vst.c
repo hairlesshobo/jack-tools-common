@@ -58,7 +58,7 @@ AEffect *vst_begin(void *m)
 
 void vst_set_program(AEffect *e,VstInt32 k)
 {
-    if (k < lxvst->effect->numPrograms) {
+    if (k < e->numPrograms) {
         e->dispatcher(e, effSetProgram, 0, k, NULL, 0);
     }
 }
