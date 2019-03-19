@@ -17,7 +17,7 @@ void vst_verify_platform(void)
 }
 
 
-/* Print VST parameter data (IX, NAME, LABEL, DISPLAY) */
+/* Print VST parameter data (IX, NAME, LABEL, DISPLAY, VALUE) */
 void vst_param_pp(AEffect *e)
 {
     for (VstInt32 i = 0; i < e->numParams; i++) {
@@ -27,7 +27,8 @@ void vst_param_pp(AEffect *e)
         e->dispatcher (e, effGetParamName, i, 0, nm, 0);
         e->dispatcher (e, effGetParamLabel, i, 0, lbl, 0);
         e->dispatcher (e, effGetParamDisplay, i, 0, disp, 0);
-        printf ("HOST> PARAM> %03d, %s, %s, %s\n", i, nm, disp, lbl);
+        float val = e->getParameter(e, i);
+        printf ("HOST> PARAM> %03d, %s, %s, %s, %.3f\n", i, nm, disp, lbl, val);
     }
 }
 
