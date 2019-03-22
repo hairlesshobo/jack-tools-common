@@ -1,8 +1,7 @@
 #include "float.h"
 #include "signal-interleave.h"
 
-/* f = number of frames, c = number of channels */
-
+/* dst = frame-order data, src = channel-order data, f = number of frames, c = number of channels */
 void signal_interleave(f32 *dst, const f32 *src, int f, int c)
 {
   int i, k = 0;
@@ -14,6 +13,7 @@ void signal_interleave(f32 *dst, const f32 *src, int f, int c)
   }
 }
 
+/* dst = channel-order data, src = frame-order data, f = number of frames, c = number of channels */
 void signal_uninterleave(f32 *dst, const f32 *src, int f, int c)
 {
   int i, k = 0;

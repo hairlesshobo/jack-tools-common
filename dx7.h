@@ -50,6 +50,6 @@ void dx7_voice_name_cstr(const uint8_t *data,char *s);
 
 void dx7_syx_load(const char *fn,uint8_t *data);
 
-uint8_t dx7_init_voice[155];
+void dx7_init_voice(uint8_t *data);
 
 #endif

@@ -66,7 +66,7 @@ float *read_signal_file(const char *name, int nc, int *n)
 
 /* Write a NeXT F32 sound file */
 
-bool write_au_f32(const char *name, int nc, int nf,int sr,const float *data )
+bool write_au_f32(const char *name, int nc, int nf,int sr,const float *data)
 {
   SF_INFO sfi;
   xmemset (&sfi, 0, sizeof (sfi)) ;
