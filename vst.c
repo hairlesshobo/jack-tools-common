@@ -79,6 +79,8 @@ void vst_require_audio_io(AEffect *e,VstInt32 i,VstInt32 o)
 {
     dprintf("REQUIRE AUDIO I/O\n");
     if ((e->numInputs != i) || (e->numOutputs != o)) {
-        die("NOT %d-IN/%d-OUT\n",(int)i, (int)o);
+        die("NOT %d-IN/%d-OUT (%d-IN/%d-OUT)\n",
+            (int)i, (int)o,
+            (int)(e->numInputs), (int)(e->numOutputs));
     }
 }
