@@ -57,6 +57,7 @@ obj =	alsa-seq-endpoint.o \
 	trace.o \
 	vector.o \
 	window.o \
+	x11.o \
 	ximg.o \
 	xregcomp.o
 

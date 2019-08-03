@@ -4,25 +4,8 @@
 #include "failure.h"
 #include "int.h"
 #include "memory.h"
+#include "x11.h"
 #include "ximg.h"
-
-static int
-ximg_handle_error(Display *d, XErrorEvent *e)
-{
-  char message[128];
-  XGetErrorText(d, e->error_code, message, 128);
-  fprintf(stderr, "X error: %s\n", message);
-  FAILURE;
-  return 1;
-}
-
-static int
-ximg_handle_io_error(Display *d)
-{
-  fprintf(stderr, "X IO error\n");
-  FAILURE;
-  return 1;
-}
 
 Ximg_t *
 ximg_open(int width, int height, char *name)
@@ -30,19 +13,18 @@ ximg_open(int width, int height, char *name)
   Ximg_t *x = xmalloc(sizeof(Ximg_t));
   x->width = width;
   x->height = height;
-  x->d = XOpenDisplay(NULL);
-  XSetErrorHandler(ximg_handle_error);
-  XSetIOErrorHandler(ximg_handle_io_error);
+  x->d = x11_XOpenDisplay_err(NULL);
+  x11_fail_on_errors();
   Window r = DefaultRootWindow(x->d );
   x->v = DefaultVisual(x->d, DefaultScreen(x->d));
   XGCValues draw;
-  draw.background = WhitePixel(x->d, DefaultScreen( x->d));
-  draw.foreground = BlackPixel(x->d, DefaultScreen( x->d));
+  draw.background = WhitePixel(x->d, DefaultScreen(x->d));
+  draw.foreground = BlackPixel(x->d, DefaultScreen(x->d));
   x->draw = XCreateGC(x->d, r, GCForeground | GCBackground, &draw );
   x->w = XCreateSimpleWindow(x->d, r,
 			       0, 0, x->width, x->height,
-			       0, BlackPixel(x->d, DefaultScreen( x->d)),
-			       WhitePixel(x->d, DefaultScreen( x->d)));
+			       0, BlackPixel(x->d, DefaultScreen(x->d)),
+			       WhitePixel(x->d, DefaultScreen(x->d)));
   XSetStandardProperties(x->d, x->w, name, name, None, NULL, 0, NULL);
   XSizeHints h;
   h.width = h.min_width = h.max_width = h.base_width = width;
@@ -58,7 +40,7 @@ ximg_open(int width, int height, char *name)
     FAILURE;
   }
   x->image = XCreateImage(x->d, x->v,
-			    DisplayPlanes(x->d, DefaultScreen( x->d)),
+			    DisplayPlanes(x->d, DefaultScreen(x->d)),
 			    ZPixmap, 0, NULL,
 			    x->width, x->height, BitmapPad(x->d), 0);
   if(! x->image){
@@ -163,7 +145,7 @@ ximg_blit(Ximg_t *x, u8 *data)
       }
     }
   }
-  XdbeBeginIdiom( x->d);
+  XdbeBeginIdiom(x->d);
   XPutImage(x->d, x->b, x->draw, x->image, 0, 0, 0, 0, x->width, x->height);
   XdbeSwapBuffers(x->d, &(x->swap), 1);
   XSync(x->d, 0);
