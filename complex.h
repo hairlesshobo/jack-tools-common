@@ -20,5 +20,7 @@ c64 c64_mul(c64 a,c64 b);
 c64 c64_div(c64 a,c64 b);
 f64 c64_mod(c64 a);
 c64 c64_conj(c64 a);
+c64 c64_square(c64 z);
+c64 c64_cube(c64 z);
 
 #endif

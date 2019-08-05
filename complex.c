@@ -78,3 +78,15 @@ c64 c64_conj(c64 a)
   c64 c = {a.r, -a.i};
   return c;
 }
+
+c64 c64_square(c64 z)
+{
+  return c64_mul(z,z);
+}
+
+c64 c64_cube(c64 z)
+{
+  return c64_mul(z,c64_square(z));
+}
+
+c64 c64_one = {1.0, 0.0};
