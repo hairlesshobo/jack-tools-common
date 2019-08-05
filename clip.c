@@ -15,7 +15,7 @@ f32 clip_f32(f32 n, f32 l, f32 r)
 
 v32 clip_v32(v32 v, f32 l, f32 r)
 {
-    return make_v32(clip_f32(v.x, l, r),
+    return v32_make(clip_f32(v.x, l, r),
                     clip_f32(v.y, l, r),
                     clip_f32(v.z, l, r));
 }

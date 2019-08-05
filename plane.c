@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <math.h>
+
 #include "vector.h"
 #include "plane.h"
 
@@ -18,7 +19,7 @@ plane make_plane(v32 n, f32 d)
 
 f32 point_plane_distance(plane p, v32 v)
 {
-  return vdot(p.n, v) + p.d;
+  return v32_dot(p.n, v) + p.d;
 }
 
 /* Determing if a point lies on, in front of or behind a plane. */
@@ -55,10 +56,10 @@ bool intersect (plane p, v32 v0, v32 v1)
 
 v32 intersection(plane p, v32 v0, v32 v1)
 {
-  v32 r = vsub(v1, v0);
-  f32 n = vdot(p.n, r);
-  f32 t = -(vdot(p.n, v0) + p.d) / n;
-  return vadd(v0, vmul(t, r));
+  v32 r = v32_sub(v1, v0);
+  f32 n = v32_dot(p.n, r);
+  f32 t = -(v32_dot(p.n, v0) + p.d) / n;
+  return v32_add(v0, v32_mul(t, r));
 }
 
 /*  i = unit incidence vector, n = unit surface normal, result = unit
@@ -66,7 +67,7 @@ v32 intersection(plane p, v32 v0, v32 v1)
 
 v32 in_to_r(v32 i, v32 n)
 {
-  return vadd(vmul(vdot(vmul(-1.0, i), n) * 2.0, n), i);
+  return v32_add(v32_mul(v32_dot(v32_mul(-1.0, i), n) * 2.0, n), i);
 }
 
 /*
@@ -86,6 +87,6 @@ v32 in_to_r(v32 i, v32 n)
 v32 reflect(plane p, v32 v0, v32 v1)
 {
   v32 v = intersection(p, v0, v1);
-  v32 w = vunitise(vsub(v, v0));
-  return vadd(v, vmul(vlength(vsub(v1, v)), in_to_r(w, p.n)));
+  v32 w = v32_unitise(v32_sub(v, v0));
+  return v32_add(v, v32_mul(v32_length(v32_sub(v1, v)), in_to_r(w, p.n)));
 }
