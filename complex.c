@@ -41,6 +41,18 @@ c32 c32_conj(c32 a)
   return c;
 }
 
+c32 c32_square(c32 z)
+{
+  return c32_mul(z,z);
+}
+
+c32 c32_cube(c32 z)
+{
+  return c32_mul(z,c32_square(z));
+}
+
+c32 c32_one = {1.0, 0.0};
+
 /* c64 */
 
 c64 c64_add(c64 a, c64 b)
