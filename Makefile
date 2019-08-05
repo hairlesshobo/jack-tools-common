@@ -37,6 +37,7 @@ obj =	alsa-seq-endpoint.o \
 	observe-signal.o \
 	osc.o \
 	plane.o \
+	point.o \
 	quantize.o \
 	rand.o \
 	resample-src.o \
