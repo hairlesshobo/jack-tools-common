@@ -1,15 +1,10 @@
 c-common
 --------
 
-library of functions common to [c][c] projects
+library of functions common to local [c](http://www.open-std.org/jtc1/sc22/wg14/) projects
 
 tested-with: [gcc](http://gcc.gnu.org/) 8.3.0
 
-[c]: http://www.open-std.org/jtc1/sc22/wg14/
-
 debian: freeglut3-dev libglu1-mesa-dev libjack-dev libsamplerate-dev
 
-© [rohan drape][rd], 2003-2019, [gpl]
-
-[rd]: http://rohandrape.net/
-[gpl]: http://gnu.org/copyleft/
+© [rohan drape](http://rohandrape.net/), 2003-2019, [gpl](http://gnu.org/copyleft/)
