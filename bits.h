@@ -14,4 +14,8 @@
   (byte & 0x02 ? '1' : '0'), \
   (byte & 0x01 ? '1' : '0')
 
+void print_bit_mask_newline(FILE *fp, unsigned char x) {
+    fprintf(fp, BYTE_TO_BINARY_PRINTF_PATTERN"\n",BYTE_TO_BINARY_CHAR_SEQUENCE(x));
+}
+
 #endif
