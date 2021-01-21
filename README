@@ -3,7 +3,7 @@ c-common
 
 library of functions common to local [c](http://www.open-std.org/jtc1/sc22/wg14/) projects
 
-tested-with: [gcc](http://gcc.gnu.org/) 10.2.0
+tested-with: [gcc](http://gcc.gnu.org/) 10.2.1
 
 debian: freeglut3-dev libasound-dev libglu1-mesa-dev libjack-dev libpng-dev libsamplerate-dev libsndfile-dev
 
