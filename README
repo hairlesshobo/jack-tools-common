@@ -3,8 +3,8 @@ c-common
 
 library of functions common to local [c](http://www.open-std.org/jtc1/sc22/wg14/) projects
 
-tested-with: [gcc](http://gcc.gnu.org/) 9.3.0
+tested-with: [gcc](http://gcc.gnu.org/) 10.2.0
 
-debian: freeglut3-dev libglu1-mesa-dev libjack-dev libsamplerate-dev
+debian: freeglut3-dev libasound-dev libglu1-mesa-dev libjack-dev libpng-dev libsamplerate-dev libsndfile-dev
 
-© [rohan drape](http://rohandrape.net/), 2003-2020, [gpl](http://gnu.org/copyleft/)
+© [rohan drape](http://rohandrape.net/), 2003-2021, [gpl](http://gnu.org/copyleft/)

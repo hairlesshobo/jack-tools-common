@@ -47,14 +47,18 @@ void write_au_f32(char *nm, i32 nc, i32 nf, i32 sr, f32 * d)
 i32 read_i32(FILE * fp)
 {
     i32 i;
-    fread(&i, sizeof(i), 1, fp);
+    if(fread(&i, sizeof(i), 1, fp) != 1) {
+        die("sf-au: read_i32: read error");
+    }
     return ntoh_i32(i);
 }
 
 f32 read_f32(FILE * fp)
 {
     f32 i;
-    fread(&i, sizeof(i), 1, fp);
+    if(fread(&i, sizeof(i), 1, fp) != 1) {
+        die("sf-au: read_f32: read error");
+    }
     return ntoh_f32(i);
 }
 
