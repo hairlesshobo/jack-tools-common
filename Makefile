@@ -62,13 +62,17 @@ obj =	alsa-seq-endpoint.o \
 	ximg.o \
 	xregcomp.o
 
+CC = gcc # gcc clang
+AR = ar # ar llvm-ar
+
 CPPFLAGS += -g -Wall -pedantic -O2
+CFLAGS += -D_POSIX_C_SOURCE=200809 -std=c11
 
 %.o : %.c %.h
-	gcc $(CPPFLAGS) $(CFLAGS) -c $*.c
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $*.c
 
 all: $(obj)
-	ar -rcs lib-c-common.a $(obj)
+	$(AR) -rcs lib-c-common.a $(obj)
 
 clean:
 	rm -f *.o *.a
