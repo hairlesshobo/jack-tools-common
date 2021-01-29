@@ -1,5 +1,5 @@
 #ifndef _COMMON_BITS_H
-#define _COMMON_BIST_H
+#define _COMMON_BITS_H
 
 /* printf("..."BYTE_TO_BINARY_PRINTF_PATTERN"...", ..., BYTE_TO_BINARY_CHAR_SEQUENCE(x), ...) */
 
