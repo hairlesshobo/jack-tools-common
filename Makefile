@@ -14,6 +14,7 @@ obj =	alsa-seq-endpoint.o \
 	colour-rgba.o \
 	complex.o \
         cq.o \
+	denormal.o \
 	dl.o \
 	dx7.o \
 	file.o \
@@ -65,7 +66,7 @@ obj =	alsa-seq-endpoint.o \
 CC = gcc # gcc clang
 AR = ar # ar llvm-ar
 
-CPPFLAGS += -g -Wall -pedantic -O2
+CPPFLAGS += -g -Wall -pedantic -O2 -ffast-math
 CFLAGS += -D_POSIX_C_SOURCE=200809 -std=c11
 
 %.o : %.c %.h
