@@ -19,5 +19,6 @@ u8 status_ch(u8 st);
 bool is_note_data(u8 st);
 bool is_channel_voice_message(u8 st);
 bool is_sysex_message(u8 st);
+u16 u14_combine(u8 d1, u8 d2);
 
 #endif

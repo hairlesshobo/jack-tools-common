@@ -21,3 +21,7 @@ bool is_channel_voice_message(u8 st) {
 bool is_sysex_message(u8 st) {
     return st == 0xF0;
 }
+
+u16 u14_combine(u8 d1, u8 d2) {
+    return (((u16)d2 << 7) | (u16)d1);
+}
