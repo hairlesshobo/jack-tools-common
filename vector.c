@@ -1,47 +1,38 @@
 #include <math.h>
 #include <stdio.h>
-#include "vector.h"
 
-v3 v3_make(f32 x, f32 y, f32 z)
-{
-  v3 v;
-  v.x = x;
-  v.y = y;
-  v.z = z;
-  return v;
+#include "vector.h" /* c-common */
+
+v3 v3_make(f32 x, f32 y, f32 z) {
+  return (v3){x,y,z};
 }
 
-v3 v3_mul(f32 s, v3 v)
-{
-  v3 r = { s * v.x, s * v.y, s * v.z};
-  return r;
+v3 v3_mul(f32 s, v3 v) {
+  return v3_make(s * v.x, s * v.y, s * v.z);
 }
 
-v3 v3_add(v3 a, v3 b)
-{
-  v3 v = { a.x + b.x, a.y + b.y, a.z + b.z};
-  return v;
+v3 v3_add(v3 a, v3 b) {
+  return v3_make(a.x + b.x, a.y + b.y, a.z + b.z);
 }
 
-v3 v3_sub(v3 a, v3 b)
-{
-  v3 v = { a.x - b.x, a.y - b.y, a.z - b.z};
-  return v;
+v3 v3_sub(v3 a, v3 b) {
+  return v3_make(a.x - b.x, a.y - b.y, a.z - b.z);
 }
 
-f32 v3_dot(v3 a, v3 b)
-{
+f32 v3_dot(v3 a, v3 b) {
   return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
-f32 v3_length(v3 v)
-{
-  return sqrtf(v3_dot(v, v));
+f32 v3_mag_sq(v3 v) {
+  return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
-v3 v3_unitise(v3 v)
-{
-  f32 l = v3_length(v);
+f32 v3_mag(v3 v) {
+  return sqrtf(v3_mag_sq(v));
+}
+
+v3 v3_unitise(v3 v) {
+  f32 l = v3_mag(v);
   if(l == 0.0) {
     fprintf(stderr, "v3_unitise: v3_length==0\n");
     return v;

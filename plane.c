@@ -88,5 +88,5 @@ v3 reflect(plane p, v3 v0, v3 v1)
 {
   v3 v = intersection(p, v0, v1);
   v3 w = v3_unitise(v3_sub(v, v0));
-  return v3_add(v, v3_mul(v3_length(v3_sub(v1, v)), in_to_r(w, p.n)));
+  return v3_add(v, v3_mul(v3_mag(v3_sub(v1, v)), in_to_r(w, p.n)));
 }
