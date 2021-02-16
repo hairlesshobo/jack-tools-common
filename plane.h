@@ -4,15 +4,15 @@
 #include <stdbool.h>
 #include "vector.h"
 
-typedef struct {v32 n; f32 d;} plane;
+typedef struct {v3 n; f32 d;} plane;
 enum side {front, back, coincide};
 
-plane make_plane(v32 n, f32 d);
-f32 point_plane_distance(plane p, v32 v);
-enum side half_space(plane p, v32 v);
-bool intersect (plane p, v32 v0, v32 v1);
-v32 intersection(plane p, v32 v0, v32 v1);
-v32 in_to_r(v32 i, v32 n);
-v32 reflect(plane p, v32 v0, v32 v1);
+plane make_plane(v3 n, f32 d);
+f32 point_plane_distance(plane p, v3 v);
+enum side half_space(plane p, v3 v);
+bool intersect (plane p, v3 v0, v3 v1);
+v3 intersection(plane p, v3 v0, v3 v1);
+v3 in_to_r(v3 i, v3 n);
+v3 reflect(plane p, v3 v0, v3 v1);
 
 #endif

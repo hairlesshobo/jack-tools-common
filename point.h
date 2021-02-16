@@ -3,20 +3,21 @@
 
 #include "float.h"
 
-typedef struct { f32 x, y; } p32;
+typedef struct {f32 x, y;} p2;
 
-p32 p32_make(f32 x,f32 y);
-f32 p32_dot(p32 a,p32 b);
-f32 p32_length(p32 p);
-f32 p32_angle(p32 p);
-f32 p32_distance(p32 a, p32 b);
-p32 p32_polar_to_cartesian(p32 p);
-p32 p32_cartesian_to_polar(p32 p);
+p2 p2_make(f32 x,f32 y);
+f32 p2_dot(p2 a,p2 b);
+f32 p2_mag_sq(p2 p);
+f32 p2_mag(p2 p);
+f32 p2_angle(p2 p);
+f32 p2_distance(p2 a, p2 b);
+p2 p2_polar_to_cartesian(p2 p);
+p2 p2_cartesian_to_polar(p2 p);
 
-p32 p32_rotate(p32 p,f32 ang);
-p32 p32_translateP(p32 p,p32 v);
-p32 p32_scale(p32 p,p32 v);
-p32 p32_uscale(p32 p,f32 s);
-p32 p32_shear(p32 p,f32 dxdy);
+p2 p2_rotate(p2 p,f32 ang);
+p2 p2_add(p2 p,p2 v);
+p2 p2_mul(p2 p,p2 v);
+p2 p2_scale(p2 p,f32 m);
+p2 p2_shear(p2 p,f32 dxdy);
 
 #endif

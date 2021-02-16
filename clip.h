@@ -10,6 +10,6 @@
 
 i32 clip_i32(i32 n, i32 l, i32 r);
 f32 clip_f32(f32 n, f32 l, f32 r);
-v32 clip_v32(v32 v, f32 l, f32 r);
+v3 clip_v3(v3 v, f32 l, f32 r);
 
 #endif

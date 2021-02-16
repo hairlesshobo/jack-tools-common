@@ -3,14 +3,14 @@
 
 #include "float.h"
 
-typedef struct { f32 x, y, z;} v32;
+typedef struct { f32 x, y, z;} v3;
 
-v32 v32_make(f32 x, f32 y, f32 z);
-v32 v32_mul(f32 s, v32 v);
-v32 v32_add(v32 a, v32 b);
-v32 v32_sub(v32 a, v32 b);
-f32 v32_dot(v32 a, v32 b);
-f32 v32_length(v32 v);
-v32 v32_unitise(v32 v);
+v3 v3_make(f32 x, f32 y, f32 z);
+v3 v3_mul(f32 s, v3 v);
+v3 v3_add(v3 a, v3 b);
+v3 v3_sub(v3 a, v3 b);
+f32 v3_dot(v3 a, v3 b);
+f32 v3_length(v3 v);
+v3 v3_unitise(v3 v);
 
 #endif
