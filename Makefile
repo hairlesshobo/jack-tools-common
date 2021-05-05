@@ -50,6 +50,7 @@ obj =	alsa-seq-endpoint.o \
 	signal-interleave.o \
 	signal-interpolate.o \
 	signal-print.o \
+	svf.o \
 	taus88.o \
 	time-current.o \
 	time-ntp.o \
@@ -73,25 +74,16 @@ CFLAGS += -D_POSIX_C_SOURCE=200809 -std=c11
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $*.c
 
 all: $(obj)
-	$(AR) -rcs lib-c-common.a $(obj)
+	$(AR) -rcs lib-c-commonr.a $(obj)
 
 clean:
 	rm -f *.o *.a
 
-install:
-	cp lib-c-common.a $(prefix)/lib
-	mkdir -p $(prefix)/include/c-common
-	cp *.h $(prefix)/include/c-common
-
-uninstall:
-	rm -f $(prefix)/lib/lib-c-common.a
-	rm -Rf $(prefix)/include/c-common
-
 push-rd:
-	darcs push -a rd@rohandrape.net:sw/c-common
+	darcs push -a rd@rohandrape.net:sw/c-commonr
 
 pull-rd:
-	darcs pull -a http://rohandrape.net/sw/c-common
+	darcs pull -a http://rohandrape.net/sw/c-commonr
 
 indent:
 	indent -kr -nut sf-au.c

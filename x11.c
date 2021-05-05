@@ -22,6 +22,8 @@ x11_io_error_fail(Display *d)
   return 1;
 }
 
+/* This will generate errors for BadDrawable, which will be sent if a
+ window is destroyed by the window manager (which is a non-error). */
 void x11_fail_on_errors(void)
 {
   XSetErrorHandler(x11_error_fail);
