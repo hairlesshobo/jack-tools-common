@@ -79,11 +79,23 @@ all: $(obj)
 clean:
 	rm -f *.o *.a
 
-push-rd:
-	darcs push -a rd@rohandrape.net:sw/c-commonr
-
-pull-rd:
-	darcs pull -a http://rohandrape.net/sw/c-commonr
-
 indent:
 	indent -kr -nut sf-au.c
+
+GL_GIT=git@gitlab.com:rd--/c-commonr.git
+GL_HTTP=https://gitlab.com/rd--/c-commonr.git
+
+push-gl:
+	git push $(GL_GIT)
+
+push-gl-tags:
+	git push $(GH_GIT) --tag
+
+pull-gl:
+	git pull $(GL_HTTP)
+
+update-rd:
+	ssh rd@rohandrape.net "(cd sw/c-commonr ; git pull $(GL_HTTP))"
+
+push-all:
+	make push-gl update-rd
