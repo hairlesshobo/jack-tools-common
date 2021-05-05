@@ -1,5 +1,5 @@
-c-common
---------
+c-commonr
+---------
 
 library of functions common to local [c](http://www.open-std.org/jtc1/sc22/wg14/) projects
 
