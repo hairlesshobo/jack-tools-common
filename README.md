@@ -1,7 +1,9 @@
-c-commonr
----------
+r-common
+--------
 
-library of functions common to local [c](http://www.open-std.org/jtc1/sc22/wg14/) projects
+library of functions common to local projects
+
+- [c](http://www.open-std.org/jtc1/sc22/wg14/)
 
 tested-with:
 [gcc](http://gcc.gnu.org/)-10.2.1
