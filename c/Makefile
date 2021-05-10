@@ -74,7 +74,7 @@ CFLAGS += -D_POSIX_C_SOURCE=200809 -std=c11
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $*.c
 
 all: $(obj)
-	$(AR) -rcs lib-c-commonr.a $(obj)
+	$(AR) -rcs lib-r-common.a $(obj)
 
 clean:
 	rm -f *.o *.a
