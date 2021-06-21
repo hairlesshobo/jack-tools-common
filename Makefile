@@ -14,7 +14,7 @@ pull-gl:
 	git pull $(GL_HTTP)
 
 push-tags:
-	git push $(GL_GIT) --tag
+	git push $(GL_GIT) --tags
 
 update-rd:
 	ssh rd@rohandrape.net "(cd sw/r-common ; git pull $(GL_HTTP))"
