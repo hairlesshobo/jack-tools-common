@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 #include <stdint.h>
-#include "byte-order.h"
 #include "failure.h"
 
 FILE *xfopen(const char *filename, const char *opentype);
