@@ -2,10 +2,11 @@
 #include <stdint.h>
 #include "taus88.h"
 
-taus88_t taus88_std_init(void)
+void taus88_std_init(taus88_t *t)
 {
-    taus88_t st = {1243598713U, 3093459404U, 1821928721U};
-    return(st);
+    t->s1 = 1243598713U;
+    t->s2 = 3093459404U;
+    t->s3 = 1821928721U;
 }
 
 taus88_t make_taus88(u32 seed)
