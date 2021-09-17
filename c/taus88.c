@@ -1,5 +1,12 @@
+/* c.f. supercollider/include/plugin_interface/SC_RGen.h */
 #include <stdint.h>
 #include "taus88.h"
+
+taus88_t taus88_std_init(void)
+{
+    taus88_t st = {1243598713U, 3093459404U, 1821928721U};
+    return(st);
+}
 
 taus88_t make_taus88(u32 seed)
 {
@@ -18,6 +25,7 @@ u32 taus88u32(taus88_t *t)
   return t->s1 ^ t->s2 ^ t->s3;
 }
 
+/* range = [0,1) */
 f32 taus88f32(taus88_t *t)
 {
   union {u32 i ; f32 f ;} u;

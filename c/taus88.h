@@ -7,6 +7,7 @@
 
 typedef struct {u32 s1, s2, s3;} taus88_t;
 
+taus88_t taus88_std_init(void);
 taus88_t make_taus88(u32 seed);
 u32 taus88u32(taus88_t *t);
 f32 taus88f32(taus88_t *t);
