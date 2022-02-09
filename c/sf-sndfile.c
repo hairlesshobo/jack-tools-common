@@ -45,7 +45,7 @@ sf_count_t xsf_write_float(SNDFILE *sndfile, float *ptr, sf_count_t items)
 /* Read the sound file at `name' to a newly allocated array and store
    the size (in samples) at `n'. */
 
-float *read_signal_file(const char *name, int nc, int *n)
+float *xsf_read_signal_file(const char *name, int nc, int *n)
 {
   SF_INFO sfi;
   SNDFILE *sfp = xsf_open(name, SFM_READ, &sfi);
@@ -66,7 +66,7 @@ float *read_signal_file(const char *name, int nc, int *n)
 
 /* Write a NeXT F32 sound file */
 
-bool write_au_f32(const char *name, int nc, int nf,int sr,const float *data)
+bool xsf_write_au_f32(const char *name, int nc, int nf,int sr,const float *data)
 {
   SF_INFO sfi;
   xmemset (&sfi, 0, sizeof (sfi)) ;
