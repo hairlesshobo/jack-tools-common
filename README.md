@@ -6,7 +6,7 @@ library of functions common to local projects
 - [c](http://www.open-std.org/jtc1/sc22/wg14/)
 
 tested-with:
-[gcc](http://gcc.gnu.org/)-10.2.1
+[gcc](http://gcc.gnu.org/)-11.2.0
 [clang](https://clang.llvm.org/)-11.0.1
 
 debian:
