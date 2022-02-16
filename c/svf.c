@@ -4,7 +4,7 @@
 
 #include "svf.h"
 
-void svf_calculate_c1_and_c2(float f,float q,float *c1,float *c2)
+inline void svf_calculate_c1_and_c2(float f,float q,float *c1,float *c2)
 {
     float pi = 3.141592653589793;
     float w = 2.0 * tan (pi * f);

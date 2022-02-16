@@ -8,18 +8,18 @@
 
 static taus88_t taus88_std = {1243598713U, 3093459404U, 1821928721U};
 
-f32 rand_f32_st(taus88_t *st, f32 l, f32 r)
+inline f32 rand_f32_st(taus88_t *st, f32 l, f32 r)
 {
   f32 n = taus88f32(st);
   return (n * (r - l)) + l;
 }
 
-f32 rand_f32(f32 l, f32 r)
+inline f32 rand_f32(f32 l, f32 r)
 {
   return rand_f32_st(&taus88_std, l, r);
 }
 
-v3 rand_v3(f32 l, f32 r)
+inline v3 rand_v3(f32 l, f32 r)
 {
   v3 v;
   v.x = rand_f32(l,r);
@@ -28,7 +28,7 @@ v3 rand_v3(f32 l, f32 r)
   return v;
 }
 
-rgba rand_rgba(f32 l, f32 r)
+inline rgba rand_rgba(f32 l, f32 r)
 {
   rgba c;
   c.r = rand_f32(l,r);

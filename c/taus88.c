@@ -2,14 +2,14 @@
 #include <stdint.h>
 #include "taus88.h"
 
-void taus88_std_init(taus88_t *t)
+inline void taus88_std_init(taus88_t *t)
 {
     t->s1 = 1243598713U;
     t->s2 = 3093459404U;
     t->s3 = 1821928721U;
 }
 
-taus88_t make_taus88(u32 seed)
+inline taus88_t make_taus88(u32 seed)
 {
   taus88_t t;
   t.s1 = 1243598713U ^ seed; if (t.s1 <  2) t.s1 = 1243598713U;
@@ -18,7 +18,7 @@ taus88_t make_taus88(u32 seed)
   return t;
 }
 
-u32 taus88u32(taus88_t *t)
+inline u32 taus88u32(taus88_t *t)
 {
   t->s1 = ((t->s1 &  -2) << 12) ^ (((t->s1 << 13) ^  t->s1) >> 19);
   t->s2 = ((t->s2 &  -8) <<  4) ^ (((t->s2 <<  2) ^  t->s2) >> 25);
@@ -27,7 +27,7 @@ u32 taus88u32(taus88_t *t)
 }
 
 /* range = [0,1) */
-f32 taus88f32(taus88_t *t)
+inline f32 taus88f32(taus88_t *t)
 {
   union {u32 i ; f32 f ;} u;
   u.i = 0x3F800000 | (taus88u32(t) >> 9);

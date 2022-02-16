@@ -5,7 +5,7 @@
 #include "failure.h"
 #include "memory.h"
 
-void *xmalloc(size_t size)
+inline void *xmalloc(size_t size)
 {
   void *p = malloc(size);
   if(p == NULL) {
@@ -15,7 +15,7 @@ void *xmalloc(size_t size)
   return p;
 }
 
-void *xcalloc(size_t count, size_t eltsize)
+inline void *xcalloc(size_t count, size_t eltsize)
 {
   void *p = calloc(count, eltsize);
   if(p == NULL) {
@@ -25,7 +25,7 @@ void *xcalloc(size_t count, size_t eltsize)
   return p;
 }
 
-void *xrealloc(void *p, size_t size)
+inline void *xrealloc(void *p, size_t size)
 {
   p = realloc(p, size);
   if(p == NULL) {
@@ -35,7 +35,7 @@ void *xrealloc(void *p, size_t size)
   return p;
 }
 
-void *xmemcpy(void *dst,const void *src, size_t n)
+inline void *xmemcpy(void *dst,const void *src, size_t n)
 {
   if(dst == NULL || src == NULL) {
     perror("xmemcpy() failed");
@@ -45,7 +45,7 @@ void *xmemcpy(void *dst,const void *src, size_t n)
   }
 }
 
-void *xmemset(void *s, int c, size_t n)
+inline void *xmemset(void *s, int c, size_t n)
 {
   if(s == NULL) {
     perror("xmemset() failed");
@@ -55,7 +55,7 @@ void *xmemset(void *s, int c, size_t n)
   }
 }
 
-float *fmalloc(size_t n)
+inline float *fmalloc(size_t n)
 {
   float *d = (float *)xmalloc(n * sizeof(float));
   size_t i;
@@ -65,7 +65,7 @@ float *fmalloc(size_t n)
   return d;
 }
 
-void fmemset(float *data, int n, float value)
+inline void fmemset(float *data, int n, float value)
 {
   if(data == NULL) {
     perror("fmemset() failed");
