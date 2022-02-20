@@ -2,10 +2,14 @@
 
 The meaning of the _inline_ qualifier is defined in C99.
 
-There is different meaning in Gcc C89.
+_inline_ has a different meaning in Gcc C89.
 
-This library requires C99 behaviour.
+r-common/c requires C99 behaviour.
 
 Inline functions are declared in .h files, and the corresponding .c file mentions the definition (as _extern inline_).
 
-This library compiles cleanly with Gcc-11.2 and Clang-13.0.
+r-common/c compiles cleanly with Gcc-11.2 and Clang-13.0.
+
+Modules (.c/.h file pairs) are written inline if they are required by multiple objects that are to be linked together statically.
+
+Web Assembly scsynth links all unit generators statically.
