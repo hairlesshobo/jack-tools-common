@@ -1,0 +1,11 @@
+# Inline
+
+The meaning of the _inline_ qualifier is defined in C99.
+
+There is different meaning in Gcc C89.
+
+This library requires C99 behaviour.
+
+Inline functions are declared in .h files, and the corresponding .c file mentions the definition (as _extern inline_).
+
+This library compiles cleanly with Gcc-11.2 and Clang-13.0.

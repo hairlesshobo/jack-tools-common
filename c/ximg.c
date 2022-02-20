@@ -10,7 +10,7 @@
 Ximg_t *
 ximg_open(int width, int height, char *name)
 {
-  Ximg_t *x = xmalloc(sizeof(Ximg_t));
+  Ximg_t *x = (Ximg_t *)xmalloc(sizeof(Ximg_t));
   x->width = width;
   x->height = height;
   x->d = x11_XOpenDisplay_err(NULL);
@@ -47,7 +47,7 @@ ximg_open(int width, int height, char *name)
     fprintf(stderr, "XCreateImage() failed");
     FAILURE;
   }
-  x->image->data = xmalloc(x->height * x->image->bytes_per_line);
+  x->image->data = (char *)xmalloc(x->height * x->image->bytes_per_line);
   XPutImage(x->d, x->w, x->draw, x->image, 0, 0, 0, 0, x->width, x->height);
   XFlush(x->d);
   XMapWindow(x->d, x->w);

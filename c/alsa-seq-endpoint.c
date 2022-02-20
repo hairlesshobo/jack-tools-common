@@ -108,10 +108,10 @@ void alsa_seq_endpoint_read(snd_seq_t *seq,
   alsa_seq_endpoint_count(seq, source_n, destination_n);
 
   alsa_seq_endpoint_t *s;
-  s = malloc(*source_n * sizeof(alsa_seq_endpoint_t));
+  s = (alsa_seq_endpoint_t *)malloc(*source_n * sizeof(alsa_seq_endpoint_t));
 
   alsa_seq_endpoint_t *d;
-  d = malloc(*destination_n * sizeof(alsa_seq_endpoint_t));
+  d = (alsa_seq_endpoint_t *)malloc(*destination_n * sizeof(alsa_seq_endpoint_t));
 
   snd_seq_client_info_t *c;
   snd_seq_client_info_malloc(&c);

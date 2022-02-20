@@ -65,7 +65,7 @@ obj =	alsa-seq-endpoint.o \
 	xregcomp.o
 
 CC = gcc # gcc clang
-AR = ar # ar llvm-ar
+AR = ar # ar llvm-ar-13
 
 CPPFLAGS += -g -Wall -pedantic -O2 -ffast-math
 CFLAGS += -D_POSIX_C_SOURCE=200809 -std=c11

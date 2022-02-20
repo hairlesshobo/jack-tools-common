@@ -92,7 +92,7 @@ f32 *read_au_f32(char *nm, i32 * nc, i32 * nf, i32 * sr)
     fp = fopen(nm, "r");
     read_header(fp, nc, nf, sr);
     i32 n = *nf * *nc;
-    f32 *d = xmalloc(n * sizeof(f32));
+    f32 *d = (f32 *)xmalloc(n * sizeof(f32));
     for (i = 0; i < n; i++) {
         d[i] = read_f32(fp);
     }

@@ -33,7 +33,7 @@ u8 *img_read_ppm(i32 *w, i32 *h, FILE *fp)
     FAILURE;
   }
   size_t n = *w * *h;
-  u8 *data = xmalloc(n);
+  u8 *data = (u8 *)xmalloc(n);
   size_t r_err = fread(data, 3, n, fp);
   if(r_err != n){
     fprintf(stderr, "img_read_ppm(): fread() failed");

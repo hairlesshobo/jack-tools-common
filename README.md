@@ -7,7 +7,7 @@ library of functions common to local projects
 
 tested-with:
 [gcc](http://gcc.gnu.org/)-11.2.0
-[clang](https://clang.llvm.org/)-11.0.1
+[clang](https://clang.llvm.org/)-13.0.1
 
 debian:
 libjack-jackd2-dev (libjack-dev);

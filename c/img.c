@@ -16,7 +16,7 @@ i32 img_bytes(i32 w, i32 h, i32 n)
 
 u8 *img_alloc(i32 w, i32 h, i32 n)
 {
-  return xmalloc(img_bytes(w,h,n));
+  return (u8 *)xmalloc(img_bytes(w,h,n));
 }
 
 void img_memset(u8 *img,i32 w, i32 h, i32 n,u8 c)

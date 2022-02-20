@@ -51,8 +51,6 @@ c32 c32_cube(c32 z)
   return c32_mul(z,c32_square(z));
 }
 
-c32 c32_one = {1.0, 0.0};
-
 /* c64 */
 
 c64 c64_add(c64 a, c64 b)
@@ -100,5 +98,3 @@ c64 c64_cube(c64 z)
 {
   return c64_mul(z,c64_square(z));
 }
-
-c64 c64_one = {1.0, 0.0};

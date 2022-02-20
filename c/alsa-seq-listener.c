@@ -41,7 +41,7 @@ pthread_t alsa_seq_listener(snd_seq_t *seq,
 {
   pthread_t thread;
   alsa_seq_listener_t *l;
-  l = malloc(sizeof(alsa_seq_listener_t));
+  l = (alsa_seq_listener_t *)malloc(sizeof(alsa_seq_listener_t));
   l->seq = seq;
   l->decoder = decoder;
   l->receiver = receiver;

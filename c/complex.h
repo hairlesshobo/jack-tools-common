@@ -13,7 +13,7 @@ f32 c32_mod(c32 a);
 c32 c32_conj(c32 a);
 c32 c32_square(c32 z);
 c32 c32_cube(c32 z);
-c32 c32_one;
+c32 c32_one = {1.0, 0.0};
 
 typedef struct {f64 r,i;} c64;
 
@@ -25,6 +25,6 @@ f64 c64_mod(c64 a);
 c64 c64_conj(c64 a);
 c64 c64_square(c64 z);
 c64 c64_cube(c64 z);
-c64 c64_one;
+c64 c64_one = {1.0, 0.0};
 
 #endif
