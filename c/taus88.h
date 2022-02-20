@@ -7,6 +7,8 @@
 
 typedef struct {u32 s1, s2, s3;} taus88_t;
 
+taus88_t taus88_std = {1243598713U, 3093459404U, 1821928721U};
+
 inline void taus88_std_init(taus88_t *t)
 {
     t->s1 = 1243598713U;
