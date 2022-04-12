@@ -22,6 +22,7 @@ obj =	alsa-seq-endpoint.o \
 	gl-cube.o \
 	gl-sphere.o \
 	glu-screen-capture.o \
+	hash.o \
 	hermite.o \
 	img.o \
 	img-png.o \
