@@ -12,6 +12,7 @@ obj =	alsa-seq-endpoint.o \
 	clip.o \
 	colour.o \
 	colour-rgba.o \
+	compare.o \
 	complex.o \
         cq.o \
 	denormal.o \
