@@ -1,6 +1,9 @@
 #ifndef _COMMON_CFILE_BYTE_H
 #define _COMMON_CFILE_BYTE_H
 
+#include "float.h"
+#include "int.h"
+
 u16 fread_u16(FILE *fp);
 u32 fread_u32(FILE *fp);
 u64 fread_u64(FILE *fp);
