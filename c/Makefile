@@ -20,6 +20,8 @@ obj =	alsa-seq-endpoint.o \
 	dl.o \
 	dx7.o \
 	file.o \
+	filter.o \
+	float.o \
 	gen-trapezoid.o \
 	gl-cube.o \
 	gl-sphere.o \

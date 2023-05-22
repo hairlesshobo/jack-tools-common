@@ -1,4 +1,4 @@
-/* Beq filter coefficient calculations, results are (a0,a1,a2,b0,b1). */
+/* Beq filter coefficient calculations, results are (a0, a1, a2, b1, b2). */
 
 #include <math.h>
 
