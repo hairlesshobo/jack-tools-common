@@ -121,11 +121,11 @@ void bHiShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	*b2 = ((a + 1) - j - k) * -b0rz;
 }
 
-beq beqLowPass(R sr, R freq, R rq) { beq c; bLowPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-beq beqHiPass(R sr, R freq, R rq) { beq c; bHiPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-beq beqAllPass(R sr, R freq, R rq) { beq c; bAllPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-beq beqBandPass(R sr, R freq, R bw) { beq c; bBandPassCoef(sr, freq, bw, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-beq beqBandStop(R sr, R freq, R bw) { beq c; bBandStopCoef(sr, freq, bw, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-beq beqPeakEq(R sr, R freq, R rq, R db) { beq c; bPeakEqCoef(sr, freq, rq, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-beq beqLowShelf(R sr, R freq, R rs, R db) { beq c; bLowShelfCoef(sr, freq, rs, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-beq beqHiShelf(R sr, R freq, R rs, R db) { beq c; bHiShelfCoef(sr, freq, rs, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqLowPass(R sr, R freq, R rq) { sos c; bLowPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqHiPass(R sr, R freq, R rq) { sos c; bHiPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqAllPass(R sr, R freq, R rq) { sos c; bAllPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqBandPass(R sr, R freq, R bw) { sos c; bBandPassCoef(sr, freq, bw, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqBandStop(R sr, R freq, R bw) { sos c; bBandStopCoef(sr, freq, bw, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqPeakEq(R sr, R freq, R rq, R db) { sos c; bPeakEqCoef(sr, freq, rq, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqLowShelf(R sr, R freq, R rs, R db) { sos c; bLowShelfCoef(sr, freq, rs, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqHiShelf(R sr, R freq, R rs, R db) { sos c; bHiShelfCoef(sr, freq, rs, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }

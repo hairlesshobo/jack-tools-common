@@ -7,10 +7,33 @@
 
 #define PI (3.14159265358979323846)
 
+R fosCoefStep(R in, R a0, R a1, R b1, R *in1, R *out1) {
+	R out = (a0 * in) + (a1 * *in1) + (b1 * *out1);
+	*in1 = in;
+	*out1 = out;
+	return out;
+}
+
+R sosCoefStep(R in, R a0, R a1, R a2, R b1, R b2, R *in1, R *in2, R *out1, R *out2) {
+	R out = (a0 * in) + (a1 * *in1) + (a2 * *in2) + (b1 * *out1) + (b2 * *out2);
+	*in2 = *in1;
+	*in1 = in;
+	*out2 = *out1;
+	*out1 = out;
+	return out;
+}
+
+R iir2CoefStep(R in, R a0, R b1, R b2, R *out1, R *out2) {
+	R out = (a0 * in) + (b1 * *out1) + (b2 * *out2);
+	*out2 = *out1;
+	*out1 = out;
+	return out;
+}
+
 // Butterworth low pass or high pass Sos filter coefficients.
 void bwLpfOrHpfCoef(bool isHpf, R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	R f = freq * PI / sr;
-	R c = isHpf ? tan(f) : 1.0 / tan(f);
+	R c = isHpf ? tan(f) : 1 / tan(f);
 	R c2 = c * c;
 	R s2c = sqrt(2) * c;
 	*a0 = 1 / (1 + s2c + c2);
@@ -26,7 +49,7 @@ void rlpfCoef(R radiansPerSample, R freq, R rq, R *a0, R *b1, R *b2) {
 	R pf = freq * radiansPerSample;
 	R d = tan(pf * qr * 0.5);
 	R c = (1 - d) / (1 + d);
-	*b1 = (1.0 + c) * cos(pf);
+	*b1 = (1 + c) * cos(pf);
 	*a0 = (1 + c - *b1) * 0.25;
 	*b2 = -c;
 }
@@ -43,6 +66,10 @@ void resonzCoef(R radiansPerSample, R freq, R rq, R *a0, R *b1, R *b2) {
 	*b1 = twoR * ct;
 	*b2 = -r2;
 }
+
+R fosStep(R in, fos c, fosState s) { return fosCoefStep(in, c.a0, c.a1, c.b1, &s.in1, &s.out1); }
+R sosStep(R in, sos c, sosState s) { return sosCoefStep(in, c.a0, c.a1, c.a2, c.b1, c.b2, &s.in1, &s.in2, &s.out1, &s.out2); }
+R iir2Step(R in, iir2 c, iir2State s) { return iir2CoefStep(in, c.a0, c.b1, c.b2, &s.out1, &s.out2); }
 
 sos bwLpfOrHpf(bool isHpf, R sr, R freq, R rq) { sos c; bwLpfOrHpfCoef(isHpf, sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
 iir2 rlpf(R radiansPerSample, R freq, R rq) { iir2 c; rlpfCoef(radiansPerSample, freq, rq, &c.a0, &c.b1, &c.b2); return c; }
