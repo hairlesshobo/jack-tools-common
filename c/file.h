@@ -1,7 +1,6 @@
 #ifndef _COMMON_FILE_H
 #define _COMMON_FILE_H
 
-void *xrealloc(void *p, size_t size);
 bool file_exists_p(const char *filename);
 time_t stat_mtime(const char *filename);
 size_t stat_size(const char *filename);
