@@ -3,14 +3,14 @@
 
 #include "filter.h"
 
-void bLowPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2);
-void bHiPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2);
-void bAllPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2);
-void bBandPassCoef(R sr, R freq, R bw, R *a0, R *a1, R *a2, R *b1, R *b2);
-void bBandStopCoef(R sr, R freq, R bw, R *a0, R *a1, R *a2, R *b1, R *b2);
-void bPeakEqCoef(R sr, R freq, R rq, R db, R *a0, R *a1, R *a2, R *b1, R *b2);
-void bLowShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2);
-void bHiShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2);
+void beqLowPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2);
+void beqHiPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2);
+void beqAllPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2);
+void beqBandPassCoef(R sr, R freq, R bw, R *a0, R *a1, R *a2, R *b1, R *b2);
+void beqBandStopCoef(R sr, R freq, R bw, R *a0, R *a1, R *a2, R *b1, R *b2);
+void beqPeakEqCoef(R sr, R freq, R rq, R db, R *a0, R *a1, R *a2, R *b1, R *b2);
+void beqLowShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2);
+void beqHiShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2);
 
 sos beqLowPass(R sr, R freq, R rq);
 sos beqHiPass(R sr, R freq, R rq);

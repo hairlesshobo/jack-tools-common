@@ -7,7 +7,7 @@
 #define PI (3.14159265358979323846)
 
 // Calculate coefficients for bi-quad low pass filter.
-void bLowPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2) {
+void beqLowPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	R w0 = PI * 2 * freq * (1 / sr);
 	R cos_w0 = cos(w0);
 	R i = 1 - cos_w0;
@@ -21,7 +21,7 @@ void bLowPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2) {
 }
 
 // Calculate coefficients for bi-quad high pass filter.
-void bHiPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2) {
+void beqHiPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	R w0 = PI * 2 * freq * (1 / sr);
 	R cos_w0 = cos(w0);
 	R i = 1 + cos_w0;
@@ -35,7 +35,7 @@ void bHiPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2) {
 }
 
 // Calculate coefficients for bi-quad all pass filter.
-void bAllPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2) {
+void beqAllPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	R w0 = PI * 2 * freq * (1 / sr);
 	R alpha = sin(w0) * 0.5 * rq;
 	R b0rz = 1 / (1 + alpha);
@@ -47,7 +47,7 @@ void bAllPassCoef(R sr, R freq, R rq, R *a0, R *a1, R *a2, R *b1, R *b2) {
 }
 
 // Calculate coefficients for bi-quad band pass filter.
-void bBandPassCoef(R sr, R freq, R bw, R *a0, R *a1, R *a2, R *b1, R *b2) {
+void beqBandPassCoef(R sr, R freq, R bw, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	R w0 = PI * 2 * freq * (1 / sr);
 	R sin_w0 = sin(w0);
 	R alpha = sin_w0 * sinh(0.34657359027997 * bw * w0 / sin_w0);
@@ -60,7 +60,7 @@ void bBandPassCoef(R sr, R freq, R bw, R *a0, R *a1, R *a2, R *b1, R *b2) {
 }
 
 // Calculate coefficients for bi-quad stop band filter.
-void bBandStopCoef(R sr, R freq, R bw, R *a0, R *a1, R *a2, R *b1, R *b2) {
+void beqBandStopCoef(R sr, R freq, R bw, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	R w0 = PI * 2 * freq * (1 / sr);
 	R sin_w0 = sin(w0);
 	R alpha = sin_w0 * sinh(0.34657359027997 * bw * w0 / sin_w0);
@@ -73,7 +73,7 @@ void bBandStopCoef(R sr, R freq, R bw, R *a0, R *a1, R *a2, R *b1, R *b2) {
 }
 
 // Calculate coefficients for bi-quad peaking EQ filter.
-void bPeakEqCoef(R sr, R freq, R rq, R db, R *a0, R *a1, R *a2, R *b1, R *b2) {
+void beqPeakEqCoef(R sr, R freq, R rq, R db, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	R a = pow(10, db / 40);
 	R w0 = PI * 2 * freq * (1 / sr);
 	R alpha = sin(w0) * 0.5 * rq;
@@ -86,7 +86,7 @@ void bPeakEqCoef(R sr, R freq, R rq, R db, R *a0, R *a1, R *a2, R *b1, R *b2) {
 }
 
 // Calculate coefficients for bi-quad low shelf filter.
-void bLowShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2) {
+void beqLowShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	R a = pow(10, db / 40);
 	R w0 = PI * 2 * freq * (1 / sr);
 	R cos_w0 = cos(w0);
@@ -104,7 +104,7 @@ void bLowShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2) 
 }
 
 // Calculate coefficients for bi-quad high shelf filter.
-void bHiShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2) {
+void beqHiShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	R a = pow(10, db / 40);
 	R w0 = PI * 2 * freq * (1 / sr);
 	R cos_w0 = cos(w0);
@@ -121,11 +121,11 @@ void bHiShelfCoef(R sr, R freq, R rs, R db, R *a0, R *a1, R *a2, R *b1, R *b2) {
 	*b2 = ((a + 1) - j - k) * -b0rz;
 }
 
-sos beqLowPass(R sr, R freq, R rq) { sos c; bLowPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-sos beqHiPass(R sr, R freq, R rq) { sos c; bHiPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-sos beqAllPass(R sr, R freq, R rq) { sos c; bAllPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-sos beqBandPass(R sr, R freq, R bw) { sos c; bBandPassCoef(sr, freq, bw, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-sos beqBandStop(R sr, R freq, R bw) { sos c; bBandStopCoef(sr, freq, bw, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-sos beqPeakEq(R sr, R freq, R rq, R db) { sos c; bPeakEqCoef(sr, freq, rq, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-sos beqLowShelf(R sr, R freq, R rs, R db) { sos c; bLowShelfCoef(sr, freq, rs, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
-sos beqHiShelf(R sr, R freq, R rs, R db) { sos c; bHiShelfCoef(sr, freq, rs, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqLowPass(R sr, R freq, R rq) { sos c; beqLowPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqHiPass(R sr, R freq, R rq) { sos c; beqHiPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqAllPass(R sr, R freq, R rq) { sos c; beqAllPassCoef(sr, freq, rq, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqBandPass(R sr, R freq, R bw) { sos c; beqBandPassCoef(sr, freq, bw, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqBandStop(R sr, R freq, R bw) { sos c; beqBandStopCoef(sr, freq, bw, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqPeakEq(R sr, R freq, R rq, R db) { sos c; beqPeakEqCoef(sr, freq, rq, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqLowShelf(R sr, R freq, R rs, R db) { sos c; beqLowShelfCoef(sr, freq, rs, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
+sos beqHiShelf(R sr, R freq, R rs, R db) { sos c; beqHiShelfCoef(sr, freq, rs, db, &c.a0, &c.a1, &c.a2, &c.b1, &c.b2); return c; }
