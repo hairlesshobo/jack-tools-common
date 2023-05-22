@@ -4,6 +4,7 @@ obj =	alsa-seq-endpoint.o \
 	alsa-seq-listener.o \
 	alsa-seq-print.o \
 	alsa-seq-send.o \
+	beq.o \
 	bessel.o \
 	bezier.o \
 	byte-order.o \
@@ -69,7 +70,7 @@ obj =	alsa-seq-endpoint.o \
 CC = gcc # gcc clang
 AR = ar # ar llvm-ar-13
 
-CPPFLAGS += -g -Wall -pedantic -O2 -ffast-math
+CPPFLAGS += -g -Wall -pedantic -O3 -ffast-math
 CFLAGS += -D_POSIX_C_SOURCE=200809 -std=c11
 
 %.o : %.c %.h
