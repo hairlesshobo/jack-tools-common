@@ -23,7 +23,7 @@ inline f32 signal_interpolate_circular(const f32 *signal, i32 signal_n, f32 inde
 }
 
 inline f32 signal_interpolate_circular_safe(const f32 *signal, i32 signal_n, f32 index) {
-	if (index < 0 || index >= (f32) signal_n) {
+	if (index < 0 || index >= (f32)signal_n) {
 		return 0.0;
 	}
 	return signal_interpolate_circular(signal, signal_n, index);

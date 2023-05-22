@@ -35,7 +35,7 @@ float cq_access_i(float *s,int n,int ri,int wi)
 float cq_access(float *s,int n,float ri,int wi)
 {
   int i = cq_index(n,ri,wi);
-  return signal_interpolate(s,n,i);
+  return signal_interpolate_circular(s,n,i);
 }
 
 void cq_increment_write_index(int n,int *wi)
