@@ -47,6 +47,8 @@ obj =	alsa-seq-endpoint.o \
 	quantize.o \
 	rand.o \
 	resample-src.o \
+	ringbuffer.o \
+	ringbuffer-fd.o \
 	segment-transfer.o \
 	sf-au.o \
 	sf-sndfile.o \
