@@ -32,4 +32,7 @@ size_t ringbuffer_write(ringbuffer_t *rb, const char *src, size_t cnt);
 void ringbuffer_write_advance(ringbuffer_t *rb, size_t cnt);
 size_t ringbuffer_write_space(const ringbuffer_t *rb);
 
+void ringbuffer_read_exactly(ringbuffer_t *rb, char *dest, size_t cnt);
+void ringbuffer_write_exactly(ringbuffer_t *rb, const char *src, size_t cnt);
+
 #endif
