@@ -44,6 +44,7 @@ obj =	alsa-seq-endpoint.o \
 	osc.o \
 	plane.o \
 	point.o \
+	rt-portaudio.o \
 	quantize.o \
 	rand.o \
 	resample-src.o \
