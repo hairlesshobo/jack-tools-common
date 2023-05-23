@@ -206,20 +206,20 @@ void ringbuffer_print_debug(const ringbuffer_t *r, const char *s)
 	);
 }
 
-void ringbuffer_read_exactly(ringbuffer_t *r, char *buf, int n)
+void ringbuffer_read_exactly(ringbuffer_t *rb, char *dest, size_t cnt)
 {
-	int err = ringbuffer_read(r, buf, n);
-	if(err != n) {
-		fprintf(stderr, "%s: error reading ring buffer (%d != %d)\n", __func__, err, n);
+	size_t err = ringbuffer_read(rb, dest, cnt);
+	if(err != cnt) {
+		fprintf(stderr, "%s: error reading ring buffer (%lu != %lu)\n", __func__, err, cnt);
 		exit(1);
 	}
 }
 
-void ringbuffer_write_exactly(ringbuffer_t *r, const char *buf, int n)
+void ringbuffer_write_exactly(ringbuffer_t *rb, const char *src, size_t cnt)
 {
-	int err = ringbuffer_write(r, buf, n);
-	if(err != n) {
-		fprintf(stderr, "%s: error writing ring buffer (%d != %d)\n",  __func__, err, n);
+	size_t err = ringbuffer_write(rb, src, cnt);
+	if(err != cnt) {
+		fprintf(stderr, "%s: error writing ring buffer (%lu != %lu)\n",  __func__, err, cnt);
 		exit(1);
 	}
 }
