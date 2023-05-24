@@ -1,33 +1,27 @@
-/* Filter coefficient calculations. */
-
 #include <math.h>
 #include <stdbool.h>
 
+#include "biquad.h"
 #include "filter.h"
 
 #define PI (3.14159265358979323846)
 
-R fosCoefStep(R in, R a0, R a1, R b1, R *in1, R *out1) {
-	R out = (a0 * in) + (a1 * *in1) + (b1 * *out1);
-	*in1 = in;
-	*out1 = out;
-	return out;
+R fosCoefStep(R x0, R b0, R b1, R a1, R *x1, R *y1) {
+	R y0 = (b0 * x0) + (b1 * *x1) + (a1 * *y1);
+	*x1 = x0;
+	*y1 = y0;
+	return y0;
 }
 
-R sosCoefStep(R in, R a0, R a1, R a2, R b1, R b2, R *in1, R *in2, R *out1, R *out2) {
-	R out = (a0 * in) + (a1 * *in1) + (a2 * *in2) + (b1 * *out1) + (b2 * *out2);
-	*in2 = *in1;
-	*in1 = in;
-	*out2 = *out1;
-	*out1 = out;
-	return out;
+R sosCoefStep(R x0, R b0, R b1, R b2, R a1, R a2, R *x1, R *x2, R *y1, R *y2) {
+	return biquad_normalised_direct_form_1(x0, b0, b1, b2, -a1, -a2, x1, x2, y1, y2);
 }
 
-R iir2CoefStep(R in, R a0, R b1, R b2, R *out1, R *out2) {
-	R out = (a0 * in) + (b1 * *out1) + (b2 * *out2);
-	*out2 = *out1;
-	*out1 = out;
-	return out;
+R iir2CoefStep(R x0, R b0, R a1, R a2, R *y1, R *y2) {
+	R y0 = (b0 * x0) + (a1 * *y1) + (a2 * *y2);
+	*y2 = *y1;
+	*y1 = y0;
+	return y0;
 }
 
 // Butterworth low pass or high pass Sos filter coefficients.

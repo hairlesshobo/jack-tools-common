@@ -7,6 +7,7 @@ obj =	alsa-seq-endpoint.o \
 	beq.o \
 	bessel.o \
 	bezier.o \
+	biquad.o \
 	byte-order.o \
 	cfile.o cfile-byte.o \
 	client.o \
