@@ -24,7 +24,9 @@ osc_socket_t osc_socket_open(enum SocketType socket_type,const char *hostname, i
 void osc_socket_send_packet(osc_socket_t osc_socket, const u8 *packet, i32 packet_sz)
 {
   if(osc_socket.socket_type == TcpSocket) {
-    xsend(osc_socket.fd, &packet_sz, 4, 0);
+    u8 sz_buf[4];
+    hton_i32_to_buf(sz_buf, packet_sz);
+    xsend(osc_socket.fd, sz_buf, 4, 0);
   }
   xsend(osc_socket.fd, packet, packet_sz, 0);
 }
