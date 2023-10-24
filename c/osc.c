@@ -13,8 +13,8 @@
 void osc_socket_print(osc_socket_t osc_socket)
 {
   char type_name[4];
-  socket_type_string(osc_socket.socket_type, type_name, 4);
-  printf("socket_type = %s (%d)\n", type_name, osc_socket.socket_type);
+  socket_type_string(osc_socket.protocol, type_name, 4);
+  printf("protocol = %s (%d)\n", type_name, osc_socket.protocol);
   printf("hostname = %s\n", osc_socket.hostname);
   printf("port = %d\n", osc_socket.port);
   printf("fd = %d\n", osc_socket.fd);
@@ -23,7 +23,7 @@ void osc_socket_print(osc_socket_t osc_socket)
 osc_socket_t osc_socket_open(enum SocketType socket_type,const char *hostname, int port)
 {
   osc_socket_t osc_socket;
-  osc_socket.socket_type = socket_type;
+  osc_socket.protocol = socket_type;
   strncpy(osc_socket.hostname, hostname, HOST_NAME_MAX - 1);
   osc_socket.port = port;
   osc_socket.fd = socket_for(socket_type);
@@ -34,7 +34,7 @@ osc_socket_t osc_socket_open(enum SocketType socket_type,const char *hostname, i
 
 void osc_socket_send_packet(osc_socket_t osc_socket, const u8 *packet, i32 packet_sz)
 {
-  if(osc_socket.socket_type == TcpSocket) {
+  if(osc_socket.protocol == TcpSocket) {
     u8 sz_buf[4];
     hton_i32_to_buf(sz_buf, packet_sz);
     xsend(osc_socket.fd, sz_buf, 4, 0);
