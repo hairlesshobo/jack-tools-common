@@ -17,6 +17,7 @@ osc_socket_t osc_socket_open(enum SocketType socket_type,const char *hostname, i
   strncpy(osc_socket.hostname, hostname, HOST_NAME_MAX - 1);
   osc_socket.port = port;
   osc_socket.fd = socket_for(socket_type);
+  bind_inet(osc_socket.fd, "0.0.0.0", 0);
   connect_inet(osc_socket.fd, hostname, port);
   return osc_socket;
 }
