@@ -129,8 +129,12 @@ void connect_inet(int fd, const char *hostname, int port)
 void xsend(int fd, const void *buf, size_t len, int flags)
 {
   size_t err = send(fd, buf, len, flags);
-  if(err != len) {
+  if(err == -1) {
     perror("xsend: send() failed");
+    FAILURE;
+  }
+  if(err < len) {
+    perror("xsend: send() partial send");
     FAILURE;
   }
 }
