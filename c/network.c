@@ -17,14 +17,44 @@
 #include "network.h"
 #include "time-timeval.h"
 
-int socket_udp(int flags)
+int xsocket(int domain, int type, int protocol)
 {
-  int fd = socket(AF_INET, SOCK_DGRAM, flags);
+  int fd = socket(domain, type, protocol);
   if(fd < 0) {
-    perror("socket_udp: socket() failed");
+    perror("xsocket: socket() failed");
     FAILURE;
   }
   return fd;
+}
+
+int socket_tcp(int protocol)
+{
+  return xsocket(AF_INET, SOCK_STREAM, protocol);
+
+}
+int socket_udp(int protocol)
+{
+  return xsocket(AF_INET, SOCK_DGRAM, protocol);
+}
+
+enum SocketType socket_type_parse(char *str)
+{
+    if(strncmp("tcp", str, 3)) {
+	return TcpSocket;
+    } else if(strncmp("udp", str, 3)) {
+	return UdpSocket;
+    } else {
+	FAILURE;
+    }
+}
+
+int socket_for(enum SocketType socket_type)
+{
+    switch(socket_type) {
+	case TcpSocket: return socket_tcp(0);
+	case UdpSocket: return socket_udp(0);
+	default: FAILURE;
+    }
 }
 
 void init_sockaddr_in(struct sockaddr_in *name, const char *hostname, uint16_t port)
@@ -64,15 +94,20 @@ void print_sockaddr_in(FILE *fp, struct sockaddr_in a)
   fprintf(fp, "sin_addr.s_addr %d\n", a.sin_addr.s_addr);
 }
 
+void xbind(int fd, const struct sockaddr *addr, socklen_t addrlen)
+{
+  int err = bind(fd, addr, addrlen);
+  if(err < 0) {
+    perror("xbind: bind() failed");
+    FAILURE;
+  }
+}
+
 void bind_inet(int fd, const char *hostname, int port)
 {
   struct sockaddr_in name;
   init_sockaddr_in(&name, hostname, port);
-  int err = bind(fd, (struct sockaddr *)&name, sizeof(name));
-  if(err < 0) {
-    perror("bind_inet: bind() failed");
-    FAILURE;
-  }
+  xbind(fd, (struct sockaddr *)&name, sizeof(name));
 }
 
 void connect_inet(int fd, const char *hostname, int port)
