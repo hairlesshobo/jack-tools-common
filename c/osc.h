@@ -1,11 +1,13 @@
 #ifndef _COMMON_OSC_H
 #define _COMMON_OSC_H
 
+#include <limits.h>
 #include <stdint.h>
 #include <stdbool.h>
 
 #include "int.h"
 #include "float.h"
+#include "network.h"
 
 typedef struct
 {
@@ -33,6 +35,18 @@ typedef struct
   u8 type;
   osc_data_t value;
 } osc_arg_t;
+
+typedef struct
+{
+  enum SocketType socket_type;
+  char hostname[HOST_NAME_MAX];
+  int port;
+  int fd;
+} osc_socket_t;
+
+osc_socket_t osc_socket_open(enum SocketType socket_type,char *hostname, int port);
+void osc_socket_send_packet(osc_socket_t osc_socket, const u8 *packet, i32 packet_sz);
+void osc_socket_close(osc_socket_t osc_socket);
 
 i32 osc_align(i32 n);
 i32 osc_cstr_bound(i32 n);

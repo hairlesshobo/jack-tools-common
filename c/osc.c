@@ -10,6 +10,30 @@
 #include "osc.h"
 #include "print.h"
 
+osc_socket_t osc_socket_open(enum SocketType socket_type,char *hostname, int port)
+{
+  osc_socket_t osc_socket;
+  osc_socket.socket_type = socket_type;
+  strncpy(osc_socket.hostname, hostname, HOST_NAME_MAX - 1);
+  osc_socket.port = port;
+  osc_socket.fd = socket_for(socket_type);
+  connect_inet(osc_socket.fd, hostname, port);
+  return osc_socket;
+}
+
+void osc_socket_send_packet(osc_socket_t osc_socket, const u8 *packet, i32 packet_sz)
+{
+  if(osc_socket.socket_type == TcpSocket) {
+    xsend(osc_socket.fd, &packet_sz, 4, 0);
+  }
+  xsend(osc_socket.fd, packet, packet_sz, 0);
+}
+
+void osc_socket_close(osc_socket_t osc_socket)
+{
+  xclose(osc_socket.fd);
+}
+
 i32 osc_align(i32 n) {return (((n + 3) & (~3)) - n);}
 i32 osc_cstr_bound(i32 n) {return n + 1 + osc_align(n + 1);}
 

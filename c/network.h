@@ -22,6 +22,7 @@ void xbind(int fd, const struct sockaddr *addr, socklen_t addrlen);
 void bind_inet(int fd, const char *hostname, int port);
 void xconnect(int fd, const struct sockaddr *addr, socklen_t addrlen);
 void connect_inet(int fd, const char *hostname, int port);
+void xsend(int fd, const void *buf, size_t len, int flags);
 int xsendto(int fd, const void *data, size_t n, int flags, struct sockaddr *addr, socklen_t length);
 void sendto_exactly(int fd, const u8 *data, int n, struct sockaddr_in address);
 int xrecv(int fd, void *buf, size_t n, int flags);
@@ -29,5 +30,6 @@ void recv_exactly(int fd, void *buf, size_t n, int flags);
 int xrecvfrom(int fd, void *buf, size_t n, int flags, struct sockaddr *addr, socklen_t *length);
 void recvfrom_exactly(int fd, void *buf, size_t n, int flags, struct sockaddr *addr, socklen_t *length);
 int fd_wait(int fd, unsigned long timeout);
+void xclose(int fd);
 
 #endif

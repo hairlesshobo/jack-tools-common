@@ -126,6 +126,15 @@ void connect_inet(int fd, const char *hostname, int port)
   xconnect(fd, (struct sockaddr *)&name, sizeof(name));
 }
 
+void xsend(int fd, const void *buf, size_t len, int flags)
+{
+  size_t err = send(fd, buf, len, flags);
+  if(err != len) {
+    perror("xsend: send() failed");
+    FAILURE;
+  }
+}
+
 int xsendto(int fd, const void *data, size_t n, int flags, struct sockaddr *addr, socklen_t length)
 {
   int err = sendto(fd, data, n, flags, addr, length);
@@ -203,4 +212,13 @@ int fd_wait(int fd, unsigned long timeout)
     FAILURE;
   }
   return err;
+}
+
+void xclose(int fd)
+{
+  int err = close(fd);
+  if(err != 0) {
+    perror("xclose: close() failed");
+    FAILURE;
+  }
 }
