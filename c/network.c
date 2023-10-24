@@ -48,6 +48,15 @@ enum SocketType socket_type_parse(char *str)
     }
 }
 
+void socket_type_string(enum SocketType socket_type, char *answer, int answer_size)
+{
+    switch(socket_type) {
+	case TcpSocket: strncpy(answer, "tcp", answer_size - 1);
+	case UdpSocket: strncpy(answer, "udp", answer_size - 1);
+	default: FAILURE;
+    }
+}
+
 int socket_for(enum SocketType socket_type)
 {
     switch(socket_type) {

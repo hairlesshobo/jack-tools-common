@@ -10,6 +10,7 @@
 enum SocketType {TcpSocket, UdpSocket};
 
 enum SocketType socket_type_parse(char *str);
+void socket_type_string(enum SocketType socket_type, char *answer, int answer_size);
 int xsocket(int domain, int type, int protocol);
 int socket_tcp(int protocol);
 int socket_udp(int protocol);
