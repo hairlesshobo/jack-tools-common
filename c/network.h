@@ -20,6 +20,7 @@ int sockaddr_in_equal(const struct sockaddr_in *a, const struct sockaddr_in *b);
 void print_sockaddr_in(FILE *fp, struct sockaddr_in a);
 void xbind(int fd, const struct sockaddr *addr, socklen_t addrlen);
 void bind_inet(int fd, const char *hostname, int port);
+void xconnect(int fd, const struct sockaddr *addr, socklen_t addrlen);
 void connect_inet(int fd, const char *hostname, int port);
 int xsendto(int fd, const void *data, size_t n, int flags, struct sockaddr *addr, socklen_t length);
 void sendto_exactly(int fd, const u8 *data, int n, struct sockaddr_in address);

@@ -110,15 +110,20 @@ void bind_inet(int fd, const char *hostname, int port)
   xbind(fd, (struct sockaddr *)&name, sizeof(name));
 }
 
+void xconnect(int fd, const struct sockaddr *addr, socklen_t addrlen)
+{
+  int err = connect(fd, addr, addrlen);
+  if(err < 0) {
+    perror("xconnect: connect() failed");
+    FAILURE;
+  }
+}
+
 void connect_inet(int fd, const char *hostname, int port)
 {
   struct sockaddr_in name;
   init_sockaddr_in(&name, hostname, port);
-  int err = connect(fd, (struct sockaddr *)&name, sizeof(name));
-  if(err < 0) {
-    perror("connect_inet: bind() failed");
-    FAILURE;
-  }
+  xconnect(fd, (struct sockaddr *)&name, sizeof(name));
 }
 
 int xsendto(int fd, const void *data, size_t n, int flags, struct sockaddr *addr, socklen_t length)
