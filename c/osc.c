@@ -14,7 +14,7 @@ void osc_socket_print(osc_socket_t osc_socket)
 {
   char type_name[4];
   socket_type_string(osc_socket.socket_type, type_name, 4);
-  printf("socket_type = %s\n", type_name);
+  printf("socket_type = %s (%d)\n", type_name, osc_socket.socket_type);
   printf("hostname = %s\n", osc_socket.hostname);
   printf("port = %d\n", osc_socket.port);
   printf("fd = %d\n", osc_socket.fd);

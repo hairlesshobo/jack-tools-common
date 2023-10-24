@@ -60,11 +60,11 @@ void socket_type_string(enum SocketType socket_type, char *answer, int answer_si
 
 int socket_for(enum SocketType socket_type)
 {
-    switch(socket_type) {
-  case TcpSocket: return socket_tcp(0);
-  case UdpSocket: return socket_udp(0);
-  default: FAILURE;
-    }
+  switch(socket_type) {
+    case TcpSocket: return socket_tcp(0);
+    case UdpSocket: return socket_udp(0);
+    default: FAILURE;
+  }
 }
 
 void init_sockaddr_in(struct sockaddr_in *name, const char *hostname, uint16_t port)
