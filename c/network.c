@@ -20,7 +20,7 @@
 int xsocket(int domain, int type, int protocol)
 {
   int fd = socket(domain, type, protocol);
-  if(fd < 0) {
+  if(fd == -1) {
     perror("xsocket: socket() failed");
     FAILURE;
   }
@@ -97,7 +97,7 @@ void print_sockaddr_in(FILE *fp, struct sockaddr_in a)
 void xbind(int fd, const struct sockaddr *addr, socklen_t addrlen)
 {
   int err = bind(fd, addr, addrlen);
-  if(err < 0) {
+  if(err == -1) {
     perror("xbind: bind() failed");
     FAILURE;
   }
@@ -113,7 +113,7 @@ void bind_inet(int fd, const char *hostname, int port)
 void xconnect(int fd, const struct sockaddr *addr, socklen_t addrlen)
 {
   int err = connect(fd, addr, addrlen);
-  if(err < 0) {
+  if(err == -1) {
     perror("xconnect: connect() failed");
     FAILURE;
   }
@@ -128,70 +128,70 @@ void connect_inet(int fd, const char *hostname, int port)
 
 void xsend(int fd, const void *buf, size_t len, int flags)
 {
-  size_t err = send(fd, buf, len, flags);
-  if(err == -1) {
+  ssize_t bytesSent = send(fd, buf, len, flags);
+  if(bytesSent == -1) {
     perror("xsend: send() failed");
     FAILURE;
   }
-  if(err < len) {
+  if(bytesSent < len) {
     perror("xsend: send() partial send");
     FAILURE;
   }
 }
 
-int xsendto(int fd, const void *data, size_t n, int flags, struct sockaddr *addr, socklen_t length)
+ssize_t xsendto(int fd, const void *data, size_t n, int flags, struct sockaddr *addr, socklen_t length)
 {
-  int err = sendto(fd, data, n, flags, addr, length);
-  if(err < 0) {
+  ssize_t bytesSent = sendto(fd, data, n, flags, addr, length);
+  if(bytesSent == -1) {
     perror("sendto() failed");
     FAILURE;
   }
-  return err;
+  return bytesSent;
 }
 
 void sendto_exactly(int fd, const u8 *data, int n, struct sockaddr_in address)
 {
-  int err = xsendto(fd, data, n, 0, (struct sockaddr *)&address, sizeof(address));
-  if(err != n) {
+  ssize_t bytesSent = xsendto(fd, data, n, 0, (struct sockaddr *)&address, sizeof(address));
+  if(bytesSent != n) {
     fprintf(stderr, "sendto_exactly: partial write\n");
     FAILURE;
   }
 }
 
-int xrecv(int fd, void *buf, size_t n, int flags)
+ssize_t xrecv(int fd, void *buf, size_t n, int flags)
 {
-  int err = recv(fd, buf, n, flags);
-  if(err < 0) {
-    perror("recv() failed");
+  ssize_t bytesReceived = recv(fd, buf, n, flags);
+  if(bytesReceived == -1) {
+    perror("xrecv: recv() failed");
     FAILURE;
   }
-  return err;
+  return bytesReceived;
 }
 
 void recv_exactly(int fd, void *buf, size_t n, int flags)
 {
-  int err = (int) xrecv(fd, buf, n, flags);
-  if(err != n) {
-    fprintf(stderr, "recv_exactly: partial recv (%d != %ul)\n", err, (int) n);
+  ssize_t bytesReceived = xrecv(fd, buf, n, flags);
+  if(bytesReceived != n) {
+    fprintf(stderr, "recv_exactly: partial recv (%d != %ul)\n", (int)bytesReceived, (int)n);
     FAILURE;
   }
 }
 
-int xrecvfrom(int fd, void *buf, size_t n, int flags, struct sockaddr *addr, socklen_t *length)
+ssize_t xrecvfrom(int fd, void *buf, size_t n, int flags, struct sockaddr *addr, socklen_t *length)
 {
-  int err = recvfrom(fd, buf, n, flags, addr, length);
-  if(err < 0) {
-    perror("recvfrom() failed");
+  ssize_t bytesReceived = recvfrom(fd, buf, n, flags, addr, length);
+  if(bytesReceived == -1) {
+    perror("xrecvfrom: recvfrom() failed");
     FAILURE;
   }
-  return err;
+  return bytesReceived;
 }
 
 void recvfrom_exactly(int fd, void *buf, size_t n, int flags, struct sockaddr *addr, socklen_t *length)
 {
-  int err = (int) xrecvfrom(fd, buf, n, flags, addr, length);
-  if(err != n) {
-    fprintf(stderr, "recvfrom_exactly: partial recv (%d != %d)\n", err, (int) n);
+  ssize_t bytesReceived = xrecvfrom(fd, buf, n, flags, addr, length);
+  if(bytesReceived != n) {
+    fprintf(stderr, "recvfrom_exactly: partial recv (%d != %d)\n", (int)bytesReceived, (int) n);
     FAILURE;
   }
 }
@@ -221,7 +221,7 @@ int fd_wait(int fd, unsigned long timeout)
 void xclose(int fd)
 {
   int err = close(fd);
-  if(err != 0) {
+  if(err == -1) {
     perror("xclose: close() failed");
     FAILURE;
   }
