@@ -39,9 +39,9 @@ int socket_udp(int protocol)
 
 enum SocketType socket_type_parse(char *str)
 {
-  if(strncmp("tcp", str, 3)) {
+  if(strncmp("tcp", str, 3) == 0) {
     return TcpSocket;
-  } else if(strncmp("udp", str, 3)) {
+  } else if(strncmp("udp", str, 3) == 0) {
     return UdpSocket;
   } else {
     fprintf(stderr, "socket_type_parse: unknown socket type: '%s'\n", str);
