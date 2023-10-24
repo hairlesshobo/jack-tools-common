@@ -44,7 +44,7 @@ typedef struct
   int fd;
 } osc_socket_t;
 
-osc_socket_t osc_socket_open(enum SocketType socket_type,char *hostname, int port);
+osc_socket_t osc_socket_open(enum SocketType socket_type,const char *hostname, int port);
 void osc_socket_send_packet(osc_socket_t osc_socket, const u8 *packet, i32 packet_sz);
 void osc_socket_close(osc_socket_t osc_socket);
 

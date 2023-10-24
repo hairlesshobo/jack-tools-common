@@ -10,7 +10,7 @@
 #include "osc.h"
 #include "print.h"
 
-osc_socket_t osc_socket_open(enum SocketType socket_type,char *hostname, int port)
+osc_socket_t osc_socket_open(enum SocketType socket_type,const char *hostname, int port)
 {
   osc_socket_t osc_socket;
   osc_socket.socket_type = socket_type;
