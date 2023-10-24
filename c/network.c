@@ -39,30 +39,31 @@ int socket_udp(int protocol)
 
 enum SocketType socket_type_parse(char *str)
 {
-    if(strncmp("tcp", str, 3)) {
-	return TcpSocket;
-    } else if(strncmp("udp", str, 3)) {
-	return UdpSocket;
-    } else {
-	FAILURE;
-    }
+  if(strncmp("tcp", str, 3)) {
+    return TcpSocket;
+  } else if(strncmp("udp", str, 3)) {
+    return UdpSocket;
+  } else {
+    fprintf(stderr, "socket_type_parse: unknown socket type: '%s'\n", str);
+    FAILURE;
+  }
 }
 
 void socket_type_string(enum SocketType socket_type, char *answer, int answer_size)
 {
-    switch(socket_type) {
-	case TcpSocket: strncpy(answer, "tcp", answer_size - 1);
-	case UdpSocket: strncpy(answer, "udp", answer_size - 1);
-	default: FAILURE;
-    }
+  switch(socket_type) {
+    case TcpSocket: strncpy(answer, "tcp", answer_size - 1); break;
+    case UdpSocket: strncpy(answer, "udp", answer_size - 1); break;
+    default: fprintf(stderr, "socket_type_string: illegal socket type: '%d'\n", socket_type); FAILURE;
+  }
 }
 
 int socket_for(enum SocketType socket_type)
 {
     switch(socket_type) {
-	case TcpSocket: return socket_tcp(0);
-	case UdpSocket: return socket_udp(0);
-	default: FAILURE;
+  case TcpSocket: return socket_tcp(0);
+  case UdpSocket: return socket_udp(0);
+  default: FAILURE;
     }
 }
 
@@ -91,9 +92,9 @@ void init_broadcast_sockaddr_in(struct sockaddr_in *name, uint16_t port)
 
 int sockaddr_in_equal(const struct sockaddr_in *a, const struct sockaddr_in *b)
 {
-  return(( a->sin_family == b->sin_family)&&
-	 (a->sin_addr.s_addr == b->sin_addr.s_addr)&&
-	 (a->sin_port == b->sin_port));
+  return((a->sin_family == b->sin_family) &&
+    (a->sin_addr.s_addr == b->sin_addr.s_addr) &&
+    (a->sin_port == b->sin_port));
 }
 
 void print_sockaddr_in(FILE *fp, struct sockaddr_in a)
