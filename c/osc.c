@@ -10,6 +10,14 @@
 #include "osc.h"
 #include "print.h"
 
+void osc_socket_print(osc_socket_t osc_socket)
+{
+  printf("socket_type = %s\n", osc_socket.socket_type == TcpSocket ? "tcp" : "udp");
+  printf("hostname = %s\n", osc_socket.hostname);
+  printf("port = %d\n", osc_socket.port);
+  printf("fd = %d\n", osc_socket.fd);
+}
+
 osc_socket_t osc_socket_open(enum SocketType socket_type,const char *hostname, int port)
 {
   osc_socket_t osc_socket;
@@ -17,7 +25,7 @@ osc_socket_t osc_socket_open(enum SocketType socket_type,const char *hostname, i
   strncpy(osc_socket.hostname, hostname, HOST_NAME_MAX - 1);
   osc_socket.port = port;
   osc_socket.fd = socket_for(socket_type);
-  bind_inet(osc_socket.fd, "127.0.0.1", 0);
+  osc_socket_print(osc_socket);
   connect_inet(osc_socket.fd, hostname, port);
   return osc_socket;
 }
