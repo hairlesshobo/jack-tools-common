@@ -5,6 +5,10 @@ alsa =	alsa-seq-endpoint.o \
 	alsa-seq-print.o \
 	alsa-seq-send.o
 
+gl =	gl-cube.o \
+	gl-sphere.o \
+	glu-screen-capture.o
+
 jack =	jack-client.o \
 	jack-port.o \
 	jack-ringbuffer.o \
@@ -40,9 +44,6 @@ obj =	beq.o \
 	filter.o \
 	float.o \
 	gen-trapezoid.o \
-	gl-cube.o \
-	gl-sphere.o \
-	glu-screen-capture.o \
 	hash.o \
 	hermite.o \
 	img.o \
