@@ -5,6 +5,8 @@ alsa =	alsa-seq-endpoint.o \
 	alsa-seq-print.o \
 	alsa-seq-send.o
 
+clk =	time-pause.o
+
 gl =	gl-cube.o \
 	gl-sphere.o \
 	glu-screen-capture.o
@@ -74,7 +76,6 @@ obj =	beq.o \
 	taus88.o \
 	time-current.o \
 	time-ntp.o \
-	time-pause.o \
 	time-timespec.o \
 	time-timeval.o \
 	trace.o \
