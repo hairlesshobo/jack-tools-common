@@ -20,6 +20,8 @@ png =	img-png.o
 
 sf =	sf-sndfile.o
 
+src =	resample-src.o
+
 x11 =	x11.o \
 	ximg.o
 
@@ -59,7 +61,6 @@ obj =	beq.o \
 	point.o \
 	quantize.o \
 	rand.o \
-	resample-src.o \
 	ringbuffer.o \
 	ringbuffer-fd.o \
 	segment-transfer.o \
