@@ -39,7 +39,7 @@ typedef struct
 typedef struct
 {
   enum SocketType protocol;
-  char hostname[HOST_NAME_MAX];
+  char hostname[_POSIX_HOST_NAME_MAX];
   int port;
   int fd;
 } osc_socket_t;

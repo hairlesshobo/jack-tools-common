@@ -26,7 +26,7 @@ osc_socket_t osc_socket_open(enum SocketType socket_type,const char *hostname, i
 {
   osc_socket_t osc_socket;
   osc_socket.protocol = socket_type;
-  strncpy(osc_socket.hostname, hostname, HOST_NAME_MAX - 1);
+  strncpy(osc_socket.hostname, hostname, _POSIX_HOST_NAME_MAX - 1);
   osc_socket.port = port;
   osc_socket.fd = socket_for(socket_type);
   osc_socket_print(osc_socket);
