@@ -1,15 +1,31 @@
 prefix = $(HOME)/opt
 
-obj =	alsa-seq-endpoint.o \
+alsa =	alsa-seq-endpoint.o \
 	alsa-seq-listener.o \
 	alsa-seq-print.o \
-	alsa-seq-send.o \
-	beq.o \
+	alsa-seq-send.o
+
+jack =	jack-client.o \
+	jack-port.o \
+	jack-ringbuffer.o \
+	jack-transport.o
+
+pa =	rt-portaudio.o
+
+png =	img-png.o
+
+sf =	sf-sndfile.o
+
+x11 =	x11.o \
+	ximg.o
+
+obj =	beq.o \
 	bessel.o \
 	bezier.o \
 	biquad.o \
 	byte-order.o \
-	cfile.o cfile-byte.o \
+	cfile.o \
+	cfile-byte.o \
 	client.o \
 	clip.o \
 	colour.o \
@@ -30,22 +46,16 @@ obj =	alsa-seq-endpoint.o \
 	hash.o \
 	hermite.o \
 	img.o \
-	img-png.o \
 	img-ppm.o \
 	int.o \
-	jack-client.o \
-	jack-port.o \
-	jack-ringbuffer.o \
-	jack-transport.o \
 	memory.o \
 	midi.o \
 	network.o \
-	numeric-type.o\
+	numeric-type.o \
 	observe-signal.o \
 	osc.o \
 	plane.o \
 	point.o \
-	rt-portaudio.o \
 	quantize.o \
 	rand.o \
 	resample-src.o \
@@ -53,7 +63,6 @@ obj =	alsa-seq-endpoint.o \
 	ringbuffer-fd.o \
 	segment-transfer.o \
 	sf-au.o \
-	sf-sndfile.o \
 	signal-clip.o \
 	signal-copy.o \
 	signal-interleave.o \
@@ -69,8 +78,6 @@ obj =	alsa-seq-endpoint.o \
 	trace.o \
 	vector.o \
 	window.o \
-	x11.o \
-	ximg.o \
 	xregcomp.o
 
 CC = gcc # gcc clang
