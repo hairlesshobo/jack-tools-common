@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <stdbool.h>
 #include <math.h>
+#include <unistd.h>
 
 #include "byte-order.h"
 #include "failure.h"
