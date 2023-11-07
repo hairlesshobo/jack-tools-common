@@ -1,8 +1,9 @@
+#include <limits.h>
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdbool.h>
-#include <math.h>
 #include <unistd.h>
 
 #include "byte-order.h"

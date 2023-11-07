@@ -14,7 +14,7 @@
 /* Require p & q to be equal */
 void u64_verify_eq(const char *err,u64 p,u64 q)
 {
-    die_when(p != q,"U64_VERIFY_EQ: %s: 0x%lX != 0x%lX\n",err,p,q);
+    die_when(p != q,"U64_VERIFY_EQ: %s: 0x%lX != 0x%lX\n",err,(unsigned long)p,(unsigned long)q);
 }
 
 /* DX7 checksum algorithm */
