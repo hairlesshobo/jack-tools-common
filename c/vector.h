@@ -13,5 +13,6 @@ f32 v3_dot(v3 a, v3 b);
 f32 v3_mag_sq(v3 v);
 f32 v3_mag(v3 v);
 v3 v3_unitise(v3 v);
+f32 v3_distance(v3 v1, v3 v2);
 
 #endif

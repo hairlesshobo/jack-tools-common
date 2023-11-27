@@ -23,6 +23,14 @@ f32 v3_dot(v3 a, v3 b) {
   return a.x * b.x + a.y * b.y + a.z * b.z;
 }
 
+f32 f32_squared(f32 x) {
+    return x * x;
+}
+
+f32 v3_distance(v3 v1, v3 v2) {
+  return sqrtf(f32_squared(v2.x - v1.x) + f32_squared(v2.y - v1.y) + f32_squared(v2.z - v1.z));
+}
+
 f32 v3_mag_sq(v3 v) {
   return v.x * v.x + v.y * v.y + v.z * v.z;
 }
