@@ -4,7 +4,11 @@
 #include "vector.h" /* c-common */
 
 v3 v3_make(f32 x, f32 y, f32 z) {
-  return (v3){x,y,z};
+  v3 v;
+  v.x = x;
+  v.y = y;
+  v.z = z;
+  return v;
 }
 
 v3 v3_mul(f32 s, v3 v) {
