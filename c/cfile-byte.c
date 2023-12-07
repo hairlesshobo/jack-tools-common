@@ -8,8 +8,8 @@
 
 #define GENERATE_NC_READ(tag) \
 	tag fread_##tag(FILE *fp) \
-	{                         \
-		tag n;                \
+	{ \
+		tag n; \
 		xfread(&n, 4, 1, fp); \
 		return ntoh_##tag(n); \
 	}

@@ -17,16 +17,16 @@ bool file_exists_p(const char *filename)
 	return err == 0;
 }
 
-#define GENERATE_STAT_FIELD(type, name)                       \
-	type stat_##name(const char *filename)                    \
-	{                                                         \
-		struct stat buf;                                      \
-		int err = stat(filename, &buf);                       \
-		if (err) {                                            \
+#define GENERATE_STAT_FIELD(type, name) \
+	type stat_##name(const char *filename) \
+	{ \
+		struct stat buf; \
+		int err = stat(filename, &buf); \
+		if (err) { \
 			fprintf(stderr, "stat() failed: %s\n", filename); \
-			FAILURE;                                          \
-		}                                                     \
-		return buf.st_##name;                                 \
+			FAILURE; \
+		} \
+		return buf.st_##name; \
 	}
 
 GENERATE_STAT_FIELD(time_t, mtime)
