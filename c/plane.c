@@ -2,53 +2,53 @@
   vector perpendicular to the plane) and a scalar distance from the
   origin. */
 
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <math.h>
 
-#include "vector.h"
 #include "plane.h"
+#include "vector.h"
 
 plane make_plane(v3 n, f32 d)
 {
-  plane p;
-  p.n = n;
-  p.d = d;
-  return p;
+	plane p;
+	p.n = n;
+	p.d = d;
+	return p;
 }
 
 f32 point_plane_distance(plane p, v3 v)
 {
-  return v3_dot(p.n, v) + p.d;
+	return v3_dot(p.n, v) + p.d;
 }
 
 /* Determing if a point lies on, in front of or behind a plane. */
 
 enum side half_space(plane p, v3 v)
 {
-  f32 d = point_plane_distance(p, v);
-  if(d == 0.0) {
-    return coincide;
-  } else if(d > 0.0) {
-    return front;
-  } else if(d < 0.0) {
-    return back;
-  } else if(isnan(d)) {
-    fprintf(stderr, "half_space: nan: %f\n", d);
-    return coincide;
-  } else {
-    fprintf(stderr, "half_space: impossible condition: %f\n", d);
-    return coincide;
-   }
+	f32 d = point_plane_distance(p, v);
+	if (d == 0.0) {
+		return coincide;
+	} else if (d > 0.0) {
+		return front;
+	} else if (d < 0.0) {
+		return back;
+	} else if (isnan(d)) {
+		fprintf(stderr, "half_space: nan: %f\n", d);
+		return coincide;
+	} else {
+		fprintf(stderr, "half_space: impossible condition: %f\n", d);
+		return coincide;
+	}
 }
 
 /* Returns #t iff p0 and p1 are not on the same side of plane. */
 
-bool intersect (plane p, v3 v0, v3 v1)
+bool intersect(plane p, v3 v0, v3 v1)
 {
-  enum side t0 = half_space(p, v0);
-  enum side t1 = half_space(p, v1);
-  return t0 != t1;
+	enum side t0 = half_space(p, v0);
+	enum side t1 = half_space(p, v1);
+	return t0 != t1;
 }
 
 /* Given that the line from v0 to v1 intersects the plane return the
@@ -56,18 +56,18 @@ bool intersect (plane p, v3 v0, v3 v1)
 
 v3 intersection(plane p, v3 v0, v3 v1)
 {
-  v3 r = v3_sub(v1, v0);
-  f32 n = v3_dot(p.n, r);
-  f32 t = -(v3_dot(p.n, v0) + p.d) / n;
-  return v3_add(v0, v3_mul(t, r));
+	v3 r = v3_sub(v1, v0);
+	f32 n = v3_dot(p.n, r);
+	f32 t = -(v3_dot(p.n, v0) + p.d) / n;
+	return v3_add(v0, v3_mul(t, r));
 }
 
 /*  i = unit incidence vector, n = unit surface normal, result = unit
-    reflection vector */
+	reflection vector */
 
 v3 in_to_r(v3 i, v3 n)
 {
-  return v3_add(v3_mul(v3_dot(v3_mul(-1.0, i), n) * 2.0, n), i);
+	return v3_add(v3_mul(v3_dot(v3_mul(-1.0, i), n) * 2.0, n), i);
 }
 
 /*
@@ -86,7 +86,7 @@ v3 in_to_r(v3 i, v3 n)
 
 v3 reflect(plane p, v3 v0, v3 v1)
 {
-  v3 v = intersection(p, v0, v1);
-  v3 w = v3_unitise(v3_sub(v, v0));
-  return v3_add(v, v3_mul(v3_mag(v3_sub(v1, v)), in_to_r(w, p.n)));
+	v3 v = intersection(p, v0, v1);
+	v3 w = v3_unitise(v3_sub(v, v0));
+	return v3_add(v, v3_mul(v3_mag(v3_sub(v1, v)), in_to_r(w, p.n)));
 }

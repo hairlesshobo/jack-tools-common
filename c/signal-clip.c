@@ -4,12 +4,12 @@
 
 void signal_clip(float *s, int n, float l, float r)
 {
-  int i;
-  for(i = 0; i < n; i++) {
-    if(s[i] < l) {
-      s[i] = l;
-    } else if(s[i] > r) {
-      s[i] = r;
-    }
-  }
+	int i;
+	for (i = 0; i < n; i++) {
+		if (s[i] < l) {
+			s[i] = l;
+		} else if (s[i] > r) {
+			s[i] = r;
+		}
+	}
 }

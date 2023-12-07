@@ -8,11 +8,11 @@
 int ringbuffer_wait_for_read(const ringbuffer_t *r, int nbytes, int fd)
 {
 	int space = (int)ringbuffer_read_space(r);
-	while(space < nbytes) {
+	while (space < nbytes) {
 		char b;
-		if(read(fd, &b, 1)== -1) {
-		  fprintf(stderr, "%s: error reading communication pipe\n", __func__);
-		  exit(1);
+		if (read(fd, &b, 1) == -1) {
+			fprintf(stderr, "%s: error reading communication pipe\n", __func__);
+			exit(1);
 		}
 		space = (int)ringbuffer_read_space(r);
 	}
@@ -22,11 +22,11 @@ int ringbuffer_wait_for_read(const ringbuffer_t *r, int nbytes, int fd)
 int ringbuffer_wait_for_write(ringbuffer_t *r, int nbytes, int fd)
 {
 	int space = (int)ringbuffer_write_space(r);
-	while(space < nbytes) {
+	while (space < nbytes) {
 		char b;
-		if(read(fd, &b, 1)== -1) {
-		  fprintf (stderr, "%s: error reading communication pipe\n", __func__);
-		  exit(1);
+		if (read(fd, &b, 1) == -1) {
+			fprintf(stderr, "%s: error reading communication pipe\n", __func__);
+			exit(1);
 		}
 		space = (int)ringbuffer_write_space(r);
 	}

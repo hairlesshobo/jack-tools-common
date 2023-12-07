@@ -1,18 +1,18 @@
-#include <stdio.h>
 #include <stdint.h>
+#include <stdio.h>
 
 #include "byte-order.h"
-#include "cfile.h"
 #include "cfile-byte.h"
+#include "cfile.h"
 #include "failure.h"
 
-#define GENERATE_NC_READ(tag)			\
-tag fread_##tag ( FILE *fp )			\
-{						\
-  tag n;					\
-  xfread(&n, 4, 1, fp);                         \
-  return ntoh_##tag (n);			\
-}
+#define GENERATE_NC_READ(tag) \
+	tag fread_##tag(FILE *fp) \
+	{                         \
+		tag n;                \
+		xfread(&n, 4, 1, fp); \
+		return ntoh_##tag(n); \
+	}
 
 GENERATE_NC_READ(u16)
 GENERATE_NC_READ(u32)

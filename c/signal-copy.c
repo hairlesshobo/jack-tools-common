@@ -5,11 +5,11 @@
 #include "signal-copy.h"
 
 /* dst = destination, src = source, n = elements to copy, s = src start index */
-void signal_copy_circular ( float *dst , const float *src , int n , int s )
+void signal_copy_circular(float *dst, const float *src, int n, int s)
 {
-  int d = n - s;
-  xmemcpy ( dst , src + s , d * sizeof(float) ) ;
-  xmemcpy ( dst + d , src , s * sizeof(float) ) ;
+	int d = n - s;
+	xmemcpy(dst, src + s, d * sizeof(float));
+	xmemcpy(dst + d, src, s * sizeof(float));
 }
 
 /*
