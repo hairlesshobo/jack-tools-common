@@ -201,7 +201,7 @@ GENERATE_MAKE_WINDOW_BETA(tukey)
 int streq_ci(const char *a, const char *b)
 {
 	while (1) {
-		if (*a == ' \0' && *b == ' \0') {
+		if (*a == '\0' && *b == '\0') {
 			return 1;
 		}
 		if (toupper(*a++) != toupper(*b++)) {

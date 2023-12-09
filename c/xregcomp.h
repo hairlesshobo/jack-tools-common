@@ -6,4 +6,3 @@
 int xregcomp(regex_t *preg, const char *regex, int cflags);
 
 #endif
-

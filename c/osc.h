@@ -2,49 +2,48 @@
 #define _COMMON_OSC_H
 
 #include <limits.h>
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
-#include "int.h"
 #include "float.h"
+#include "int.h"
 #include "network.h"
 
 typedef struct
 {
-  const u8 *data;
-  i32 size;
+	const u8 *data;
+	i32 size;
 } osc_blob_t;
 
-typedef union
-{
-  i32 i; /* Signed Integer (32 bits) */
-  i64 h; /* Signed Integer (64 bits) */
-  u64 t; /* NTP TimeStamp */
-  f32 f; /* IEEE Float (32 bits) */
-  f64 d; /* IEEE Float (64 bits) */
-  const char *s; /* ASCII String (NULL suffix) */
-  const char *S; /* Symbol */
-  u32 c; /* ASCII Character */
-  u8 m[4]; /* MIDI message (4 bytes) */
-  u32 r; /* RGBA Colour (4 bytes) */
-  osc_blob_t b; /* Blob (bytestring) */
+typedef union {
+	i32 i; /* Signed Integer (32 bits) */
+	i64 h; /* Signed Integer (64 bits) */
+	u64 t; /* NTP TimeStamp */
+	f32 f; /* IEEE Float (32 bits) */
+	f64 d; /* IEEE Float (64 bits) */
+	const char *s; /* ASCII String (NULL suffix) */
+	const char *S; /* Symbol */
+	u32 c; /* ASCII Character */
+	u8 m[4]; /* MIDI message (4 bytes) */
+	u32 r; /* RGBA Colour (4 bytes) */
+	osc_blob_t b; /* Blob (bytestring) */
 } osc_data_t;
 
 typedef struct
 {
-  u8 type;
-  osc_data_t value;
+	u8 type;
+	osc_data_t value;
 } osc_arg_t;
 
 typedef struct
 {
-  enum SocketType protocol;
-  char hostname[_POSIX_HOST_NAME_MAX];
-  int port;
-  int fd;
+	enum SocketType protocol;
+	char hostname[_POSIX_HOST_NAME_MAX];
+	int port;
+	int fd;
 } osc_socket_t;
 
-osc_socket_t osc_socket_open(enum SocketType socket_type,const char *hostname, int port);
+osc_socket_t osc_socket_open(enum SocketType socket_type, const char *hostname, int port);
 void osc_socket_send_packet(osc_socket_t osc_socket, const u8 *packet, i32 packet_sz);
 void osc_socket_close(osc_socket_t osc_socket);
 
@@ -68,9 +67,9 @@ i32 osc_construct_message(const char *addr, const char *dsc, const osc_data_t *d
 i32 osc_build_message(u8 *packet, i32 packet_sz, const char *addr, const char *dsc, ...);
 
 #ifdef DEBUG
-#define osc_debug_print(pkt,sz) osc_print_packet(pkt,sz);
+#define osc_debug_print(pkt, sz) osc_print_packet(pkt, sz);
 #else
-#define osc_debug_print(pkt,sz)
+#define osc_debug_print(pkt, sz)
 #endif
 
 #endif

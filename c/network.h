@@ -2,12 +2,13 @@
 #define _COMMON_NETWORK_H
 
 #include <netinet/in.h>
-#include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/types.h>
 
 #include "int.h"
 
-enum SocketType {TcpSocket, UdpSocket};
+enum SocketType { TcpSocket,
+	UdpSocket };
 
 enum SocketType socket_type_parse(char *str);
 void socket_type_string(enum SocketType socket_type, char *answer, int answer_size);

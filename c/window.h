@@ -1,26 +1,26 @@
 #ifndef _COMMON_WINDOW_H
 #define _COMMON_WINDOW_H
 
-typedef void (window_f_t) (float *, int);
-typedef void (beta_window_f_t) (float *, int, float);
+typedef void(window_f_t)(float *, int);
+typedef void(beta_window_f_t)(float *, int, float);
 
 enum WINDOW_TYPE {
-    RECTANGULAR_WINDOW,
-    HANNING_WINDOW,
-    HAMMING_WINDOW,
-    BLACKMAN2_WINDOW,
-    BLACKMAN3_WINDOW,
-    BLACKMAN4_WINDOW,
-    BARTLETT_WINDOW,
-    KAISER_WINDOW,
-    CAUCHY_WINDOW,
-    POISSON_WINDOW,
-    GAUSSIAN_WINDOW,
-    WELCH_WINDOW,
-    PARZEN_WINDOW,
-    RIEMANN_WINDOW,
-    EXPONENTIAL_WINDOW,
-    TUKEY_WINDOW,
+	RECTANGULAR_WINDOW,
+	HANNING_WINDOW,
+	HAMMING_WINDOW,
+	BLACKMAN2_WINDOW,
+	BLACKMAN3_WINDOW,
+	BLACKMAN4_WINDOW,
+	BARTLETT_WINDOW,
+	KAISER_WINDOW,
+	CAUCHY_WINDOW,
+	POISSON_WINDOW,
+	GAUSSIAN_WINDOW,
+	WELCH_WINDOW,
+	PARZEN_WINDOW,
+	RIEMANN_WINDOW,
+	EXPONENTIAL_WINDOW,
+	TUKEY_WINDOW,
 };
 
 int parse_window_type(const char *type);

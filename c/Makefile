@@ -99,7 +99,7 @@ clean:
 	rm -f *.o *.a
 
 indent:
-	clang-format -i *.c
+	clang-format -i *.c *.h
 
 diff-ignoring-whitespace:
 	git diff --ignore-space-at-eol --ignore-space-change --ignore-all-space

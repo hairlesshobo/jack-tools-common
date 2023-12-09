@@ -3,7 +3,9 @@
 
 #include "float.h"
 
-typedef struct { f32 x, y, z;} v3;
+typedef struct {
+	f32 x, y, z;
+} v3;
 
 v3 v3_make(f32 x, f32 y, f32 z);
 v3 v3_mul(f32 s, v3 v);

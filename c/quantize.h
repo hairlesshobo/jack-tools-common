@@ -3,6 +3,6 @@
 
 #include "float.h"
 
-f32 quantize(f32 quanta,f32 value);
+f32 quantize(f32 quanta, f32 value);
 
 #endif

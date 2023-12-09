@@ -4,16 +4,19 @@
 #include <stdio.h>
 
 /* error-printer */
-#define eprintf(...) fprintf(stderr,__VA_ARGS__)
+#define eprintf(...) fprintf(stderr, __VA_ARGS__)
 
 /* verbose-printer */
-#define vprintf(_verbose,...) if(_verbose) {fprintf(stderr,__VA_ARGS__);}
+#define vprintf(_verbose, ...) \
+	if (_verbose) { \
+		fprintf(stderr, __VA_ARGS__); \
+	}
 
 /* debug-printer */
 #ifdef DEBUG
-  #define dprintf(...) fprintf(stderr,__VA_ARGS__)
+#define dprintf(...) fprintf(stderr, __VA_ARGS__)
 #else
-  #define dprintf(...)
+#define dprintf(...)
 #endif
 
 #endif

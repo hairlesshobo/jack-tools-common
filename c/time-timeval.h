@@ -3,8 +3,8 @@
 
 #include <sys/time.h>
 
-#include "int.h"
 #include "float.h"
+#include "int.h"
 
 struct timeval usec_to_timeval(u64 usec);
 f64 timeval_to_real(struct timeval tv);

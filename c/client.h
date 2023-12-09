@@ -5,16 +5,16 @@
 
 typedef struct
 {
-  struct sockaddr_in address ;
-  i32 mask ;
-  i8 in_use ;
-} client_t ;
+	struct sockaddr_in address;
+	i32 mask;
+	i8 in_use;
+} client_t;
 
 typedef struct
 {
-  client_t *c ;
-  i32 n ;
-} client_register_t ;
+	client_t *c;
+	i32 n;
+} client_register_t;
 
 client_register_t *alloc_client_register(i32 n);
 void print_client_register(FILE *fp, const client_register_t *r, i32 mask);
