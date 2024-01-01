@@ -16,7 +16,7 @@ f32 segment_transfer_interpolate_logarithmic(f32 left, f32 right, f32 index)
 	return ((log10((index * 9) + 1.0)) * (right - left)) + left;
 }
 
-/* `data' is a pointer to a `size' samples that define a valid
+/* `data' is a pointer to `size' samples that define a valid
    transfer function.  `x' is a normalized lookup index between zero
    and one. `size' must be a multiple of two, and `data' is
    interpreted as a series of x/y co-ordinates. `data' is searched
